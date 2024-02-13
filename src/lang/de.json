@@ -1,0 +1,9 @@
+{
+  "page": {
+    "login": {
+      "headline": "Willkommen zurück",
+      "description": "Wählen Sie Ihren Anbieter aus, um sich anzumelden!",
+      "noAccount": "Sie haben noch kein Konto? Registrieren Sie sich"
+    }
+  }
+}
