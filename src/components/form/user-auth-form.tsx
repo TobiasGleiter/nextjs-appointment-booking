@@ -29,7 +29,7 @@ export function UserAuthForm({ lang }) {
         type="button"
         className={cn(buttonVariants({ variant: 'outline' }))}
         onClick={() =>
-          handleSignInWithProviderAndRedirect('google', '/app/dashboard')
+          handleSignInWithProviderAndRedirect('google', `/${lang}/book-now`)
         }
         disabled={isAuthLoading}
       >
