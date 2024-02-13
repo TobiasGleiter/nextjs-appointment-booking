@@ -6,12 +6,25 @@
     }
   },
   "navigation": {
-    "marketing": [{ "title": "About", "href": "#about" }]
+    "marketing": [
+      { "title": "Open Hours", "href": "#open-hours" },
+      { "title": "About", "href": "#about" }
+    ]
   },
   "page": {
     "home": {
       "headline": "Book Your Appointment Now!",
-      "description": "Our services are easy and simple. Don't worry, we care about anything."
+      "description": "Our services are easy and simple. Don't worry, we care about anything.",
+      "sections": {
+        "openingHours": {
+          "headline": "Open Hours",
+          "description": "All day and night!"
+        },
+        "about": {
+          "headline": "About",
+          "description": "We are a crazy team for booking appointments with us. We love it."
+        }
+      }
     },
     "login": {
       "headline": "Welcome back",

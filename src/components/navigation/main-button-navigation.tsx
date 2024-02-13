@@ -15,7 +15,7 @@ export default async function MainButtonNavigation({
   return (
     <nav className="flex flex-row gap-2">
       <Link
-        href={'/en/login'}
+        href={'/en/book-now'}
         className={cn(buttonVariants({ size: 'sm' }), 'px-4')}
       >
         {button.bookNow}

@@ -31,12 +31,48 @@ export default async function Home({
           </ol>
           <div>
             <Link
-              href={'/en/login'}
+              href={'/en/book-now'}
               className={cn(buttonVariants({ size: 'sm' }), 'px-4')}
             >
               {button.bookNow}
             </Link>
           </div>
+        </div>
+      </section>
+      <section
+        id="open-hours"
+        className={cn(
+          'relative container gap-6 py-8 md:py-12 lg:py-24',
+          'min-h-[400px]'
+        )}
+      >
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <div className="flex gap-2 items-center">
+            <h2 className="font-heading font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+              {page.home.sections.openingHours.headline}
+            </h2>
+          </div>
+          <p className="max-w-[85%] leading-normal text-muted-background dark:text-muted-foreground sm:text-lg sm:leading-7">
+            {page.home.sections.openingHours.description}
+          </p>
+        </div>
+      </section>
+      <section
+        id="about"
+        className={cn(
+          'relative container gap-6 py-8 md:py-12 lg:py-24',
+          'min-h-[400px]'
+        )}
+      >
+        <div className="mx-auto flex max-w-[58rem] flex-col items-center space-y-4 text-center">
+          <div className="flex gap-2 items-center">
+            <h2 className="font-heading font-bold text-3xl leading-[1.1] sm:text-3xl md:text-6xl">
+              {page.home.sections.about.headline}
+            </h2>
+          </div>
+          <p className="max-w-[85%] leading-normal text-muted-background dark:text-muted-foreground sm:text-lg sm:leading-7">
+            {page.home.sections.about.description}
+          </p>
         </div>
       </section>
     </>
