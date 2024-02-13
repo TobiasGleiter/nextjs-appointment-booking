@@ -10,7 +10,7 @@ This project is a streamlined appointment booking website powered by Next.js 14,
 - **Shadcn UI**: Providing UI components.
 - **Tailwind CSS**: Enhancing styling capabilities.
 
-## Key Features:
+## Key Featurs:
 
 - **GitHub Workflow**: Utilizing CI with GitHub Actions.
 - **CommitLint**: Enforcing conventional commits.
@@ -18,7 +18,12 @@ This project is a streamlined appointment booking website powered by Next.js 14,
 - **Environment Variables**: Managed with @t3-oss/env-nextjs.
 - **Cypress**: Implemented for component and end-to-end testing.
 
-This README provides a concise overview of the project's setup and technologies employed, ensuring clarity and readability for potential users and contributors.
+## Add-Ons:
+
+In addition to the core features, the project includes:
+
+- **Internationalization**: Supporting multiple languages for enhanced accessibility.
+- **Middleware**: Implementing middleware for additional functionality and customization options.
 
 ## Appointment booking process
 
