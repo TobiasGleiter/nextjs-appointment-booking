@@ -5,6 +5,9 @@
       "description": "Our services are easy and simple. Don't worry, we care about anything."
     }
   },
+  "navigation": {
+    "marketing": [{ "title": "About", "href": "#about" }]
+  },
   "page": {
     "home": {
       "headline": "Book Your Appointment Now!",
@@ -15,5 +18,26 @@
       "description": "Select your Provider to log in!",
       "noAccount": "Don't have an account? Sign Up"
     }
+  },
+  "button": {
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Try it - for free!",
+    "menu": "Menu",
+    "back": "Back",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "return": "Return",
+    "submit": "Submit",
+    "edit": "Edit",
+    "reset": "Reset",
+    "achieve": "Achieve",
+    "createvision": "Milestone",
+    "creategoal": "Goal",
+    "visionpage": "Your Visions",
+    "earlyaccess": "Request Early Access"
   }
 }

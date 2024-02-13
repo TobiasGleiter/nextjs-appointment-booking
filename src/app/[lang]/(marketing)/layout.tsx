@@ -1,5 +1,8 @@
 import { SiteFooter } from '@/src/components/navigation/footer/site-footer';
+import { MainNavigation } from '@/src/components/navigation/main-navigation';
 import { Locale } from '@/src/lib/lang/i18.config';
+import { getDictionary } from '@/src/lib/lang/lang';
+import { Suspense } from 'react';
 
 interface MarketingLayoutProps {
   children: React.ReactNode;
@@ -10,13 +13,19 @@ export default async function MarketingLayout({
   children,
   params: { lang },
 }: MarketingLayoutProps) {
+  const { button, navigation } = await getDictionary(lang);
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="container z-40">
         <div className="flex h-20 items-center justify-between py-6">
-          {/* <Suspense>
-            <MainNav items={navigation.marketing} button={button} lang={lang} />
-          </Suspense> */}
+          <Suspense>
+            <MainNavigation
+              items={navigation.marketing}
+              button={button}
+              lang={lang}
+            />
+          </Suspense>
           {/* <MainButtonNav lang={lang} button={button} /> */}
         </div>
       </header>
