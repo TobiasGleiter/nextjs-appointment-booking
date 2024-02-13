@@ -50,14 +50,6 @@ export default async function LoginPage({
         <Suspense fallback={'Loading...'}>
           <UserAuthForm lang={lang} />
         </Suspense>
-        <p className="px-8 text-center text-sm text-muted-foreground">
-          <Link
-            href={'/de/register'}
-            className="hover:text-brand underline underline-offset-4"
-          >
-            {page.login.noAccount}
-          </Link>
-        </p>
       </div>
     </div>
   );
