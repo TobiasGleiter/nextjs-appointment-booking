@@ -1,0 +1,13 @@
+{
+  "page": {
+    "home": {
+      "headline": "Book Your Appointment Now!",
+      "description": "Our services are easy and simple. Don't worry, we care about anything."
+    },
+    "login": {
+      "headline": "Welcome back",
+      "description": "Select your Provider to log in!",
+      "noAccount": "Don't have an account? Sign Up"
+    }
+  }
+}
