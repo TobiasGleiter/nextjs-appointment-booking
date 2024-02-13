@@ -30,7 +30,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       template: `%s | ${meta.home.title}`,
     },
     description: meta.home.description,
-    applicationName: 'Appointment Bookings',
+    applicationName: 'Appointment',
     openGraph: {
       title: meta.home.title,
       description: meta.home.description,
@@ -43,6 +43,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       },
     ],
     creator: 'Tobias Gleiter',
+    metadataBase: new URL('https://localhost:3000'),
   };
 }
 
