@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import * as React from 'react';
 import { Icons } from '../base/icons';
+import { MobileNav } from './mobile-navigation';
 
 interface MainNavProps {
   items?: MainNavItem[];
@@ -58,7 +59,7 @@ export function MainNavigation({
         {showMobileMenu ? <Icons.close /> : <Icons.logo />}
         <span className="font-bold">{button.menu}</span>
       </button>
-      {/* {showMobileMenu && items && (
+      {showMobileMenu && items && (
         <MobileNav
           items={items}
           lang={lang}
@@ -66,7 +67,7 @@ export function MainNavigation({
         >
           {children}
         </MobileNav>
-      )} */}
+      )}
     </div>
   );
 }

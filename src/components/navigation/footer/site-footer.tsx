@@ -16,7 +16,7 @@ export function SiteFooter({ className }: SiteFooterProps) {
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
           <Icons.logo />
           <p className="text-center text-sm leading-loose md:text-left">
-            &copy; 2024 Appointment Booking
+            &copy; 2024 Appointment Bookings
           </p>
           <Link
             href={'/en/privacy'}
