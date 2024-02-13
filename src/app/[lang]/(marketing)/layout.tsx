@@ -1,4 +1,5 @@
 import { SiteFooter } from '@/src/components/navigation/footer/site-footer';
+import MainButtonNavigation from '@/src/components/navigation/main-button-navigation';
 import { MainNavigation } from '@/src/components/navigation/main-navigation';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
@@ -26,7 +27,7 @@ export default async function MarketingLayout({
               lang={lang}
             />
           </Suspense>
-          {/* <MainButtonNav lang={lang} button={button} /> */}
+          <MainButtonNavigation lang={lang} button={button} />
         </div>
       </header>
       <main className="container flex-1">{children}</main>

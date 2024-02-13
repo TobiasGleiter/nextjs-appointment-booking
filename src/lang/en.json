@@ -22,9 +22,8 @@
   "button": {
     "dashboard": "Dashboard",
     "home": "Home",
-    "login": "Login",
     "logout": "Logout",
-    "register": "Try it - for free!",
+    "bookNow": "Book Now",
     "menu": "Menu",
     "back": "Back",
     "delete": "Delete",
