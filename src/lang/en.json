@@ -27,9 +27,8 @@
       }
     },
     "login": {
-      "headline": "Welcome back",
-      "description": "Select your Provider to log in!",
-      "noAccount": "Don't have an account? Sign Up"
+      "headline": "Log in to book an appointment",
+      "description": "Select your Provider"
     }
   },
   "button": {
