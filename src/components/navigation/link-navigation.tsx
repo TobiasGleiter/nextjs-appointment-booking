@@ -1,5 +1,4 @@
 import { Locale } from '@/src/lib/lang/i18.config';
-import { cn } from '@/src/lib/utils';
 import { cva, type VariantProps } from 'class-variance-authority';
 import Link from 'next/link';
 
@@ -44,15 +43,10 @@ const NavigationLink = ({
   path,
   children,
   className,
-  variant,
-  size,
   ...props
 }: NavigationLinkProps) => {
   return (
-    <Link
-      href={`/${lang}/${path}`}
-      className={cn(linkVariants({ variant, size, className }))}
-    >
+    <Link href={`/${lang}/${path}`} className={className}>
       {children}
     </Link>
   );

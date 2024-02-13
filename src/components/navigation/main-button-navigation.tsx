@@ -1,4 +1,6 @@
 import { Locale } from '@/src/lib/lang/i18.config';
+import { cn } from '@/src/lib/utils';
+import { buttonVariants } from '../ui/button';
 import NavigationLink from './link-navigation';
 
 interface IMainButtonNav {
@@ -12,7 +14,11 @@ export default async function MainButtonNavigation({
 }: IMainButtonNav) {
   return (
     <nav className="flex flex-row gap-2">
-      <NavigationLink lang={lang} path={'/login'}>
+      <NavigationLink
+        lang={lang}
+        path={'/login'}
+        className={cn(buttonVariants({ variant: 'default' }))}
+      >
         {button.bookNow}
       </NavigationLink>
     </nav>

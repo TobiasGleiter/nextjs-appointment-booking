@@ -1,4 +1,5 @@
 import NavigationLink from '@/src/components/navigation/link-navigation';
+import { buttonVariants } from '@/src/components/ui/button';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
 import { cn } from '@/src/lib/utils';
@@ -29,7 +30,11 @@ export default async function Home({
             <li>No worry, we go you!</li>
           </ol>
           <div>
-            <NavigationLink lang={lang} path={'/login'}>
+            <NavigationLink
+              lang={lang}
+              path={'/login'}
+              className={cn(buttonVariants({ variant: 'default' }))}
+            >
               {button.bookNow}
             </NavigationLink>
           </div>
