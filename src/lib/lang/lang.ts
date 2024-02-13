@@ -2,7 +2,7 @@ import 'server-only';
 import { Locale } from './i18.config';
 
 const dictionaries = {
-  de: () => import('@/src/lang/de.json').then((module) => module.default),
+  en: () => import('@/src/lang/en.json').then((module) => module.default),
 };
 
 /**

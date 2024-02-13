@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   ArrowRight,
+  BookText,
   Brain,
   Check,
   ChevronLeft,
@@ -29,17 +30,15 @@ import {
   ShieldCheck,
   ShieldQuestion,
   SunMedium,
-  Target,
   Trash,
   Trophy,
-  Twitter,
   User,
   X,
   XCircle,
 } from 'lucide-react';
 
 export const Icons = {
-  logo: Target,
+  logo: BookText,
   goal: Goal,
   why: ShieldQuestion,
   how: ShieldCheck,
@@ -120,6 +119,5 @@ export const Icons = {
       <path d="M1 1h22v22H1z" fill="none" />
     </svg>
   ),
-  twitter: Twitter,
   check: Check,
 };

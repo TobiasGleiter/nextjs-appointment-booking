@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "home": {
+      "title": "Appointment Booking - A easy way to go.",
+      "description": "Our services are easy and simple. Don't worry, we care about anything."
+    }
+  },
+  "navigation": {
+    "marketing": [
+      { "title": "Open Hours", "href": "#open-hours" },
+      { "title": "About", "href": "#about" }
+    ]
+  },
+  "page": {
+    "home": {
+      "headline": "Book Your Appointment Now!",
+      "description": "Our services are easy and simple. Don't worry, we care about anything.",
+      "sections": {
+        "openingHours": {
+          "headline": "Open Hours",
+          "description": "All day and night!"
+        },
+        "about": {
+          "headline": "About",
+          "description": "We are a crazy team for booking appointments with us. We love it."
+        }
+      }
+    },
+    "login": {
+      "headline": "Welcome back",
+      "description": "Select your Provider to log in!",
+      "noAccount": "Don't have an account? Sign Up"
+    }
+  },
+  "button": {
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "logout": "Logout",
+    "bookNow": "Book Now",
+    "menu": "Menu",
+    "back": "Back",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "return": "Return",
+    "submit": "Submit",
+    "edit": "Edit",
+    "reset": "Reset",
+    "achieve": "Achieve",
+    "createvision": "Milestone",
+    "creategoal": "Goal",
+    "visionpage": "Your Visions",
+    "earlyaccess": "Request Early Access"
+  }
+}
