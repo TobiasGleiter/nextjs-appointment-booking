@@ -1,4 +1,10 @@
 {
+  "meta": {
+    "home": {
+      "title": "Appointment Booking - A easy way to go.",
+      "description": "Our services are easy and simple. Don't worry, we care about anything."
+    }
+  },
   "page": {
     "home": {
       "headline": "Book Your Appointment Now!",
