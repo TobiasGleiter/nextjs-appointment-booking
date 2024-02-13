@@ -8,4 +8,4 @@ A simple appointment booking website using:
 
 ## Appointment booking process
 
-![appointment-booking-process](https://github.com/TobiasGleiter/nextjs-appointment-booking/blob/main/documentation/appointment-booking-process.jpg)
+![appointment-booking-process](https://github.com/TobiasGleiter/nextjs-appointment-booking/blob/main/docs/appointment-booking-process.jpg)
