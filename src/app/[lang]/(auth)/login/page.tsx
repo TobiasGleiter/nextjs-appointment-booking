@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 
 import { Icons } from '@/src/components/base/icons';
+import { UserAuthForm } from '@/src/components/form/user-auth-form';
 import { buttonVariants } from '@/src/components/ui/button';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
@@ -47,7 +48,7 @@ export default async function LoginPage({
           </p>
         </div>
         <Suspense fallback={'Loading...'}>
-          {/* <UserAuthForm lang={lang} /> */}
+          <UserAuthForm lang={lang} />
         </Suspense>
         <p className="px-8 text-center text-sm text-muted-foreground">
           <Link
