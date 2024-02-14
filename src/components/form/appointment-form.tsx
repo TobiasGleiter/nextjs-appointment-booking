@@ -23,16 +23,16 @@ import {
   SelectValue,
 } from '../ui/select';
 
-const FormSchema = z.object({
-  date: z.date({
-    required_error: 'A date of birth is required.',
-  }),
-  timeSlot: z.string({
-    required_error: 'Please select an email to display.',
-  }),
-});
+export function AppointmentForm({ sections, buttonBookNow, error }) {
+  const FormSchema = z.object({
+    date: z.date({
+      required_error: error.form.date.description,
+    }),
+    timeSlot: z.string({
+      required_error: error.form.timeSlot.description,
+    }),
+  });
 
-export function AppointmentForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -61,7 +61,7 @@ export function AppointmentForm() {
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Select Appointment Date</FormLabel>
+              <FormLabel>{sections.date.headline}</FormLabel>
               <Calendar
                 mode="single"
                 selected={field.value}
@@ -79,11 +79,11 @@ export function AppointmentForm() {
           name="timeSlot"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Select Time Slot</FormLabel>
+              <FormLabel>{sections.timeSlot.headline}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a time slot" />
+                    <SelectValue placeholder={sections.date.headline} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -97,7 +97,7 @@ export function AppointmentForm() {
           )}
         />
         <Button type="submit" className="w-full">
-          Book Appointment
+          {buttonBookNow}
         </Button>
       </form>
     </Form>
