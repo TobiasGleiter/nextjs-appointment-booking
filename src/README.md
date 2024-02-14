@@ -1,21 +1,25 @@
 # 🆕 Src - The Magic
 
-Simple structure of this:
+Here's a simplified breakdown of the project structure:
 
-- app: the api and "pages"
-- components: all reusable components
-- config: some configuration like protected routes/pages
-- lang: the supported language files
-- lib: were the magic happens 🗿
-- types: because JS is not as good without types
-- middleware.ts: the magic to handle incoming requests before even get the resource they want.
+- **app**: Contains the API and "pages" for the application.
+- **components**: Houses all reusable components.
+- **config**: Holds configurations such as protected routes/pages.
+- **lang**: Contains supported language files for internationalization.
+- **lib**: Where the magic happens 🗿.
+- **types**: Provides type definitions to enhance JavaScript.
+- **middleware.ts**: Handles incoming requests before accessing the desired resource.
 
-## ❓ Some Questions you probably want to know
+## ❓ Frequently Asked Questions
 
-- How can I add enviroment variables?
-- How can I add a reusable component?
-- How do I connect to my mongodb instance?
-- How can I add more languages?
+Here are some common questions you might have:
+
+- **How can I add environment variables?**
+- **How can I add a reusable component?**
+- **How do I connect to my MongoDB instance?**
+- **How can I add more languages?**
+- **What does the database schema look like?**
+- **What does the appointment booking process entail?**
 
 ## 🏃🏽 Appointment booking process
 
