@@ -20,4 +20,4 @@ Here are some common questions you might have:
 - [How can I add more languages?](./_docs/LANG.md)
 - **What does the database schema look like?**
 - [What does the appointment booking process entail?](./_docs/BOOKING.md)
-- **How can I add a custom middleware?**
+- [How can I add a custom middleware?](./_docs/MIDDLEWARE.md)
