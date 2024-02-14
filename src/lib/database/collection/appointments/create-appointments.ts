@@ -1,16 +1,16 @@
-import { routeRequestPostAppointmentSchema } from '@/src/lib/validation/appointment/route-appointment';
+import { appointmentSchema } from '@/src/lib/validation/appointment/database-appointment';
 import { Appointment } from '@/src/types/database/appointments-database';
-import { InsertOneResult, ObjectId } from 'mongodb';
+import { InsertOneResult } from 'mongodb';
 import { z } from 'zod';
 import { connectToDatabaseAndCollection } from '../../connect-database';
 
 /**
- * Insert a new appointment
+ * Insert a new appointment into the database/collection
  * @param appointment
  * @returns result
  */
 export async function createAppointment(
-  appointment: z.infer<typeof routeRequestPostAppointmentSchema>
+  appointment: z.infer<typeof appointmentSchema>
 ): Promise<InsertOneResult> {
   const appointmentCollection = await connectToDatabaseAndCollection(
     'appointments'
@@ -21,7 +21,7 @@ export async function createAppointment(
     clientEmail: appointment.clientEmail,
     clientName: appointment.clientName,
     clientNotes: appointment.clientNotes,
-    sellerId: new ObjectId(appointment.sellerId),
+    sellerId: appointment.sellerId,
   };
 
   const result: InsertOneResult = await appointmentCollection.insertOne(

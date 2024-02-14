@@ -14,8 +14,6 @@ export const routeContextAppointmentSchema = z.object({
  */
 export const routeRequestPostAppointmentSchema = z.object({
   bookedAt: z.string(),
-  clientEmail: z.string(),
-  clientName: z.string(),
   clientNotes: z.string().optional(),
   sellerId: z.string(),
 });

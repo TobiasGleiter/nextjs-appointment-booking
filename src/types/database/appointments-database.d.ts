@@ -2,7 +2,7 @@ import { ObjectId } from 'mongodb';
 
 export type Appointment = {
   _id?: ObjectId;
-  bookedAt: string;
+  bookedAt: Date;
   clientEmail: string;
   clientName: string;
   clientNotes: string;
