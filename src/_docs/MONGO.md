@@ -28,7 +28,7 @@ Sellers collection explained:
 | ------------ | -------- | -------------------------------- |
 | \_id         | ObjectId |                                  |
 | availability | Number[] | Represents the weekdays from 0-6 |
-| sellerName   | String   | Email of the Client              |
+| sellerName   | String   | Email of the seller              |
 
 Appointments collection explainted:
 
