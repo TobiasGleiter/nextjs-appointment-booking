@@ -9,7 +9,8 @@
   ],
   "globals": {
     "React": "readonly",
-    "cypress/globals": true
+    "cypress/globals": true,
+    "globalThis": "readonly"
   },
   // New
   "overrides": [
