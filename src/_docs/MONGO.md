@@ -18,3 +18,16 @@ What you need to know at the beginning:
 -
 
 ## What collection are used in the MongoDb?
+
+Collection:
+
+- Appointment
+
+Appointment collection explainted:
+
+| Appointment | Type   | Description                            |
+| ----------- | ------ | -------------------------------------- |
+| bookedAt    | Date   | Appointment start date                 |
+| email       | String | Email of the Customer                  |
+| name        | String | Name of the Customer                   |
+| notes       | String | Any additional notes from the Customer |
