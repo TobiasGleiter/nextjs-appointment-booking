@@ -3,48 +3,45 @@
 ## ❓ Frequently Asked Questions
 
 - **How do I connect to a MongoDb collection?**
-- **What collection are used in the MongoDb?**
+- **What collections are used in the MongoDb?**
 
 ---
 
 ## How do I connect to a MongoDb collection?
 
-I implemented the MongoDb using the NativeDriver.
-This allows to be completly indepentent.
-One alterantive is "Mongoose" that uses Schemas.
+The MongoDb implementation in this project utilizes the NativeDriver, providing complete independence. An alternative approach is using "Mongoose," which incorporates schemas.
 
-## What collection are used in the MongoDb?
+## What collections are used in the MongoDb?
 
-Collection:
+### Sellers Collection
 
-- sellers (1-N)
-- appointments (0-N)
-- opening-time
-- (local-holidays <- where do I get them?)
+| Field        | Type     | Description              |
+| ------------ | -------- | ------------------------ |
+| \_id         | ObjectId | Unique identifier        |
+| availability | Number[] | Weekdays available (0-6) |
+| sellerName   | String   | Name of the seller       |
 
-Sellers collection explained:
+The Sellers collection contains information about the sellers, including their availability on weekdays. If a weekday is set, the seller is available on that date.
 
-| Seller       | Type     | Description                      |
-| ------------ | -------- | -------------------------------- |
-| \_id         | ObjectId |                                  |
-| availability | Number[] | Represents the weekdays from 0-6 |
-| sellerName   | String   | Email of the seller              |
+### Appointments Collection
 
-Appointments collection explainted:
+| Field       | Type     | Description                                |
+| ----------- | -------- | ------------------------------------------ |
+| \_id        | ObjectId | Unique identifier                          |
+| bookedAt    | Date     | Appointment start date                     |
+| clientEmail | String   | Email of the client                        |
+| clientName  | String   | Name of the client                         |
+| clientNotes | String   | Additional notes from the client           |
+| sellerId    | ObjectId | Reference to the seller associated with it |
 
-| Appointment | Type     | Description                          |
-| ----------- | -------- | ------------------------------------ |
-| \_id        | ObjectId |                                      |
-| bookedAt    | Date     | Appointment start date               |
-| clientEmail | String   | Email of the Client                  |
-| clientName  | String   | Name of the Client                   |
-| clientNotes | String   | Any additional notes from the Client |
-| sellerId    | ObjectId | Reference to the seller              |
+The Appointments collection stores information about booked appointments, including the date and time, client details, and the associated seller.
 
-Opening-Times collection explainted:
+### Opening-Times Collection
 
-| Opening-Time  | Type     | Description           |
-| ------------- | -------- | --------------------- |
-| \_id          | ObjectId |                       |
-| opening-days  | Number[] | Weekdays from 0-6     |
-| opening-hours | Object[] | Open- and close-times |
+| Field        | Type     | Description                              |
+| ------------ | -------- | ---------------------------------------- |
+| \_id         | ObjectId | Unique identifier                        |
+| openingDays  | Number[] | Weekdays when the booking system is open |
+| openingHours | Object[] | Open and close times for each day        |
+
+The Opening-Times collection specifies the days and hours during which the appointment booking system is open. It helps determine the validity of selected dates and hours for booking appointments.
