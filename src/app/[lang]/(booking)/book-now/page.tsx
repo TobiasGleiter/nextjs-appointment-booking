@@ -1,4 +1,4 @@
-import AppointmentForm from '@/src/components/form/appointment-form';
+import { AppointmentForm } from '@/src/components/form/appointment-form';
 import { Suspense } from 'react';
 
 export default async function BookNowPage() {
