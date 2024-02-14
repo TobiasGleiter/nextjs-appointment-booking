@@ -13,21 +13,38 @@ I implemented the MongoDb using the NativeDriver.
 This allows to be completly indepentent.
 One alterantive is "Mongoose" that uses Schemas.
 
-What you need to know at the beginning:
-
--
-
 ## What collection are used in the MongoDb?
 
 Collection:
 
-- Appointment
+- sellers (1-N)
+- appointments (0-N)
+- opening-time
+- (local-holidays <- where do I get them?)
 
-Appointment collection explainted:
+Sellers collection explained:
 
-| Appointment | Type   | Description                            |
-| ----------- | ------ | -------------------------------------- |
-| bookedAt    | Date   | Appointment start date                 |
-| email       | String | Email of the Customer                  |
-| name        | String | Name of the Customer                   |
-| notes       | String | Any additional notes from the Customer |
+| Seller       | Type     | Description                      |
+| ------------ | -------- | -------------------------------- |
+| \_id         | ObjectId |                                  |
+| availability | Number[] | Represents the weekdays from 0-6 |
+| sellerName   | String   | Email of the Client              |
+
+Appointments collection explainted:
+
+| Appointment | Type     | Description                          |
+| ----------- | -------- | ------------------------------------ |
+| \_id        | ObjectId |                                      |
+| bookedAt    | Date     | Appointment start date               |
+| clientEmail | String   | Email of the Client                  |
+| clientName  | String   | Name of the Client                   |
+| clientNotes | String   | Any additional notes from the Client |
+| sellerId    | ObjectId | Reference to the seller              |
+
+Opening-Times collection explainted:
+
+| Opening-Time  | Type     | Description           |
+| ------------- | -------- | --------------------- |
+| \_id          | ObjectId |                       |
+| opening-days  | Number[] | Weekdays from 0-6     |
+| opening-hours | Object[] | Open- and close-times |
