@@ -21,7 +21,8 @@ Project specific questions:
 
 - [How can I add environment variables?](./_docs/ENV.md)
 - [How can I add a reusable component?](./_docs/COMPONENTS.md)
-- [How do I connect to my MongoDB instance?](./_docs/MONGO.md)
+- [How do I connect to a MongoDb collection?](./_docs/MONGO.md)
+- [What collection are used in the MongoDb?](./_docs/MONGO.md)
 - [How can I add more languages?](./_docs/LANG.md)
 - [What does the appointment booking process entail?](./_docs/BOOKING.md)
 - [How can I add a custom middleware?](./_docs/MIDDLEWARE.md)
