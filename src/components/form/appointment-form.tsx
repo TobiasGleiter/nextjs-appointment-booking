@@ -9,7 +9,6 @@ import { Calendar } from '@/src/components/ui/calendar';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -53,13 +52,16 @@ export function AppointmentForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-col gap-2"
+      >
         <FormField
           control={form.control}
           name="date"
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Appointment</FormLabel>
+              <FormLabel>Select Appointment Date</FormLabel>
               <Calendar
                 mode="single"
                 selected={field.value}
@@ -68,8 +70,6 @@ export function AppointmentForm() {
                 disabled={(date) => date <= new Date()}
                 initialFocus
               />
-
-              <FormDescription>Select your appointment date</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -79,11 +79,11 @@ export function AppointmentForm() {
           name="timeSlot"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Select Time Slot</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a verified email to display" />
+                    <SelectValue placeholder="Select a time slot" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -96,7 +96,9 @@ export function AppointmentForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="w-full">
+          Book Appointment
+        </Button>
       </form>
     </Form>
   );
