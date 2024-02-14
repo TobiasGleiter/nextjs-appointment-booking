@@ -1,8 +1,13 @@
-import { authOptions } from '@/src/lib/auth/options-auth';
-import { getServerSession } from 'next-auth';
+import AppointmentForm from '@/src/components/form/appointment-form';
+import { Suspense } from 'react';
 
 export default async function BookNowPage() {
-  const session = await getServerSession(authOptions);
-
-  return <div>BookNowPage</div>;
+  return (
+    <div>
+      <h1>BookNowPage</h1>
+      <Suspense>
+        <AppointmentForm />
+      </Suspense>
+    </div>
+  );
 }

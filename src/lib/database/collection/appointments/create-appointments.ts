@@ -12,10 +12,10 @@ import { connectToDatabaseAndCollection } from '../../connect-database';
 export async function createAppointment(
   appointment: z.infer<typeof appointmentSchema>
 ): Promise<InsertOneResult> {
-  const appointmentCollection = await connectToDatabaseAndCollection(
+  const appointmentsCollection = await connectToDatabaseAndCollection(
     'appointments'
   );
-  const appointmentOptions = {};
+  const appointmentsOptions = {};
   const insertAppointment: Appointment = {
     bookedAt: appointment.bookedAt,
     clientEmail: appointment.clientEmail,
@@ -24,9 +24,9 @@ export async function createAppointment(
     sellerId: appointment.sellerId,
   };
 
-  const result: InsertOneResult = await appointmentCollection.insertOne(
+  const result: InsertOneResult = await appointmentsCollection.insertOne(
     insertAppointment,
-    appointmentOptions
+    appointmentsOptions
   );
   return result;
 }
