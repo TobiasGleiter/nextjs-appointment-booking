@@ -26,3 +26,11 @@ Project specific questions:
 - [How can I add more languages?](./_docs/LANG.md)
 - [What does the appointment booking process entail?](./_docs/BOOKING.md)
 - [How can I add a custom middleware?](./_docs/MIDDLEWARE.md)
+
+## ✅ Todos
+
+- ✅ English language support
+- ✅ Basic Documentation
+- ✅ NextAuth with Google provider for login (working without mongodb)
+- ❌ Booking process
+- ❌ MongoDb setup
