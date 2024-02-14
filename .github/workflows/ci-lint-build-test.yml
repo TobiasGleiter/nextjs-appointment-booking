@@ -7,7 +7,7 @@ jobs:
     env:
       # NextAuth
       NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-      NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
 
