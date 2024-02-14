@@ -1,8 +1,10 @@
+import { ObjectId } from 'mongodb';
+
 export type Appointment = {
-  _id?: string;
+  _id?: ObjectId;
   bookedAt: string;
   clientEmail: string;
   clientName: string;
   clientNotes: string;
-  sellerId: string;
+  sellerId: ObjectId;
 };

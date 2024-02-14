@@ -1,3 +1,4 @@
+import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
 import { routeRequestPostAppointmentSchema } from '@/src/lib/validation/appointment/route-appointment';
 import { Appointment } from '@/src/types/database/appointments-database';
 import { NextResponse } from 'next/server';
@@ -10,7 +11,10 @@ export async function POST(request: Request) {
     const json: Appointment = await request.json();
     const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
 
-    console.log(parsedAppointment);
+    const response = await createAppointment(parsedAppointment);
+    if (!response) {
+      return NextResponse.json('Failed', { status: 400 });
+    }
 
     // Add appointment to the collection
 
