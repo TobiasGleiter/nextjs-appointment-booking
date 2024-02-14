@@ -19,9 +19,5 @@ Here are some common questions you might have:
 - [How do I connect to my MongoDB instance?](./_docs/MONGO.md)
 - [How can I add more languages?](./_docs/LANG.md)
 - **What does the database schema look like?**
-- **What does the appointment booking process entail?**
+- [What does the appointment booking process entail?](./_docs/BOOKING.md)
 - **How can I add a custom middleware?**
-
-## 🏃🏽 Appointment booking process
-
-![appointment-booking-process](https://github.com/TobiasGleiter/nextjs-appointment-booking/blob/main/docs/appointment-booking-process.jpg)
