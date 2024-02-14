@@ -8,20 +8,36 @@
 
 ## How can I add a reusable component?
 
-Two ways:
+You have two options for adding a reusable component:
 
-- Using Shadcn Ui (CLI)
-- Creating an own resuable component
+### Using Shadcn UI
 
-### Using Shadcn Ui
+Shadcn UI provides a comprehensive library of components that you can seamlessly integrate into your project.
 
-Shadcn UI is killer! Check out their components: [Shadcn UI](https://ui.shadcn.com/docs/components/accordion).
+1. Ensure you have Shadcn UI set up in your project.
+2. Explore the available components in the [Shadcn UI documentation](https://ui.shadcn.com/docs/components/accordion).
+3. Copy the `npx` command provided for the desired component.
+4. Execute the command in your terminal at the root folder of your project.
+5. Your newly installed component will be available in the `components/ui` folder.
+6. Refer to the Shadcn UI documentation for guidance on importing and using the component in your pages.
 
-1. Make sure you have setup Shadcn UI! Then contouniue with Step 2:
-2. Find the component you want in this [list](https://ui.shadcn.com/docs/components/accordion)
-3. Copy the npx command: `npx shadcn-ui@latest add "component"`
-4. Run it in your terminal in your project root folder
-5. In the `components/ui` folder is your new installed component
-6. Use the documentation from shadcn to import the component into your page
+### Creating Your Own Reusable Component
 
-### Creating an own resuaable component
+If you prefer to create your own reusable component from scratch:
+
+1. Navigate to the `src/components/` folder in your project.
+2. Ensure the component you need to create fits the existing folder schema (e.g., components for a form placed into the `form` folder).
+3. Create a new file following the naming convention: `componentName-parentFolderName.tsx` (e.g., `userAuth-form.tsx`).
+4. Implement the basic structure of the component:
+
+```typescript
+interface ComponentNameProps {
+  lang: Locale;
+}
+
+export function ComponentNameParentFolderName({ lang }: ComponentNameProps) {
+  return <div>ComponentNameParentFolderName</div>;
+}
+```
+
+5. Add your logic and UI elements to the reusable component as needed.
