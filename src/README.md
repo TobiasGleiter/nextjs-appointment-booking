@@ -10,9 +10,13 @@ Simple structure of this:
 - types: because JS is not as good without types
 - middleware.ts: the magic to handle incoming requests before even get the resource they want.
 
-## Some Questions you probably want to know
+## ❓ Some Questions you probably want to know
 
 - How can I add enviroment variables?
 - How can I add a reusable component?
 - How do I connect to my mongodb instance?
 - How can I add more languages?
+
+## 🏃🏽 Appointment booking process
+
+![appointment-booking-process](https://github.com/TobiasGleiter/nextjs-appointment-booking/blob/main/docs/appointment-booking-process.jpg)

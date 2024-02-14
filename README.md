@@ -25,8 +25,8 @@ In addition to the core features, the project includes:
 - **Internationalization**: Supporting multiple languages for enhanced accessibility.
 - **Middleware**: Implementing middleware for additional functionality and customization options.
 
-## 🏃🏽 Appointment booking process
+## ❓ Questions?
 
-![appointment-booking-process](https://github.com/TobiasGleiter/nextjs-appointment-booking/blob/main/docs/appointment-booking-process.jpg)
+Check the [src/README.md](./src/README.md) for more information.
 
 README.md optimized with [ChatGPT](https://chat.openai.com)
