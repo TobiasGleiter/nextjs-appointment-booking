@@ -1,8 +1,8 @@
-export type Appointments = {
-  _id: any;
-  bookedAt: Date;
+export type Appointment = {
+  _id?: string;
+  bookedAt: string;
   clientEmail: string;
   clientName: string;
   clientNotes: string;
-  sellerId: any;
+  sellerId: string;
 };

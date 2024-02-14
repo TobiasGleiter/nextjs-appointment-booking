@@ -1,18 +1,23 @@
 import { routeRequestPostAppointmentSchema } from '@/src/lib/validation/appointment/route-appointment';
+import { Appointment } from '@/src/types/database/appointments-database';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   return NextResponse.json('Forbidden', { status: 403 });
 }
 export async function POST(request: Request) {
-  const json = await request.json();
-  const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
+  try {
+    const json: Appointment = await request.json();
+    const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
 
-  console.log(parsedAppointment);
+    console.log(parsedAppointment);
 
-  // Add appointment to the collection
+    // Add appointment to the collection
 
-  return NextResponse.json('Forbidden', { status: 403 });
+    return NextResponse.json('Success', { status: 200 });
+  } catch (error) {
+    return NextResponse.json('Forbidden', { status: 403 });
+  }
 }
 export async function PATCH() {
   return NextResponse.json('Forbidden', { status: 403 });
