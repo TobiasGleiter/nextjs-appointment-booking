@@ -1,4 +1,5 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
+import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
 import {
   VerifyAppointmentSchemaHandler,
   VerifyBusinessIsOpenHandler,
@@ -55,11 +56,10 @@ export async function POST(request: Request) {
       clientNotes: json.clientNotes,
     };
 
-    // const response = await createAppointment(newAppointment);
-    // if (!response) {
-    //   return NextResponse.json('Failed', { status: 400 });
-    // }
-    console.log('Booked!');
+    const response = await createAppointment(newAppointment);
+    if (!response) {
+      return NextResponse.json('Failed', { status: 400 });
+    }
 
     return NextResponse.json('Success', { status: 200 });
   } catch (error) {

@@ -14,7 +14,6 @@ export async function createAppointment(
   const appointmentsCollection = await connectToDatabaseAndCollection(
     'appointments'
   );
-  console.log(appointment);
   const appointmentsOptions = {};
   const insertAppointment = appointment;
 

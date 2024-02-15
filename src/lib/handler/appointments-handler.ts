@@ -1,5 +1,9 @@
+import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
-import { checkIfBusinessIsOpen } from '../helper/appointments-helper';
+import {
+  checkIfBusinessIsOpen,
+  checkIfSellerIsAvailable,
+} from '../helper/appointments-helper';
 import { routeRequestPostAppointmentSchema } from '../validation/appointment/route-appointment';
 import { AbstractHandler } from './handler';
 
@@ -10,7 +14,6 @@ import { AbstractHandler } from './handler';
 export class VerifyAppointmentSchemaHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
     const parsedAppointment = routeRequestPostAppointmentSchema.parse(data);
-    console.log('VerifyAppointmentSchemaHandler');
     if (!parsedAppointment) {
       return NextResponse.json('Forbidden', { status: 403 });
     }
@@ -24,10 +27,9 @@ export class VerifyAppointmentSchemaHandler extends AbstractHandler {
  */
 export class VerifyBusinessIsOpenHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
-    console.log('VerifyBusinessIsOpenHandler');
     const appointmentDate = new Date(data.appointmentDate);
-    const isOpen = checkIfBusinessIsOpen(appointmentDate);
-    if (!isOpen) {
+    const isBusinessOpen = checkIfBusinessIsOpen(appointmentDate);
+    if (!isBusinessOpen) {
       return NextResponse.json('Forbidden', { status: 404 });
     }
     return super.handle(data);
@@ -40,10 +42,14 @@ export class VerifyBusinessIsOpenHandler extends AbstractHandler {
  */
 export class VerifySellerIsAvailableHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
-    console.log('VerifySellerIsAvailableHandler');
     const appointmentDate = new Date(data.appointmentDate);
-    // Check if already an appointment is booked on that date for the seller.
-    console.log('Free');
+    const isSellerAvailable = await checkIfSellerIsAvailable(
+      appointmentDate,
+      new ObjectId(data.sellerId)
+    );
+    if (!isSellerAvailable) {
+      return NextResponse.json('Forbidden', { status: 404 });
+    }
 
     return super.handle(data);
   }
