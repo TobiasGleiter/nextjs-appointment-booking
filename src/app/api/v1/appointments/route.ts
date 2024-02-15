@@ -37,6 +37,7 @@ export async function POST(request: Request) {
     // 3. Book Appointment
     const user = await readCurrentUser();
     const germanDate = new Date(json.appointmentDate);
+    console.log(germanDate);
     const newAppointment: Appointment = {
       appointmentDate: germanDate,
       clientEmail: user.email,

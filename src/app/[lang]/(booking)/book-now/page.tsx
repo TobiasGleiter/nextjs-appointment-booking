@@ -14,11 +14,11 @@ export default async function BookNowPage({
   const { page, button, error } = await getDictionary(lang);
 
   return (
-    <div className="grid w-full gap-10 justify-between">
+    <div className="flex flex-col w-full gap-10 items-center justify-between">
       <div className="flex w-full items-start justify-between">
         <div className="flex flex-row items-center gap-2">
           <NavigationLink
-            lang={'en'}
+            lang={lang}
             path={'/'}
             className={cn(buttonVariants({ size: 'sm', variant: 'outline' }))}
           >

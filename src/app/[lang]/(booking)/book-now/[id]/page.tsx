@@ -5,6 +5,7 @@ import { readAppointmentById } from '@/src/lib/database/collection/appointments/
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
 import { cn } from '@/src/lib/utils';
+import { notFound } from 'next/navigation';
 
 export default async function BookNowDetailsPage({
   params: { lang, id },
@@ -13,13 +14,17 @@ export default async function BookNowDetailsPage({
 }) {
   const { page, button } = await getDictionary(lang);
   const appointment = await readAppointmentById(id);
-  console.log(appointment);
+
+  if (!appointment) {
+    notFound();
+  }
+
   return (
-    <div className="grid w-full gap-10 justify-between">
+    <div className="flex flex-col w-full items-center gap-10 justify-between">
       <div className="flex w-full items-end justify-between">
         <div className="flex flex-row items-center gap-2">
           <NavigationLink
-            lang={'en'}
+            lang={lang}
             path={'/'}
             className={cn(buttonVariants({ size: 'sm', variant: 'outline' }))}
           >
