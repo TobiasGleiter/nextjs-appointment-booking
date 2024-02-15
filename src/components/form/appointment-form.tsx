@@ -10,6 +10,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/src/components/ui/form';
+import { openingTime } from '@/src/config/opening-time-config';
+import { sellers } from '@/src/config/seller-config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import React from 'react';
@@ -111,15 +113,13 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="1970-01-01T10:00:00.000Z">
-                    10:00 - 10:30
-                  </SelectItem>
-                  <SelectItem value="1970-01-01T11:00:00.000Z">
-                    11:00 - 11:30
-                  </SelectItem>
-                  <SelectItem value="1970-01-01T12:00:00.000Z">
-                    12:00 - 12:30
-                  </SelectItem>
+                  {openingTime.timeSlots.map((timeSlot, key) => {
+                    return (
+                      <SelectItem key={key} value={timeSlot.value}>
+                        {timeSlot.label}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -139,9 +139,13 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="6025e2f1c6061f068b55c7e0">
-                    Tobias Gleiter
-                  </SelectItem>
+                  {sellers.map((seller, key) => {
+                    return (
+                      <SelectItem key={key} value={seller.id}>
+                        {seller.name}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
               <FormMessage />
