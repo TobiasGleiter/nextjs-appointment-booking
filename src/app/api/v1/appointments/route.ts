@@ -1,14 +1,12 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
 import {
-  TimezoneHandler,
   VerifyAppointmentSchemaHandler,
   VerifyBusinessIsOpenHandler,
   VerifySellerIsAvailableHandler,
 } from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
 import { Appointment } from '@/src/types/database/appointments-database';
-import { addHours } from 'date-fns';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 
@@ -19,24 +17,11 @@ import { NextResponse } from 'next/server';
  */
 export async function POST(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
-  const timezoneHandler = new TimezoneHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
   const verifyBusinessIsOpenHandler = new VerifyBusinessIsOpenHandler();
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
-  // 0. Auth and validation
-  // 0.1 User is authenticated?
-  // 0.2 input fits to schema?
-
-  // 1. Check opening time (opening-time collection)
-  // 1.1 Check opening weekday
-  // 1.2 Check opening time
-
-  // 2. Check Seller
-  // 2.1 Check Seller does work on this weekday
-  // 2.2 Check Seller are free on this date and time
   verifyUserHasRouteAccessHandler
-    .setNext(timezoneHandler)
     .setNext(verifyAppointmentSchemaHandler)
     .setNext(verifyBusinessIsOpenHandler)
     .setNext(verifySellerIsAvailableHandler);
@@ -51,7 +36,7 @@ export async function POST(request: Request) {
 
     // 3. Book Appointment
     const user = await readCurrentUser();
-    const germanDate = addHours(new Date(json.appointmentDate), 1);
+    const germanDate = new Date(json.appointmentDate);
     const newAppointment: Appointment = {
       appointmentDate: germanDate,
       clientEmail: user.email,

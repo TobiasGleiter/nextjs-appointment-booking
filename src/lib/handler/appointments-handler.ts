@@ -1,4 +1,3 @@
-import { addHours } from 'date-fns';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 import {
@@ -51,23 +50,6 @@ export class VerifySellerIsAvailableHandler extends AbstractHandler {
     if (!isSellerAvailable) {
       return NextResponse.json('Forbidden', { status: 404 });
     }
-
-    return super.handle(data);
-  }
-}
-
-/**
- * Add the correct time (Germany +1 hour)
- * @returns NextResponse | null
- */
-export class TimezoneHandler extends AbstractHandler {
-  public async handle(data: any): Promise<NextResponse | null> {
-    const appointmentDate = new Date(data.appointmentDate);
-    const germanAppointmentDate = addHours(appointmentDate, 1);
-    data = {
-      appointmentDate: germanAppointmentDate.toISOString(),
-      sellerId: data.sellerId,
-    };
 
     return super.handle(data);
   }
