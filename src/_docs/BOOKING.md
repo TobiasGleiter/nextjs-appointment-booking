@@ -9,7 +9,7 @@
 
 ## 🏃🏾‍♂️ What does the appointment booking process entail?
 
-![appointment-booking-process](https://github.com/TobiasGleiter/nextjs-appointment-booking/blob/main/docs/appointment-booking-process.jpg)
+![appointment-booking-process](https://github.com/TobiasGleiter/nextjs-appointment-booking/blob/main/docs/appointment-booking-process-expanded.jpg)
 
 ## ⛓️ Why do we use the chain of responsibility pattern?
 

@@ -21,8 +21,12 @@ export async function POST(request: Request) {
     const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
 
     // 1. Check opening time (opening-time collection)
+    // 1.1 Check opening weekday
+    // 1.2 Check opening time
 
-    // 2. Check Seller no appointment on this date (appointments collection)
+    // 2. Check Seller
+    // 2.1 Check Seller does work on this weekday
+    // 2.2 Check Seller are free on this date and time
 
     // 3. Book Appointment
     const newAppointment: Appointment = {
