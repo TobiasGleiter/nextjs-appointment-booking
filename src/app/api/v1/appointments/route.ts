@@ -1,5 +1,6 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
+import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
 import { routeRequestPostAppointmentSchema } from '@/src/lib/validation/appointment/route-appointment';
 import { Appointment } from '@/src/types/database/appointments-database';
 import { ObjectId } from 'mongodb';
@@ -11,24 +12,29 @@ import { NextResponse } from 'next/server';
  * @returns
  */
 export async function POST(request: Request) {
+  const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
+
+  // 1. Check opening time (opening-time collection)
+  // 1.1 Check opening weekday
+  // 1.2 Check opening time
+
+  // 2. Check Seller
+  // 2.1 Check Seller does work on this weekday
+  // 2.2 Check Seller are free on this date and time
+  verifyUserHasRouteAccessHandler;
+
   try {
-    const user = await readCurrentUser();
-    if (!user) {
-      return NextResponse.json('Forbidden', { status: 403 });
+    const json = await request.json();
+    const nextResponse = await verifyUserHasRouteAccessHandler.handle(json);
+
+    if (nextResponse !== null) {
+      return nextResponse;
     }
 
-    const json = await request.json();
     const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
 
-    // 1. Check opening time (opening-time collection)
-    // 1.1 Check opening weekday
-    // 1.2 Check opening time
-
-    // 2. Check Seller
-    // 2.1 Check Seller does work on this weekday
-    // 2.2 Check Seller are free on this date and time
-
     // 3. Book Appointment
+    const user = await readCurrentUser();
     const newAppointment: Appointment = {
       appointmentDate: new Date(parsedAppointment.appointmentDate),
       clientEmail: user.email,
