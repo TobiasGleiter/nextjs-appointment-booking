@@ -1,8 +1,4 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
-import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
-import { routeRequestPostAppointmentSchema } from '@/src/lib/validation/appointment/route-appointment';
-import { Appointment } from '@/src/types/database/appointments-database';
-import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 
 /**
@@ -17,20 +13,22 @@ export async function POST(request: Request) {
       return NextResponse.json('Forbidden', { status: 403 });
     }
 
-    const json: Appointment = await request.json();
-    const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
-    const newAppointment: Appointment = {
-      bookedAt: new Date(parsedAppointment.bookedAt),
-      clientEmail: user.email,
-      clientName: user.name,
-      clientNotes: parsedAppointment.clientNotes,
-      sellerId: new ObjectId(parsedAppointment.sellerId),
-    };
+    const json = await request.json();
+    console.log(json);
 
-    const response = await createAppointment(newAppointment);
-    if (!response) {
-      return NextResponse.json('Failed', { status: 400 });
-    }
+    // const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
+    // const newAppointment: Appointment = {
+    //   bookedAt: new Date(parsedAppointment.bookedAt),
+    //   clientEmail: user.email,
+    //   clientName: user.name,
+    //   clientNotes: parsedAppointment.clientNotes,
+    //   sellerId: new ObjectId(parsedAppointment.sellerId),
+    // };
+
+    // const response = await createAppointment(newAppointment);
+    // if (!response) {
+    //   return NextResponse.json('Failed', { status: 400 });
+    // }
 
     // Add appointment to the collection
 
