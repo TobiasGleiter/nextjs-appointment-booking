@@ -30,14 +30,14 @@ export function selectWeekdayNameFromDate(date: Date): DayOfWeek {
  */
 export function checkIfBusinessIsOpen(appointmentDate: Date): boolean {
   const dayOfWeekString = selectWeekdayNameFromDate(appointmentDate);
-  const dayConfig = openingTime.openHours[dayOfWeekString];
+  const dayConfig = openingTime[dayOfWeekString];
   if (!dayConfig || !dayConfig.open) {
     return false;
   }
 
   const appointmentTime = appointmentDate.toISOString().slice(11, 19);
-  const startTime = dayConfig.start.slice(1, 9);
-  const endTime = dayConfig.end.slice(1, 9);
+  const startTime = dayConfig.start;
+  const endTime = dayConfig.end;
 
   return appointmentTime >= startTime && appointmentTime <= endTime;
 }

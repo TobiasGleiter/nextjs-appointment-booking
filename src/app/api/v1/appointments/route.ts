@@ -1,12 +1,14 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
 import {
+  TimezoneHandler,
   VerifyAppointmentSchemaHandler,
   VerifyBusinessIsOpenHandler,
   VerifySellerIsAvailableHandler,
 } from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
 import { Appointment } from '@/src/types/database/appointments-database';
+import { addHours } from 'date-fns';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 
@@ -17,6 +19,7 @@ import { NextResponse } from 'next/server';
  */
 export async function POST(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
+  const timezoneHandler = new TimezoneHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
   const verifyBusinessIsOpenHandler = new VerifyBusinessIsOpenHandler();
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
@@ -33,6 +36,7 @@ export async function POST(request: Request) {
   // 2.1 Check Seller does work on this weekday
   // 2.2 Check Seller are free on this date and time
   verifyUserHasRouteAccessHandler
+    .setNext(timezoneHandler)
     .setNext(verifyAppointmentSchemaHandler)
     .setNext(verifyBusinessIsOpenHandler)
     .setNext(verifySellerIsAvailableHandler);
@@ -47,8 +51,9 @@ export async function POST(request: Request) {
 
     // 3. Book Appointment
     const user = await readCurrentUser();
+    const germanDate = addHours(new Date(json.appointmentDate), 1);
     const newAppointment: Appointment = {
-      appointmentDate: new Date(json.appointmentDate),
+      appointmentDate: germanDate,
       clientEmail: user.email,
       clientName: user.name,
       bookedAt: new Date(),

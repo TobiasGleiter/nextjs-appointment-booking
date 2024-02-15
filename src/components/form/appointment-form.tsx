@@ -47,12 +47,10 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
 
-    const timeSlotStart = new Date(data.bookingTimeSlotStart);
     const bookingDate = new Date(data.bookingDate);
 
-    const formattedTimeSlotStart = format(timeSlotStart, 'HH:mm');
     const formattedBookingDate = format(bookingDate, 'yyyy-MM-dd');
-    const fullDateWithTime = `${formattedBookingDate}T${formattedTimeSlotStart}`;
+    const fullDateWithTime = `${formattedBookingDate}T${data.bookingTimeSlotStart}`;
 
     const response = await fetch('/api/v1/appointments', {
       method: 'POST',
@@ -125,7 +123,7 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {openingTime.timeSlots.map((timeSlot, key) => {
+                  {openingTime.monday.timeSlots.map((timeSlot, key) => {
                     return (
                       <SelectItem key={key} value={timeSlot.value}>
                         {timeSlot.label}
