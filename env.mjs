@@ -15,7 +15,7 @@ export const env = createEnv({
     GOOGLE_CLIENT_SECRET: z.string().min(32),
 
     // MongoDb
-    MONGODB_URI: z.string().url(),
+    MONGODB_URI: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url().optional(),
