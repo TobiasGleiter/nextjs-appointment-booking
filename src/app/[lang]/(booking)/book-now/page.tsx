@@ -1,9 +1,25 @@
-import { authOptions } from '@/src/lib/auth/options-auth';
-import { getServerSession } from 'next-auth';
+import { AppointmentForm } from '@/src/components/form/appointment-form';
+import { Locale } from '@/src/lib/lang/i18.config';
+import { getDictionary } from '@/src/lib/lang/lang';
+import { Suspense } from 'react';
 
-export default async function BookNowPage() {
-  const session = await getServerSession(authOptions);
-  console.log(session);
+export default async function BookNowPage({
+  params: { lang },
+}: {
+  params: { lang: Locale };
+}) {
+  const { page, button, error } = await getDictionary(lang);
 
-  return <div>BookNowPage</div>;
+  return (
+    <div className="flex flex-col gap-2">
+      <h1 className="text-xl font-bold">{page.bookNow.headline}</h1>
+      <Suspense>
+        <AppointmentForm
+          sections={page.bookNow.sections}
+          buttonBookNow={button.bookNow}
+          error={error}
+        />
+      </Suspense>
+    </div>
+  );
 }

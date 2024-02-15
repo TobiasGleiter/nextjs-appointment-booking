@@ -26,6 +26,7 @@ Project specific questions:
 - [How can I add more languages?](./_docs/LANG.md)
 - [What does the appointment booking process entail?](./_docs/BOOKING.md)
 - [How can I add a custom middleware?](./_docs/MIDDLEWARE.md)
+- [How can I add a new API Endpoint?](./_docs/API.md)
 
 ## ✅ Todos
 

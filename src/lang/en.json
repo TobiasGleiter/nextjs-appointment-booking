@@ -26,6 +26,18 @@
         }
       }
     },
+    "bookNow": {
+      "headline": "Book Now!",
+      "description": "All day and night!",
+      "sections": {
+        "date": {
+          "headline": "Select Your date."
+        },
+        "timeSlot": {
+          "headline": "Select Your time slot"
+        }
+      }
+    },
     "login": {
       "headline": "Log in to book an appointment",
       "description": "Select your Provider"
@@ -38,17 +50,19 @@
     "bookNow": "Book Now",
     "menu": "Menu",
     "back": "Back",
-    "delete": "Delete",
     "cancel": "Cancel",
-    "save": "Save",
-    "return": "Return",
     "submit": "Submit",
     "edit": "Edit",
-    "reset": "Reset",
-    "achieve": "Achieve",
-    "createvision": "Milestone",
-    "creategoal": "Goal",
-    "visionpage": "Your Visions",
-    "earlyaccess": "Request Early Access"
+    "reset": "Reset"
+  },
+  "error": {
+    "form": {
+      "date": {
+        "description": "An appointment date is required"
+      },
+      "timeSlot": {
+        "description": "An appointment time slot is required"
+      }
+    }
   }
 }

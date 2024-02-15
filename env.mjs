@@ -13,6 +13,9 @@ export const env = createEnv({
 
     GOOGLE_CLIENT_ID: z.string().min(32),
     GOOGLE_CLIENT_SECRET: z.string().min(32),
+
+    // MongoDb
+    MONGODB_URI: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url().optional(),
@@ -27,5 +30,8 @@ export const env = createEnv({
 
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+
+    // MongoDb
+    MONGODB_URI: process.env.MONGODB_URI,
   },
 });
