@@ -2,7 +2,6 @@ import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import {
   VerifyAppointmentSchemaHandler,
   VerifyBusinessIsOpenHandler,
-  VerifySellerIsAvailableHandler,
 } from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
 import { Appointment } from '@/src/types/database/appointments-database';
@@ -14,27 +13,26 @@ import { NextResponse } from 'next/server';
  * @param request
  * @returns
  */
+
 export async function POST(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
   const verifyBusinessIsOpenHandler = new VerifyBusinessIsOpenHandler();
-  const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
+  const VerifySellerIsFreeOnDateAndTimeHandler =
+    new VerifySellerIsFreeOnDateAndTimeHandler();
 
   // 0. Auth and validation
   // 0.1 User is authenticated?
   // 0.2 input fits to schema?
-
   // 1. Check opening time (opening-time collection)
   // 1.1 Check opening weekday
   // 1.2 Check opening time
-
   // 2. Check Seller
   // 2.1 Check Seller does work on this weekday
   // 2.2 Check Seller are free on this date and time
   verifyUserHasRouteAccessHandler
     .setNext(verifyAppointmentSchemaHandler)
-    .setNext(verifyBusinessIsOpenHandler)
-    .setNext(verifySellerIsAvailableHandler);
+    .setNext(verifyBusinessIsOpenHandler);
 
   try {
     const json = await request.json();
@@ -65,19 +63,4 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json('Forbidden', { status: 403 });
   }
-}
-export async function GET() {
-  return NextResponse.json('Forbidden', { status: 403 });
-}
-export async function PATCH() {
-  return NextResponse.json('Forbidden', { status: 403 });
-}
-export async function DELETE() {
-  return NextResponse.json('Forbidden', { status: 403 });
-}
-export async function PUT() {
-  return NextResponse.json('Forbidden', { status: 403 });
-}
-export async function OPTIONS() {
-  return NextResponse.json('Forbidden', { status: 403 });
 }

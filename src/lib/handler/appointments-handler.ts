@@ -33,3 +33,18 @@ export class VerifyBusinessIsOpenHandler extends AbstractHandler {
     return super.handle(data);
   }
 }
+
+/**
+ * Check if the requested date is at the opening days, if not return 'Forbidden'
+ * @returns NextResponse | null
+ */
+export class VerifySellerIsAvailableHandler extends AbstractHandler {
+  public async handle(data: any): Promise<NextResponse | null> {
+    console.log('VerifySellerIsAvailableHandler');
+    const appointmentDate = new Date(data.appointmentDate);
+    // Check if already an appointment is booked on that date for the seller.
+    console.log('Free');
+
+    return super.handle(data);
+  }
+}
