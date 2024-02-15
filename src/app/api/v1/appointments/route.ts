@@ -1,7 +1,9 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
-import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
+import {
+  VerifyAppointmentOpenWeekdaysSchemaHandler,
+  VerifyAppointmentSchemaHandler,
+} from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
-import { routeRequestPostAppointmentSchema } from '@/src/lib/validation/appointment/route-appointment';
 import { Appointment } from '@/src/types/database/appointments-database';
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
@@ -13,6 +15,13 @@ import { NextResponse } from 'next/server';
  */
 export async function POST(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
+  const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
+  const verifyAppointmentOpenWeekdaysSchemaHandler =
+    new VerifyAppointmentOpenWeekdaysSchemaHandler();
+
+  // 0. Auth and validation
+  // 0.1 User is authenticated?
+  // 0.2 input fits to schema?
 
   // 1. Check opening time (opening-time collection)
   // 1.1 Check opening weekday
@@ -21,7 +30,9 @@ export async function POST(request: Request) {
   // 2. Check Seller
   // 2.1 Check Seller does work on this weekday
   // 2.2 Check Seller are free on this date and time
-  verifyUserHasRouteAccessHandler;
+  verifyUserHasRouteAccessHandler
+    .setNext(verifyAppointmentSchemaHandler)
+    .setNext(verifyAppointmentOpenWeekdaysSchemaHandler);
 
   try {
     const json = await request.json();
@@ -31,23 +42,22 @@ export async function POST(request: Request) {
       return nextResponse;
     }
 
-    const parsedAppointment = routeRequestPostAppointmentSchema.parse(json);
-
     // 3. Book Appointment
     const user = await readCurrentUser();
     const newAppointment: Appointment = {
-      appointmentDate: new Date(parsedAppointment.appointmentDate),
+      appointmentDate: new Date(json.appointmentDate),
       clientEmail: user.email,
       clientName: user.name,
       bookedAt: new Date(),
-      sellerId: new ObjectId(parsedAppointment.sellerId),
-      clientNotes: parsedAppointment.clientNotes,
+      sellerId: new ObjectId(json.sellerId),
+      clientNotes: json.clientNotes,
     };
 
-    const response = await createAppointment(newAppointment);
-    if (!response) {
-      return NextResponse.json('Failed', { status: 400 });
-    }
+    // const response = await createAppointment(newAppointment);
+    // if (!response) {
+    //   return NextResponse.json('Failed', { status: 400 });
+    // }
+    console.log('Booked!');
 
     return NextResponse.json('Success', { status: 200 });
   } catch (error) {

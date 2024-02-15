@@ -1,11 +1,5 @@
 import { NextResponse } from 'next/server';
 
-// Headline: Chain of responsibility request handler
-// Description:
-//    - Used in all route.ts with e.g. access-handler.
-//    - Read about the pattern: https://refactoring.guru/design-patterns/chain-of-responsibility
-// Creator: Tobias Gleiter, 21.01.2024
-
 /**
  * Declares a method for building the chain of handlers.
  */

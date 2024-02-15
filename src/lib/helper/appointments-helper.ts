@@ -1,0 +1,41 @@
+import { openingTime } from '@/src/config/opening-time-config';
+import { DayOfWeek } from '@/src/types/helper/appointments-helper';
+import { getDay } from 'date-fns';
+
+/**
+ * Select the weekday from the given date
+ * @param date
+ * @returns weekday: 'sunday', ...
+ */
+export function selectWeekdayNameFromDate(date: Date): DayOfWeek {
+  const dayOfWeek = getDay(date);
+  const dayNames: DayOfWeek[] = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ];
+  return dayNames[dayOfWeek];
+}
+
+/**
+ *  Check if the given appointment date is in the open times of the business
+ * @param appointmentDate
+ * @returns
+ */
+export function checkIfBusinessIsOpen(appointmentDate: Date): boolean {
+  const dayOfWeekString = selectWeekdayNameFromDate(appointmentDate);
+  const dayConfig = openingTime.openHours[dayOfWeekString];
+  if (!dayConfig || !dayConfig.open) {
+    return false;
+  }
+
+  const appointmentTime = appointmentDate.toISOString().slice(11, 19);
+  const startTime = dayConfig.start.slice(1, 9);
+  const endTime = dayConfig.end.slice(1, 9);
+
+  return appointmentTime >= startTime && appointmentTime <= endTime;
+}

@@ -68,12 +68,24 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
     setIsLoading(false);
 
     if (!response?.ok) {
+      if (response.status === 404) {
+        return toast({
+          title: 'We are closed on this date!',
+          description: 'Sorry, but try a different date.',
+        });
+      }
+
       return toast({
         title: 'Error',
         description: 'Error occured',
         variant: 'destructive',
       });
     }
+
+    return toast({
+      title: 'Success',
+      description: 'Appointment booked!',
+    });
   }
 
   return (
