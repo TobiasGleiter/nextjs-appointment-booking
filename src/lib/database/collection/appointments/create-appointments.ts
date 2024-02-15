@@ -1,5 +1,4 @@
 import { appointmentSchema } from '@/src/lib/validation/appointment/database-appointment';
-import { Appointment } from '@/src/types/database/appointments-database';
 import { InsertOneResult } from 'mongodb';
 import { z } from 'zod';
 import { connectToDatabaseAndCollection } from '../../connect-database';
@@ -15,14 +14,9 @@ export async function createAppointment(
   const appointmentsCollection = await connectToDatabaseAndCollection(
     'appointments'
   );
+  console.log(appointment);
   const appointmentsOptions = {};
-  const insertAppointment: Appointment = {
-    bookedAt: appointment.bookedAt,
-    clientEmail: appointment.clientEmail,
-    clientName: appointment.clientName,
-    clientNotes: appointment.clientNotes,
-    sellerId: appointment.sellerId,
-  };
+  const insertAppointment = appointment;
 
   const result: InsertOneResult = await appointmentsCollection.insertOne(
     insertAppointment,

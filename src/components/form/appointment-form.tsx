@@ -58,7 +58,7 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        bookingDate: new Date(fullDateWithTime),
+        appointmentDate: new Date(fullDateWithTime),
         sellerId: data.sellerId,
       }),
     });
