@@ -1,7 +1,7 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import {
-  VerifyAppointmentOpenWeekdaysSchemaHandler,
   VerifyAppointmentSchemaHandler,
+  VerifyBusinessIsOpenHandler,
 } from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
 import { Appointment } from '@/src/types/database/appointments-database';
@@ -16,8 +16,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
-  const verifyAppointmentOpenWeekdaysSchemaHandler =
-    new VerifyAppointmentOpenWeekdaysSchemaHandler();
+  const verifyBusinessIsOpenHandler = new VerifyBusinessIsOpenHandler();
 
   // 0. Auth and validation
   // 0.1 User is authenticated?
@@ -32,7 +31,7 @@ export async function POST(request: Request) {
   // 2.2 Check Seller are free on this date and time
   verifyUserHasRouteAccessHandler
     .setNext(verifyAppointmentSchemaHandler)
-    .setNext(verifyAppointmentOpenWeekdaysSchemaHandler);
+    .setNext(verifyBusinessIsOpenHandler);
 
   try {
     const json = await request.json();

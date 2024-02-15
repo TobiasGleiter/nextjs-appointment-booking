@@ -22,9 +22,9 @@ export class VerifyAppointmentSchemaHandler extends AbstractHandler {
  * Check if the requested date is at the opening days, if not return 'Forbidden'
  * @returns NextResponse | null
  */
-export class VerifyAppointmentOpenWeekdaysSchemaHandler extends AbstractHandler {
+export class VerifyBusinessIsOpenHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
-    console.log('VerifyAppointmentOpenWeekdaysSchemaHandler');
+    console.log('VerifyBusinessIsOpenHandler');
     const appointmentDate = new Date(data.appointmentDate);
     const isOpen = checkIfBusinessIsOpen(appointmentDate);
     if (!isOpen) {
