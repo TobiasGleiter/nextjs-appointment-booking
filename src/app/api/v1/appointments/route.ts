@@ -46,12 +46,12 @@ export async function POST(request: Request) {
       clientNotes: json.clientNotes,
     };
 
-    const response = await createAppointment(newAppointment);
-    if (!response) {
+    const result = await createAppointment(newAppointment);
+    if (!result) {
       return NextResponse.json('Failed', { status: 400 });
     }
 
-    return NextResponse.json('Success', { status: 200 });
+    return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
     return NextResponse.json('Forbidden', { status: 403 });
   }

@@ -14,6 +14,7 @@ import { openingTime } from '@/src/config/opening-time-config';
 import { sellers } from '@/src/config/seller-config';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -27,7 +28,8 @@ import {
 } from '../ui/select';
 import { toast } from '../ui/use-toast';
 
-export function AppointmentForm({ sections, buttonBookNow, error }) {
+export function AppointmentForm({ sections, buttonBookNow, error, lang }) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const FormSchema = z.object({
@@ -80,10 +82,9 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
       });
     }
 
-    return toast({
-      title: 'Success',
-      description: 'Appointment booked!',
-    });
+    const { result } = await response.json();
+
+    router.push(`/${lang}/book-now/${result.insertedId}`);
   }
 
   return (
