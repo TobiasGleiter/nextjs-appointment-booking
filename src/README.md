@@ -28,6 +28,7 @@ Project specific questions:
 - [How can I add a custom middleware?](./_docs/MIDDLEWARE.md)
 - [How can I add a new API Endpoint?](./_docs/API.md)
 - [How can I add a handler into the appointment booking process?](./_docs/HANDLER.md)
+- [How can I use a different database then mongodb?](./_docs/DATABASE.md)
 
 ## ✅ Todos
 
