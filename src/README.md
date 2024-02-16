@@ -27,11 +27,15 @@ Project specific questions:
 - [What does the appointment booking process entail?](./_docs/BOOKING.md)
 - [How can I add a custom middleware?](./_docs/MIDDLEWARE.md)
 - [How can I add a new API Endpoint?](./_docs/API.md)
+- [How can I add a handler into the appointment booking process?](./_docs/HANDLER.md)
 
 ## ✅ Todos
 
 - ✅ English language support
 - ✅ Basic Documentation
 - ✅ NextAuth with Google provider for login (working without mongodb)
-- ❌ Booking process
-- ❌ MongoDb setup
+- ✅ Booking process
+- ✅ MongoDb setup
+- ❌ Admin Seller Management (Dashboard)
+- ❌ Admin Opening Time Management (Dashboard)
+- ❌ Admin Appointment Management (Dashboard)

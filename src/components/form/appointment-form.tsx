@@ -10,9 +10,16 @@ import {
   FormLabel,
   FormMessage,
 } from '@/src/components/ui/form';
+import { Locale } from '@/src/lib/lang/i18.config';
+import {
+  OpeningTime,
+  TimeSlots,
+} from '@/src/types/database/opening-time-database';
+import { Seller } from '@/src/types/database/sellers-database';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { Key } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Icons } from '../base/icons';
@@ -25,7 +32,24 @@ import {
 } from '../ui/select';
 import { toast } from '../ui/use-toast';
 
-export function AppointmentForm({ sections, buttonBookNow, error }) {
+interface AppointmentFormProps {
+  sections: any;
+  buttonBookNow: any;
+  error: any;
+  lang: Locale;
+  sellers: Seller[];
+  openingTime: OpeningTime;
+}
+
+export function AppointmentForm({
+  sections,
+  buttonBookNow,
+  error,
+  lang,
+  sellers,
+  openingTime,
+}: AppointmentFormProps) {
+  const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const FormSchema = z.object({
@@ -45,12 +69,11 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
 
-    const timeSlotStart = new Date(data.bookingTimeSlotStart);
     const bookingDate = new Date(data.bookingDate);
-
-    const formattedTimeSlotStart = format(timeSlotStart, 'HH:mm');
     const formattedBookingDate = format(bookingDate, 'yyyy-MM-dd');
-    const fullDateWithTime = `${formattedBookingDate}T${formattedTimeSlotStart}`;
+    const fullDateWithTime = `${formattedBookingDate}T${data.bookingTimeSlotStart}Z`;
+    const appointmentDate = new Date(fullDateWithTime);
+    const utcAppointmentDate = appointmentDate.toUTCString();
 
     const response = await fetch('/api/v1/appointments', {
       method: 'POST',
@@ -58,7 +81,7 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        appointmentDate: new Date(fullDateWithTime),
+        appointmentDate: utcAppointmentDate,
         sellerId: data.sellerId,
       }),
     });
@@ -66,12 +89,23 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
     setIsLoading(false);
 
     if (!response?.ok) {
+      if (response.status === 404) {
+        return toast({
+          title: 'We are closed on this date!',
+          description: 'Sorry, but try a different date.',
+        });
+      }
+
       return toast({
         title: 'Error',
         description: 'Error occured',
         variant: 'destructive',
       });
     }
+
+    const { result } = await response.json();
+
+    router.push(`/${lang}/book-now/${result.insertedId}`);
   }
 
   return (
@@ -111,15 +145,16 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="1970-01-01T10:00:00.000Z">
-                    10:00 - 10:30
-                  </SelectItem>
-                  <SelectItem value="1970-01-01T11:00:00.000Z">
-                    11:00 - 11:30
-                  </SelectItem>
-                  <SelectItem value="1970-01-01T12:00:00.000Z">
-                    12:00 - 12:30
-                  </SelectItem>
+                  {openingTime?.timeSlots &&
+                    openingTime.timeSlots.map(
+                      (timeSlot: TimeSlots, key: Key) => {
+                        return (
+                          <SelectItem key={key} value={timeSlot.time}>
+                            {timeSlot.label}
+                          </SelectItem>
+                        );
+                      }
+                    )}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -139,9 +174,13 @@ export function AppointmentForm({ sections, buttonBookNow, error }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="6025e2f1c6061f068b55c7e0">
-                    Tobias Gleiter
-                  </SelectItem>
+                  {sellers.map((seller: Seller, key: Key) => {
+                    return (
+                      <SelectItem key={key} value={seller._id.toString()}>
+                        {seller.name}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectContent>
               </Select>
               <FormMessage />

@@ -27,6 +27,10 @@
       "headline": "Book Now!",
       "description": "All day and night!",
       "sections": {
+        "details": {
+          "headline": "Appointment booked!",
+          "description": "Booking details:"
+        },
         "date": {
           "headline": "Select Your date."
         },

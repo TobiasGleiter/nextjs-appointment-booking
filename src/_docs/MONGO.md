@@ -9,39 +9,40 @@
 
 ## How do I connect to a MongoDb collection?
 
-The MongoDb implementation in this project utilizes the NativeDriver, providing complete independence. An alternative approach is using "Mongoose," which incorporates schemas.
+In this project, the MongoDb implementation utilizes the NativeDriver for seamless connection, ensuring complete independence. Alternatively, you can opt for "Mongoose," which integrates schemas for added convenience.
 
 ## What collections are used in the MongoDb?
 
 ### Sellers Collection
 
-| Field        | Type     | Description              |
-| ------------ | -------- | ------------------------ |
-| \_id         | ObjectId | Unique identifier        |
-| availability | Number[] | Weekdays available (0-6) |
-| sellerName   | String   | Name of the seller       |
+| Field        | Type     | Description                | Implemented |
+| ------------ | -------- | -------------------------- | ----------- |
+| \_id         | ObjectId | Unique identifier          | 🟢          |
+| availability | Object   | Availability of the Seller | 🔴          |
+| sellerName   | String   | Name of the seller         | 🟢          |
 
-The Sellers collection contains information about the sellers, including their availability on weekdays. If a weekday is set, the seller is available on that date.
+The Sellers collection stores information about sellers, including their availability on weekdays. Each weekday availability can be managed separately.
 
 ### Appointments Collection
 
-| Field       | Type     | Description                                |
-| ----------- | -------- | ------------------------------------------ |
-| \_id        | ObjectId | Unique identifier                          |
-| bookedAt    | Date     | Appointment start date                     |
-| clientEmail | String   | Email of the client                        |
-| clientName  | String   | Name of the client                         |
-| clientNotes | String   | Additional notes from the client           |
-| sellerId    | ObjectId | Reference to the seller associated with it |
+| Field       | Type     | Description                        | Implemented |
+| ----------- | -------- | ---------------------------------- | ----------- |
+| \_id        | ObjectId | Unique identifier                  | 🟢          |
+| bookedAt    | Date     | Appointment start date             | 🟢          |
+| clientEmail | String   | Email of the client                | 🟢          |
+| clientName  | String   | Name of the client                 | 🟢          |
+| clientNotes | String   | Additional notes from the client   | 🔴          |
+| sellerId    | ObjectId | Reference to the associated seller | 🟢          |
 
-The Appointments collection stores information about booked appointments, including the date and time, client details, and the associated seller.
+The Appointments collection records booked appointments, including date, time, and client details.
 
 ### Opening-Times Collection
 
-| Field        | Type     | Description                              |
-| ------------ | -------- | ---------------------------------------- |
-| \_id         | ObjectId | Unique identifier                        |
-| openingDays  | Number[] | Weekdays when the booking system is open |
-| openingHours | Object[] | Open and close times for each day        |
+| Field    | Type     | Description                             | Implemented |
+| -------- | -------- | --------------------------------------- | ----------- |
+| \_id     | ObjectId | Unique identifier                       | 🟢          |
+| open     | boolean  | Flag indicating if the business is open | 🟢          |
+| day      | Number   | Weekdays from 0-6 (Mon-Sun)             | 🟢          |
+| timeSlot | Object   | Array of possible time slots            | 🟢          |
 
-The Opening-Times collection specifies the days and hours during which the appointment booking system is open. It helps determine the validity of selected dates and hours for booking appointments.
+The Opening-Times collection manages the business's operating hours, including weekdays and time slots.
