@@ -2,6 +2,10 @@ import { appointmentSchema } from '@/src/lib/validation/appointment/database-app
 import { InsertOneResult } from 'mongodb';
 import { z } from 'zod';
 import { connectToDatabaseAndCollection } from '../../connect-database';
+import {
+  DatabaseAdapter,
+  MongoDBRepository,
+} from '../../repository/mongodb-repository';
 
 /**
  * Insert a new appointment into the database/collection
@@ -14,10 +18,13 @@ export async function createAppointment(
   const appointmentsCollection = await connectToDatabaseAndCollection(
     'appointments'
   );
-  const appointmentsOptions = {};
-  const insertAppointment = appointment;
 
-  const result: InsertOneResult = await appointmentsCollection.insertOne(
+  const appointmentsOptions = {};
+  const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
+  const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
+
+  const insertAppointment = appointment;
+  const result = await databaseAdapter.insertOne(
     insertAppointment,
     appointmentsOptions
   );
