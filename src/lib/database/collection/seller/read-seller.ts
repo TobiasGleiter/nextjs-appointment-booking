@@ -1,5 +1,7 @@
 import { Seller } from '@/src/types/database/sellers-database';
+import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
+import { MongoDBRepository } from '../../repository/mongodb-repository';
 
 /**
  * Read all sellers from sellers collection
@@ -11,9 +13,11 @@ export async function readAllSellers(): Promise<Seller[]> {
   const sellersOptions = {
     projection: { name: 1 },
   };
-  const response = await sellersCollection
-    .find(sellersQuery, sellersOptions)
-    .toArray();
+
+  const sellersRepository = new MongoDBRepository(sellersCollection);
+  const databaseAdapter = new DatabaseAdapter(sellersRepository);
+  const response = await databaseAdapter.find(sellersQuery, sellersOptions);
+
   // workaround because of passing data from server to client
   const sellers: Seller[] = JSON.parse(JSON.stringify(response));
 

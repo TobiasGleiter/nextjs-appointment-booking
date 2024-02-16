@@ -100,9 +100,9 @@ export default async function Home({
                   y2="308"
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="48"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="48"
                 ></line>
                 <line
                   x1="292"
@@ -111,9 +111,9 @@ export default async function Home({
                   y2="292"
                   fill="none"
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="48"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="48"
                 ></line>
               </svg>
               <div className="space-y-2">
