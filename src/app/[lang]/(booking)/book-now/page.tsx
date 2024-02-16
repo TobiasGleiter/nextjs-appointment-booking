@@ -7,6 +7,7 @@ import { readAllSellers } from '@/src/lib/database/collection/seller/read-seller
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
 import { cn } from '@/src/lib/utils';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 export default async function BookNowPage({
@@ -17,6 +18,10 @@ export default async function BookNowPage({
   const { page, button, error } = await getDictionary(lang);
   const sellers = await readAllSellers();
   const openingTime = await readOpeningTime(0);
+
+  if (!sellers || !openingTime) {
+    notFound();
+  }
 
   return (
     <div className="flex flex-col w-full gap-10 items-center justify-between">
