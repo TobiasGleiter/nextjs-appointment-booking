@@ -1,6 +1,7 @@
 import { AppointmentForm } from '@/src/components/form/appointment-form';
 import NavigationLink from '@/src/components/navigation/link-navigation';
 import { buttonVariants } from '@/src/components/ui/button';
+import { readAllSellers } from '@/src/lib/database/collection/seller/read-seller';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
 import { cn } from '@/src/lib/utils';
@@ -12,6 +13,7 @@ export default async function BookNowPage({
   params: { lang: Locale };
 }) {
   const { page, button, error } = await getDictionary(lang);
+  const sellers = await readAllSellers();
 
   return (
     <div className="flex flex-col w-full gap-10 items-center justify-between">
@@ -34,6 +36,7 @@ export default async function BookNowPage({
             buttonBookNow={button.bookNow}
             error={error}
             lang={lang}
+            sellers={sellers}
           />
         </Suspense>
       </div>

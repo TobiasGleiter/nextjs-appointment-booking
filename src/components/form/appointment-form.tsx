@@ -11,11 +11,11 @@ import {
   FormMessage,
 } from '@/src/components/ui/form';
 import { openingTime } from '@/src/config/opening-time-config';
-import { sellers } from '@/src/config/seller-config';
+import { Seller } from '@/src/types/database/sellers-database';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { Key } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Icons } from '../base/icons';
@@ -28,7 +28,13 @@ import {
 } from '../ui/select';
 import { toast } from '../ui/use-toast';
 
-export function AppointmentForm({ sections, buttonBookNow, error, lang }) {
+export function AppointmentForm({
+  sections,
+  buttonBookNow,
+  error,
+  lang,
+  sellers,
+}) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -50,7 +56,6 @@ export function AppointmentForm({ sections, buttonBookNow, error, lang }) {
     setIsLoading(true);
 
     const bookingDate = new Date(data.bookingDate);
-
     const formattedBookingDate = format(bookingDate, 'yyyy-MM-dd');
     const fullDateWithTime = `${formattedBookingDate}T${data.bookingTimeSlotStart}Z`;
     const appointmentDate = new Date(fullDateWithTime);
@@ -152,9 +157,9 @@ export function AppointmentForm({ sections, buttonBookNow, error, lang }) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {sellers.map((seller, key) => {
+                  {sellers.map((seller: Seller, key: Key) => {
                     return (
-                      <SelectItem key={key} value={seller.id}>
+                      <SelectItem key={key} value={seller._id.toString()}>
                         {seller.name}
                       </SelectItem>
                     );
