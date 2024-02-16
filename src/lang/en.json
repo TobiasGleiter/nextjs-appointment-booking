@@ -6,19 +6,16 @@
     }
   },
   "navigation": {
-    "marketing": [
-      { "title": "Open Hours", "href": "#open-hours" },
-      { "title": "About", "href": "#about" }
-    ]
+    "marketing": [{ "title": "Features", "href": "#features" }]
   },
   "page": {
     "home": {
-      "headline": "Book Your Appointment Now!",
-      "description": "Our services are easy and simple. Don't worry, we care about anything.",
+      "headline": "Simple Booking System",
+      "description": "Using Next.js 14, Shadcn, MongoDb, Design Patterns, Best Practices and more..",
       "sections": {
         "openingHours": {
           "headline": "Open Hours",
-          "description": "All day and night!"
+          "description": "You can book our services"
         },
         "about": {
           "headline": "About",

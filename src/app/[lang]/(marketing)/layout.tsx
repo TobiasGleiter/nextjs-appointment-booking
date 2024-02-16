@@ -30,7 +30,7 @@ export default async function MarketingLayout({
           <MainButtonNavigation lang={lang} button={button} />
         </div>
       </header>
-      <main className="container flex-1">{children}</main>
+      <main className=" flex-1">{children}</main>
       <SiteFooter lang={lang} />
     </div>
   );
