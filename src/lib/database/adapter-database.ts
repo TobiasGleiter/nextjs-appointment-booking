@@ -8,8 +8,19 @@ export class DatabaseAdapter<T> {
     this.repository = repository;
   }
 
-  async insertOne(item: T, options?: any): Promise<any> {
+  async find(query: T, options?: Object): Promise<any> {
+    return this.repository.find(query, options);
+  }
+
+  async findOne(query: T, options?: Object): Promise<any> {
+    return this.repository.findOne(query, options);
+  }
+
+  async countDocuments(query: T): Promise<number> {
+    return this.repository.countDocuments(query);
+  }
+
+  async insertOne(item: T, options?: Object): Promise<any> {
     return this.repository.insertOne(item, options);
   }
-  // Add other methods as needed to delegate operations to the repository
 }

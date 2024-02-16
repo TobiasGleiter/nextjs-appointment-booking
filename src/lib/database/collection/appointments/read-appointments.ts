@@ -1,8 +1,16 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { Appointment } from '@/src/types/database/appointments-database';
 import { ObjectId } from 'mongodb';
+import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
+import { MongoDBRepository } from '../../repository/mongodb-repository';
 
+/**
+ * Reads if the appointment is available and not already booked
+ * @param appointmentDate
+ * @param sellerId
+ * @returns
+ */
 export async function readAppointmentIsAvailable(
   appointmentDate: Date,
   sellerId: ObjectId
@@ -19,9 +27,10 @@ export async function readAppointmentIsAvailable(
       { appointmentDate: appointmentDate },
     ],
   };
-  const count: number = await appointmentsCollection.countDocuments(
-    appointmentsQuery
-  );
+
+  const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
+  const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
+  const count: number = await databaseAdapter.countDocuments(appointmentsQuery);
 
   return count == 0;
 }
@@ -32,7 +41,6 @@ export async function readAppointmentIsAvailable(
  * @returns appointment
  */
 export async function readAppointmentById(id: string) {
-  const user = await readCurrentUser();
   const appointmentsCollection = await connectToDatabaseAndCollection(
     'appointments'
   );
@@ -42,10 +50,14 @@ export async function readAppointmentById(id: string) {
   const appointmentsQuery = {
     _id: new ObjectId(id),
   };
-  const response = await appointmentsCollection.findOne(
+
+  const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
+  const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
+  const response = await databaseAdapter.findOne(
     appointmentsQuery,
     appointmentOptions
   );
+
   // workaround because of passing data from server to client
   const appointment: Appointment = JSON.parse(JSON.stringify(response));
   return appointment;

@@ -1,5 +1,7 @@
 import { OpeningTime } from '@/src/types/database/opening-time-database';
+import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
+import { MongoDBRepository } from '../../repository/mongodb-repository';
 
 /**
  * Read opening time slots of a given day of the business
@@ -13,7 +15,10 @@ export async function readOpeningTime(day: number): Promise<OpeningTime> {
   const openingTimeOptions = {
     projection: { timeSlots: 1, open: 1 },
   };
-  const response = await openingTimeCollection.findOne(
+
+  const appointmentsRepository = new MongoDBRepository(openingTimeCollection);
+  const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
+  const response = await databaseAdapter.findOne(
     openingTimeQuery,
     openingTimeOptions
   );
