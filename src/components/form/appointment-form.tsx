@@ -10,7 +10,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/src/components/ui/form';
-import { openingTime } from '@/src/config/opening-time-config';
 import { Seller } from '@/src/types/database/sellers-database';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -34,6 +33,7 @@ export function AppointmentForm({
   error,
   lang,
   sellers,
+  openingTime,
 }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -131,9 +131,9 @@ export function AppointmentForm({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {openingTime.monday.timeSlots.map((timeSlot, key) => {
+                  {openingTime.timeSlots.map((timeSlot, key) => {
                     return (
-                      <SelectItem key={key} value={timeSlot.value}>
+                      <SelectItem key={key} value={timeSlot.time}>
                         {timeSlot.label}
                       </SelectItem>
                     );

@@ -1,1 +1,1 @@
-export type Collections = 'appointments' | 'sellers';
+export type Collections = 'appointments' | 'sellers' | 'opening-time';
