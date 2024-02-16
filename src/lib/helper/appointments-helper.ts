@@ -14,24 +14,13 @@ export async function checkIfBusinessIsOpenOnWeekday(
   const weekdaySundayToSaturday = date.getUTCDay();
   const weekdayMondayToSunday = (weekdaySundayToSaturday + 6) % 7;
 
-  const openingTime = await readOpeningTime(0);
+  const openingTime = await readOpeningTime(weekdayMondayToSunday);
 
-  // check the database
-
-  // const dayConfig = openingTime[dayOfWeekString];
-  // if (!dayConfig || !dayConfig.open) {
-  //   return false;
-  // }
-
-  // const appointmentTime = appointmentDate.toISOString().slice(11, 19);
-  // const startTime = dayConfig.start;
-  // const endTime = dayConfig.end;
-
-  return openingTime.open; //appointmentTime >= startTime && appointmentTime <= endTime;
+  return openingTime.open;
 }
 
 /**
- *  Check if the given appointment date is between opening hours
+ *  Check if the given appointment time is between opening hours
  * @param appointmentDate
  * @returns true/false
  */

@@ -40,7 +40,7 @@ export class VerifyBusinessIsOpenOnWeekdayHandler extends AbstractHandler {
 }
 
 /**
- * Check if the resuqestes appointment is inbetween the opening hours, if not return 'Forbidden'
+ * Check if the resuqestes appointment time is between the opening hours, if not return 'Forbidden'
  * @returns NextResponse | null
  */
 export class VerifyAppointmentIsBetweenOpeningHoursHandler extends AbstractHandler {
