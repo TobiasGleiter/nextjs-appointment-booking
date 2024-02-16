@@ -55,7 +55,6 @@ export function AppointmentForm({ sections, buttonBookNow, error, lang }) {
     const fullDateWithTime = `${formattedBookingDate}T${data.bookingTimeSlotStart}Z`;
     const appointmentDate = new Date(fullDateWithTime);
     const utcAppointmentDate = appointmentDate.toUTCString();
-    console.log('Client send: ', utcAppointmentDate);
 
     const response = await fetch('/api/v1/appointments', {
       method: 'POST',

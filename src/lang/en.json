@@ -32,7 +32,7 @@
       "sections": {
         "details": {
           "headline": "Appointment booked!",
-          "description": "Your appointment is successfully booked, see you then!"
+          "description": "Booking details:"
         },
         "date": {
           "headline": "Select Your date."

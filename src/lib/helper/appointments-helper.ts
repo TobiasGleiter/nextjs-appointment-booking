@@ -35,12 +35,9 @@ export function checkIfBusinessIsOpen(appointmentDate: Date): boolean {
     return false;
   }
 
-  console.log(appointmentDate);
-
   const appointmentTime = appointmentDate.toISOString().slice(11, 19);
   const startTime = dayConfig.start;
   const endTime = dayConfig.end;
-  console.log(appointmentTime);
 
   return appointmentTime >= startTime && appointmentTime <= endTime;
 }

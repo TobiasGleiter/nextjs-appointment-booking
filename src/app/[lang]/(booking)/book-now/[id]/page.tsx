@@ -15,6 +15,18 @@ export default async function BookNowDetailsPage({
   const { page, button } = await getDictionary(lang);
   const appointment = await readAppointmentById(id);
 
+  const date = new Date(appointment.appointmentDate);
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZone: 'UTC',
+  };
+  const formattedDate = date.toLocaleDateString(lang, options);
+
   if (!appointment) {
     notFound();
   }
@@ -46,7 +58,7 @@ export default async function BookNowDetailsPage({
           </div>
           <div>
             <Label>Date</Label>
-            <p>{appointment.appointmentDate.toString()}</p>
+            <p>{formattedDate}</p>
           </div>
         </div>
       </div>

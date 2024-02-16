@@ -46,7 +46,6 @@ export async function POST(request: Request) {
       clientNotes: json.clientNotes,
     };
 
-    console.log('Appointment:', newAppointment);
     const result = await createAppointment(newAppointment);
     if (!result) {
       return NextResponse.json('Failed', { status: 400 });

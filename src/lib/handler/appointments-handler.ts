@@ -43,7 +43,6 @@ export class VerifyBusinessIsOpenHandler extends AbstractHandler {
 export class VerifySellerIsAvailableHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
     const appointmentDate = new Date(data.appointmentDate);
-    console.log(appointmentDate);
     const isSellerAvailable = await checkIfSellerIsAvailable(
       appointmentDate,
       new ObjectId(data.sellerId)
