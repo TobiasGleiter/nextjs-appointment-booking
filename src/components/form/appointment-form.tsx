@@ -145,15 +145,16 @@ export function AppointmentForm({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {openingTime.timeSlots.map(
-                    (timeSlot: TimeSlots, key: Key) => {
-                      return (
-                        <SelectItem key={key} value={timeSlot.time}>
-                          {timeSlot.label}
-                        </SelectItem>
-                      );
-                    }
-                  )}
+                  {openingTime?.timeSlots &&
+                    openingTime.timeSlots.map(
+                      (timeSlot: TimeSlots, key: Key) => {
+                        return (
+                          <SelectItem key={key} value={timeSlot.time}>
+                            {timeSlot.label}
+                          </SelectItem>
+                        );
+                      }
+                    )}
                 </SelectContent>
               </Select>
               <FormMessage />

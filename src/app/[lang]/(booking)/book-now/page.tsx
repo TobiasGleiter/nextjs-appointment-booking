@@ -16,6 +16,7 @@ export default async function BookNowPage({
   const { page, button, error } = await getDictionary(lang);
   const sellers = await readAllSellers();
   const openingTime = await readOpeningTime(0);
+  console.log(openingTime);
 
   return (
     <div className="flex flex-col w-full gap-10 items-center justify-between">
@@ -32,7 +33,7 @@ export default async function BookNowPage({
       </div>
       <div className="flex flex-col gap-2">
         <h1 className="text-xl font-bold">{page.bookNow.headline}</h1>
-        <Suspense>
+        <Suspense fallback="Loading...">
           <AppointmentForm
             sections={page.bookNow.sections}
             buttonBookNow={button.bookNow}

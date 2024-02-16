@@ -3,7 +3,7 @@ import { connectToDatabaseAndCollection } from '../../connect-database';
 
 /**
  * Read opening time slots of a given day of the business
- * @returns sellers
+ * @returns opening
  */
 export async function readOpeningTime(day: number): Promise<OpeningTime> {
   const openingTimeCollection = await connectToDatabaseAndCollection(
