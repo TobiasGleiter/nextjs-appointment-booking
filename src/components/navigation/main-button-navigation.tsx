@@ -13,7 +13,7 @@ export default async function MainButtonNavigation({
   button,
 }: IMainButtonNav) {
   return (
-    <nav className="flex flex-row gap-2">
+    <nav className="flex flex-row gap-2 items-center">
       <NavigationLink
         lang={lang}
         path={'/login'}
