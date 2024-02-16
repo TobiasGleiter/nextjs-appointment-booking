@@ -2,7 +2,7 @@ import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
 import {
   VerifyAppointmentSchemaHandler,
-  VerifyBusinessIsOpenHandler,
+  VerifyBusinessIsOpenOnWeekdayHandler,
   VerifySellerIsAvailableHandler,
 } from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
@@ -19,12 +19,13 @@ import { NextResponse } from 'next/server';
 export async function POST(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
-  const verifyBusinessIsOpenHandler = new VerifyBusinessIsOpenHandler();
+  const verifyBusinessIsOpenOnWeekdayHandler =
+    new VerifyBusinessIsOpenOnWeekdayHandler();
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
   verifyUserHasRouteAccessHandler
     .setNext(verifyAppointmentSchemaHandler)
-    .setNext(verifyBusinessIsOpenHandler)
+    .setNext(verifyBusinessIsOpenOnWeekdayHandler)
     .setNext(verifySellerIsAvailableHandler);
 
   try {

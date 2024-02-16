@@ -1,7 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 import {
-  checkIfBusinessIsOpen,
+  checkIfBusinessIsOpenOnWeekday,
   checkIfSellerIsAvailable,
 } from '../helper/appointments-helper';
 import { routeRequestPostAppointmentSchema } from '../validation/appointment/route-appointment';
@@ -25,10 +25,12 @@ export class VerifyAppointmentSchemaHandler extends AbstractHandler {
  * Check if the requested date is at the opening days, if not return 'Forbidden'
  * @returns NextResponse | null
  */
-export class VerifyBusinessIsOpenHandler extends AbstractHandler {
+export class VerifyBusinessIsOpenOnWeekdayHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
     const appointmentDate = new Date(data.appointmentDate);
-    const isBusinessOpen = await checkIfBusinessIsOpen(appointmentDate);
+    const isBusinessOpen = await checkIfBusinessIsOpenOnWeekday(
+      appointmentDate
+    );
     if (!isBusinessOpen) {
       return NextResponse.json('Forbidden', { status: 404 });
     }

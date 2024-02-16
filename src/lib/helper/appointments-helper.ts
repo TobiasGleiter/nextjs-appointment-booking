@@ -7,7 +7,7 @@ import { readOpeningTime } from '../database/collection/opening-time/read-openin
  * @param appointmentDate
  * @returns
  */
-export async function checkIfBusinessIsOpen(
+export async function checkIfBusinessIsOpenOnWeekday(
   appointmentDate: Date
 ): Promise<boolean> {
   const date = new Date(appointmentDate);
