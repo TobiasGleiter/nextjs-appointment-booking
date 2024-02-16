@@ -43,8 +43,6 @@ The Appointments collection records booked appointments, including date, time, a
 | \_id     | ObjectId | Unique identifier                       | 🟢          |
 | open     | boolean  | Flag indicating if the business is open | 🟢          |
 | day      | Number   | Weekdays from 0-6 (Mon-Sun)             | 🟢          |
-| start    | String   | Business opening time                   | 🟢          |
-| end      | Number   | Business closing time                   | 🟢          |
 | timeSlot | Object   | Array of possible time slots            | 🟢          |
 
 The Opening-Times collection manages the business's operating hours, including weekdays and time slots.
