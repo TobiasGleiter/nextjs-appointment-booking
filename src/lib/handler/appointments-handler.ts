@@ -28,7 +28,7 @@ export class VerifyAppointmentSchemaHandler extends AbstractHandler {
 export class VerifyBusinessIsOpenHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
     const appointmentDate = new Date(data.appointmentDate);
-    const isBusinessOpen = checkIfBusinessIsOpen(appointmentDate);
+    const isBusinessOpen = await checkIfBusinessIsOpen(appointmentDate);
     if (!isBusinessOpen) {
       return NextResponse.json('Forbidden', { status: 404 });
     }

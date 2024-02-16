@@ -1,45 +1,33 @@
-import { openingTime } from '@/src/config/opening-time-config';
-import { DayOfWeek } from '@/src/types/helper/appointments-helper';
-import { getDay } from 'date-fns';
 import { ObjectId } from 'mongodb';
 import { readAppointmentIsAvailable } from '../database/collection/appointments/read-appointments';
-
-/**
- * Select the weekday from the given date
- * @param date
- * @returns weekday: 'sunday', ...
- */
-export function selectWeekdayNameFromDate(date: Date): DayOfWeek {
-  const dayOfWeek = getDay(date);
-  const dayNames: DayOfWeek[] = [
-    'sunday',
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thursday',
-    'friday',
-    'saturday',
-  ];
-  return dayNames[dayOfWeek];
-}
+import { readOpeningTime } from '../database/collection/opening-time/read-opening-time';
 
 /**
  *  Check if the given appointment date is in the open times of the business
  * @param appointmentDate
  * @returns
  */
-export function checkIfBusinessIsOpen(appointmentDate: Date): boolean {
-  const dayOfWeekString = selectWeekdayNameFromDate(appointmentDate);
-  const dayConfig = openingTime[dayOfWeekString];
-  if (!dayConfig || !dayConfig.open) {
-    return false;
-  }
+export async function checkIfBusinessIsOpen(
+  appointmentDate: Date
+): Promise<boolean> {
+  const date = new Date(appointmentDate);
+  const weekdaySundayToSaturday = date.getUTCDay();
+  const weekdayMondayToSunday = (weekdaySundayToSaturday + 6) % 7;
 
-  const appointmentTime = appointmentDate.toISOString().slice(11, 19);
-  const startTime = dayConfig.start;
-  const endTime = dayConfig.end;
+  const openingTime = await readOpeningTime(0);
 
-  return appointmentTime >= startTime && appointmentTime <= endTime;
+  // check the database
+
+  // const dayConfig = openingTime[dayOfWeekString];
+  // if (!dayConfig || !dayConfig.open) {
+  //   return false;
+  // }
+
+  // const appointmentTime = appointmentDate.toISOString().slice(11, 19);
+  // const startTime = dayConfig.start;
+  // const endTime = dayConfig.end;
+
+  return openingTime.open; //appointmentTime >= startTime && appointmentTime <= endTime;
 }
 
 /**
