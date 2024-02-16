@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 import {
+  checkAppointmentIsBetweenOpeningHours,
   checkIfBusinessIsOpenOnWeekday,
   checkIfSellerIsAvailable,
 } from '../helper/appointments-helper';
@@ -45,9 +46,9 @@ export class VerifyBusinessIsOpenOnWeekdayHandler extends AbstractHandler {
 export class VerifyAppointmentIsBetweenOpeningHoursHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
     const appointmentDate = new Date(data.appointmentDate);
-    console.log(appointmentDate);
-    const isBusinessOpen = true;
-    if (!isBusinessOpen) {
+    const isAppointmentBetweenOpeningHours =
+      await checkAppointmentIsBetweenOpeningHours(appointmentDate);
+    if (!isAppointmentBetweenOpeningHours) {
       return NextResponse.json('Forbidden', { status: 404 });
     }
     return super.handle(data);

@@ -1,6 +1,7 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { createAppointment } from '@/src/lib/database/collection/appointments/create-appointments';
 import {
+  VerifyAppointmentIsBetweenOpeningHoursHandler,
   VerifyAppointmentSchemaHandler,
   VerifyBusinessIsOpenOnWeekdayHandler,
   VerifySellerIsAvailableHandler,
@@ -21,11 +22,14 @@ export async function POST(request: Request) {
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
   const verifyBusinessIsOpenOnWeekdayHandler =
     new VerifyBusinessIsOpenOnWeekdayHandler();
+  const verifyAppointmentIsBetweenOpeningHoursHandler =
+    new VerifyAppointmentIsBetweenOpeningHoursHandler();
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
   verifyUserHasRouteAccessHandler
     .setNext(verifyAppointmentSchemaHandler)
     .setNext(verifyBusinessIsOpenOnWeekdayHandler)
+    .setNext(verifyAppointmentIsBetweenOpeningHoursHandler)
     .setNext(verifySellerIsAvailableHandler);
 
   try {
