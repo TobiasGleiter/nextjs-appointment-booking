@@ -1,13 +1,11 @@
-import { OpeningTimeSlots } from '@/src/types/database/opening-time-database';
+import { OpeningTime } from '@/src/types/database/opening-time-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
 
 /**
  * Read opening time slots of a given day of the business
  * @returns sellers
  */
-export async function readOpeningTime(
-  day: number
-): Promise<OpeningTimeSlots[]> {
+export async function readOpeningTime(day: number): Promise<OpeningTime> {
   const openingTimeCollection = await connectToDatabaseAndCollection(
     'opening-time'
   );
@@ -20,7 +18,7 @@ export async function readOpeningTime(
     openingTimeOptions
   );
   // workaround because of passing data from server to client
-  const openingTime: OpeningTimeSlots[] = JSON.parse(JSON.stringify(response));
+  const openingTime: OpeningTime = JSON.parse(JSON.stringify(response));
 
   return openingTime;
 }

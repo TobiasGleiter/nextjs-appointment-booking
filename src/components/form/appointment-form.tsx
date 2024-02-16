@@ -10,6 +10,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/src/components/ui/form';
+import { Locale } from '@/src/lib/lang/i18.config';
+import {
+  OpeningTime,
+  TimeSlots,
+} from '@/src/types/database/opening-time-database';
 import { Seller } from '@/src/types/database/sellers-database';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
@@ -27,6 +32,15 @@ import {
 } from '../ui/select';
 import { toast } from '../ui/use-toast';
 
+interface AppointmentFormProps {
+  sections: any;
+  buttonBookNow: any;
+  error: any;
+  lang: Locale;
+  sellers: Seller[];
+  openingTime: OpeningTime;
+}
+
 export function AppointmentForm({
   sections,
   buttonBookNow,
@@ -34,7 +48,7 @@ export function AppointmentForm({
   lang,
   sellers,
   openingTime,
-}) {
+}: AppointmentFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -131,13 +145,15 @@ export function AppointmentForm({
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {openingTime.timeSlots.map((timeSlot, key) => {
-                    return (
-                      <SelectItem key={key} value={timeSlot.time}>
-                        {timeSlot.label}
-                      </SelectItem>
-                    );
-                  })}
+                  {openingTime.timeSlots.map(
+                    (timeSlot: TimeSlots, key: Key) => {
+                      return (
+                        <SelectItem key={key} value={timeSlot.time}>
+                          {timeSlot.label}
+                        </SelectItem>
+                      );
+                    }
+                  )}
                 </SelectContent>
               </Select>
               <FormMessage />

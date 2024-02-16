@@ -1,4 +1,4 @@
-export type OpeningTimeSlots = {
+export type TimeSlots = {
   time: string;
   label: string;
 };
@@ -8,5 +8,5 @@ export type OpeningTime = {
   day: number;
   start: string;
   end: string;
-  timeSlots: OpeningTimeSlots[];
+  timeSlots: TimeSlots[];
 };
