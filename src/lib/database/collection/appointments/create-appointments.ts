@@ -1,11 +1,9 @@
 import { appointmentSchema } from '@/src/lib/validation/appointment/database-appointment';
 import { InsertOneResult } from 'mongodb';
 import { z } from 'zod';
+import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
-import {
-  DatabaseAdapter,
-  MongoDBRepository,
-} from '../../repository/mongodb-repository';
+import { MongoDBRepository } from '../../repository/mongodb-repository';
 
 /**
  * Insert a new appointment into the database/collection
