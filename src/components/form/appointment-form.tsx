@@ -52,7 +52,10 @@ export function AppointmentForm({ sections, buttonBookNow, error, lang }) {
     const bookingDate = new Date(data.bookingDate);
 
     const formattedBookingDate = format(bookingDate, 'yyyy-MM-dd');
-    const fullDateWithTime = `${formattedBookingDate}T${data.bookingTimeSlotStart}`;
+    const fullDateWithTime = `${formattedBookingDate}T${data.bookingTimeSlotStart}Z`;
+    const appointmentDate = new Date(fullDateWithTime);
+    const utcAppointmentDate = appointmentDate.toUTCString();
+    console.log('Client send: ', utcAppointmentDate);
 
     const response = await fetch('/api/v1/appointments', {
       method: 'POST',
@@ -60,7 +63,7 @@ export function AppointmentForm({ sections, buttonBookNow, error, lang }) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        appointmentDate: new Date(fullDateWithTime),
+        appointmentDate: utcAppointmentDate,
         sellerId: data.sellerId,
       }),
     });
