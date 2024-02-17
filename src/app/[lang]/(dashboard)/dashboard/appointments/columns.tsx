@@ -13,9 +13,33 @@ import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 
 import { Icons } from '@/src/components/base/icons';
+import { toast } from '@/src/components/ui/use-toast';
 import { formatDateForHumans } from '@/src/lib/helper/date-helper';
 import { constructPathWithLocale } from '@/src/lib/utils';
 import { Appointment } from '@/src/types/database/appointments-database';
+import { ObjectId } from 'mongodb';
+
+/**
+ * Delete the seller from the database by given id
+ * @param sellerId
+ * @returns
+ */
+export async function deleteAppointmentById(sellerId: ObjectId): Promise<void> {
+  //const router = useRouter();
+  const response = await fetch(`/api/v1/appointments/${sellerId}`, {
+    method: 'DELETE',
+  });
+
+  if (!response?.ok) {
+    toast({
+      title: 'Something went wrong.',
+      description: 'It was not deleted. Please try again.',
+      variant: 'destructive',
+    });
+  }
+
+  //router.refresh();
+}
 
 export const columns: ColumnDef<Appointment>[] = [
   {
@@ -88,10 +112,10 @@ export const columns: ColumnDef<Appointment>[] = [
               <DropdownMenuItem
                 onClick={async (event) => {
                   event.preventDefault();
-
+                  await deleteAppointmentById(appointment._id);
                   window.location.href = constructPathWithLocale(
                     'en',
-                    `/dashboard/appointment`
+                    `/dashboard/appointments`
                   );
                 }}
               >
