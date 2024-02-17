@@ -6,7 +6,5 @@ export type TimeSlots = {
 export type OpeningTime = {
   open: boolean;
   day: number;
-  start: string;
-  end: string;
   timeSlots: TimeSlots[];
 };

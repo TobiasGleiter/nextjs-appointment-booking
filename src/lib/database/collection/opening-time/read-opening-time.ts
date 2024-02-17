@@ -7,7 +7,7 @@ import { MongoDBRepository } from '../../repository/mongodb-repository';
  * Read opening time slots of a given day of the business
  * @returns opening
  */
-export async function readOpeningTime(day: number): Promise<OpeningTime> {
+export async function readOpeningTimeByDay(day: number): Promise<OpeningTime> {
   const openingTimeCollection = await connectToDatabaseAndCollection(
     'opening-time'
   );
@@ -25,5 +25,29 @@ export async function readOpeningTime(day: number): Promise<OpeningTime> {
   // workaround because of passing data from server to client
   const openingTime: OpeningTime = JSON.parse(JSON.stringify(response));
 
+  return openingTime;
+}
+
+export async function readAllOpeningTime(): Promise<OpeningTime[]> {
+  const openingTimeCollection = await connectToDatabaseAndCollection(
+    'opening-time'
+  );
+  const openingTimeQuery = {};
+  const openingTimeOptions = {
+    projection: { open: 1, day: 1, timeSlots: 1 },
+    sort: {
+      day: 1,
+    },
+  };
+
+  const appointmentsRepository = new MongoDBRepository(openingTimeCollection);
+  const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
+  const response = await databaseAdapter.find(
+    openingTimeQuery,
+    openingTimeOptions
+  );
+
+  // workaround because of passing data from server to client
+  const openingTime: OpeningTime[] = JSON.parse(JSON.stringify(response));
   return openingTime;
 }

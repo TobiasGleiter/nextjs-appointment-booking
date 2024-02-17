@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { readAppointmentIsAvailable } from '../database/collection/appointments/read-appointments';
-import { readOpeningTime } from '../database/collection/opening-time/read-opening-time';
+import { readOpeningTimeByDay } from '../database/collection/opening-time/read-opening-time';
 
 /**
  *  Check if the given appointment date is in the open times of the business
@@ -14,7 +14,7 @@ export async function checkIfBusinessIsOpenOnWeekday(
   const weekdaySundayToSaturday = date.getUTCDay();
   const weekdayMondayToSunday = (weekdaySundayToSaturday + 6) % 7;
 
-  const openingTime = await readOpeningTime(weekdayMondayToSunday);
+  const openingTime = await readOpeningTimeByDay(weekdayMondayToSunday);
 
   return openingTime.open;
 }
@@ -31,7 +31,7 @@ export async function checkAppointmentIsBetweenOpeningHours(
   const weekdaySundayToSaturday = date.getUTCDay();
   const weekdayMondayToSunday = (weekdaySundayToSaturday + 6) % 7;
 
-  const { timeSlots } = await readOpeningTime(weekdayMondayToSunday);
+  const { timeSlots } = await readOpeningTimeByDay(weekdayMondayToSunday);
 
   if (timeSlots.length <= 0) {
     return false;
