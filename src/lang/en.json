@@ -36,6 +36,10 @@
         }
       }
     },
+    "sellers": {
+      "headline": "Employees",
+      "description": "Manage your sellers"
+    },
     "bookNow": {
       "headline": "Book Now!",
       "description": "All day and night!",
