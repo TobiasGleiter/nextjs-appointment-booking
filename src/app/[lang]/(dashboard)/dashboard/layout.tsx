@@ -30,7 +30,11 @@ export default async function DashboardLayout({
     <div className="flex min-h-screen flex-col space-y-6">
       <header className="z-40 bg-background">
         <div className="container flex h-16 items-center bg-background justify-between py-4">
-          <MainNavigation items={[]} button={button} lang={lang} />
+          <MainNavigation
+            items={navigation.dashboard}
+            button={button}
+            lang={lang}
+          />
         </div>
       </header>
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">
