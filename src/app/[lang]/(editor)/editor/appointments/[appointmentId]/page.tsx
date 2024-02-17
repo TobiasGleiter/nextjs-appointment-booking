@@ -45,7 +45,6 @@ export default async function SellerEditorPage({
             appointment={appointment}
             sections={page.editor.bookNow.sections}
             buttonBookNow={button.bookNow}
-            error={error}
             lang={lang}
             sellers={sellers}
             openingTime={openingTime}

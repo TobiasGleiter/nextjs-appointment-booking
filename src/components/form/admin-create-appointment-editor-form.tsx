@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/src/components/ui/form';
 import { Locale } from '@/src/lib/lang/i18.config';
+import { constructPathWithLocale } from '@/src/lib/utils';
 import { appointmentFormSchema } from '@/src/lib/validation/appointment/form-appointment';
 import { Appointment } from '@/src/types/database/appointments-database';
 import {
@@ -108,7 +109,7 @@ export function CreateAppointmentEditorForm({
       });
     }
 
-    router.refresh();
+    router.push(constructPathWithLocale(lang, '/dashboard/appointments'));
 
     return toast({
       title: 'Appointment booked!',
