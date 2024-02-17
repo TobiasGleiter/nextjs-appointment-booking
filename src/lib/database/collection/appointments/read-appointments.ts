@@ -1,5 +1,6 @@
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { Appointment } from '@/src/types/database/appointments-database';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { ObjectId } from 'mongodb';
 import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
@@ -79,8 +80,21 @@ export async function readAllAppointments() {
       clientEmail: 1,
       sellerId: 1,
     },
+    sort: {
+      appointmentDate: 1,
+    },
   };
-  const appointmentsQuery = {};
+
+  const today = startOfDay(new Date());
+  const nextWeek = addDays(today, 7);
+  const endOfNextWeek = endOfDay(nextWeek);
+
+  const appointmentsQuery = {
+    appointmentDate: {
+      $gte: today,
+      // $lte: endOfNextWeek,
+    },
+  };
 
   const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
   const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
@@ -94,7 +108,7 @@ export async function readAllAppointments() {
   return appointments;
 }
 
-export async function readAllAppointmentsWithSellerName(): Promise<
+export async function readAllAppointmentsWithSellerNameForSevenDays(): Promise<
   Appointment[]
 > {
   const appointments = await readAllAppointments();
