@@ -4,6 +4,7 @@ import {
   VerifyAppointmentSchemaHandler,
   VerifyBusinessIsOpenOnWeekdayHandler,
   VerifySellerIsAvailableHandler,
+  VerifyUserIsEmployeeHandler,
 } from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
 import { getUTCDate } from '@/src/lib/helper/date-helper';
@@ -18,6 +19,7 @@ import { NextResponse } from 'next/server';
  */
 export async function POST(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
+  const verifyUserIsEmployeeHandler = new VerifyUserIsEmployeeHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
   const verifyBusinessIsOpenOnWeekdayHandler =
     new VerifyBusinessIsOpenOnWeekdayHandler();
@@ -27,6 +29,7 @@ export async function POST(request: Request) {
 
   verifyUserHasRouteAccessHandler
     .setNext(verifyAppointmentSchemaHandler)
+    .setNext(verifyUserIsEmployeeHandler)
     .setNext(verifyBusinessIsOpenOnWeekdayHandler)
     .setNext(verifyAppointmentIsBetweenOpeningHoursHandler)
     .setNext(verifySellerIsAvailableHandler);
@@ -69,6 +72,7 @@ export async function DELETE() {
 }
 export async function PUT(request: Request) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
+  const verifyUserIsEmployeeHandler = new VerifyUserIsEmployeeHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
   const verifyBusinessIsOpenOnWeekdayHandler =
     new VerifyBusinessIsOpenOnWeekdayHandler();
@@ -77,6 +81,7 @@ export async function PUT(request: Request) {
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
   verifyUserHasRouteAccessHandler
+    .setNext(verifyUserIsEmployeeHandler)
     .setNext(verifyAppointmentSchemaHandler)
     .setNext(verifyBusinessIsOpenOnWeekdayHandler)
     .setNext(verifyAppointmentIsBetweenOpeningHoursHandler)

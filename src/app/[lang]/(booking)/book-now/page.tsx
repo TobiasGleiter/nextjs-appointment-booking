@@ -1,4 +1,4 @@
-import { AppointmentForm } from '@/src/components/form/appointment-form';
+import { AppointmentForm } from '@/src/components/form/client-appointment-form';
 import NavigationLink from '@/src/components/navigation/link-navigation';
 import AppointmentFormSkeleton from '@/src/components/skeleton/appointment-form-skeleton';
 import { buttonVariants } from '@/src/components/ui/button';

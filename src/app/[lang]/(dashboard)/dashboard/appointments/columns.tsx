@@ -24,9 +24,10 @@ import { ObjectId } from 'mongodb';
  * @param sellerId
  * @returns
  */
-export async function deleteAppointmentById(sellerId: ObjectId): Promise<void> {
-  //const router = useRouter();
-  const response = await fetch(`/api/v1/appointments/admin/${sellerId}`, {
+export async function deleteAppointmentById(
+  appointmentId: ObjectId
+): Promise<void> {
+  const response = await fetch(`/api/v1/appointments/admin/${appointmentId}`, {
     method: 'DELETE',
   });
 
@@ -37,8 +38,6 @@ export async function deleteAppointmentById(sellerId: ObjectId): Promise<void> {
       variant: 'destructive',
     });
   }
-
-  //router.refresh();
 }
 
 export const columns: ColumnDef<Appointment>[] = [

@@ -2,12 +2,13 @@ import { deleteAppointmentById } from '@/src/lib/database/collection/appointment
 import { updateAppointmentById } from '@/src/lib/database/collection/appointments/update-appointment';
 import {
   VerifyAppointmentIsBetweenOpeningHoursHandler,
-  VerifyAppointmentSchemaHandler,
   VerifyBusinessIsOpenOnWeekdayHandler,
   VerifySellerIsAvailableHandler,
+  VerifyUserIsEmployeeHandler,
 } from '@/src/lib/handler/appointments-handler';
 import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
 import { getUTCDate } from '@/src/lib/helper/date-helper';
+import { routeRequestPatchAppointmentSchema } from '@/src/lib/validation/appointment/route-appointment';
 import { routeContextDashboardAppointmentSchema } from '@/src/lib/validation/dashboard/route-dashboard';
 import { Appointment } from '@/src/types/database/appointments-database';
 import { ObjectId } from 'mongodb';
@@ -25,7 +26,7 @@ export async function PATCH(
   context: z.infer<typeof routeContextDashboardAppointmentSchema>
 ) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
-  const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
+  const verifyUserIsEmployeeHandler = new VerifyUserIsEmployeeHandler();
   const verifyBusinessIsOpenOnWeekdayHandler =
     new VerifyBusinessIsOpenOnWeekdayHandler();
   const verifyAppointmentIsBetweenOpeningHoursHandler =
@@ -33,14 +34,10 @@ export async function PATCH(
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
   verifyUserHasRouteAccessHandler
-    .setNext(verifyAppointmentSchemaHandler)
+    .setNext(verifyUserIsEmployeeHandler)
     .setNext(verifyBusinessIsOpenOnWeekdayHandler)
     .setNext(verifyAppointmentIsBetweenOpeningHoursHandler)
     .setNext(verifySellerIsAvailableHandler);
-
-  // check if admin
-  // check if data is valid
-  // check if search params are valid
 
   try {
     const json = await request.json();
@@ -51,10 +48,11 @@ export async function PATCH(
     }
 
     const { params } = context;
+    const appointment = routeRequestPatchAppointmentSchema.parse(json);
     const newAppointment: Appointment = {
-      appointmentDate: new Date(json.appointmentDate),
-      clientEmail: json.clientEmail,
-      clientName: json.clientName,
+      appointmentDate: new Date(appointment.appointmentDate),
+      clientEmail: appointment.clientEmail,
+      clientName: appointment.clientName,
       bookedAt: getUTCDate(new Date()),
       sellerId: new ObjectId(json.sellerId),
       clientNotes: json.clientNotes,
@@ -75,10 +73,14 @@ export async function DELETE(
   context: z.infer<typeof routeContextDashboardAppointmentSchema>
 ) {
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
+  const verifyUserIsEmployeeHandler = new VerifyUserIsEmployeeHandler();
+  const verifyBusinessIsOpenOnWeekdayHandler =
+    new VerifyBusinessIsOpenOnWeekdayHandler();
+  const verifyAppointmentIsBetweenOpeningHoursHandler =
+    new VerifyAppointmentIsBetweenOpeningHoursHandler();
+  const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
-  verifyUserHasRouteAccessHandler;
-  // check if admin
-  // check if search params are valid
+  verifyUserHasRouteAccessHandler.setNext(verifyUserIsEmployeeHandler);
 
   try {
     const json = {};
