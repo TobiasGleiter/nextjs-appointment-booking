@@ -11,7 +11,7 @@ export async function readAllSellers(): Promise<Seller[]> {
   const sellersCollection = await connectToDatabaseAndCollection('sellers');
   const sellersQuery = {};
   const sellersOptions = {
-    projection: { name: 1 },
+    projection: { name: 1, email: 1 },
   };
 
   const sellersRepository = new MongoDBRepository(sellersCollection);
