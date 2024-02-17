@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/src/components/ui/form';
 import { Locale } from '@/src/lib/lang/i18.config';
+import { appointmentFormSchema } from '@/src/lib/validation/appointment/form-appointment';
 import { Appointment } from '@/src/types/database/appointments-database';
 import {
   OpeningTime,
@@ -56,20 +57,8 @@ export function CreateAppointmentEditorForm({
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const FormSchema = z.object({
-    bookingDate: z.date({
-      required_error: error.form.date.description,
-    }),
-    bookingTimeSlotStart: z.string({
-      required_error: error.form.timeSlot.description,
-    }),
-    sellerId: z.string({ required_error: 'A seller is required' }),
-    clientName: z.string().min(2),
-    clientEmail: z.string().optional(),
-  });
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof appointmentFormSchema>>({
+    resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
       bookingDate: new Date(appointment.appointmentDate),
       bookingTimeSlotStart: '10:00',
@@ -79,7 +68,7 @@ export function CreateAppointmentEditorForm({
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof appointmentFormSchema>) {
     setIsLoading(true);
 
     const bookingDate = new Date(data.bookingDate);
@@ -106,8 +95,9 @@ export function CreateAppointmentEditorForm({
     if (!response?.ok) {
       if (response.status === 404) {
         return toast({
-          title: 'We are closed on this date!',
-          description: 'Sorry, but try a different date.',
+          title: 'This date is not available',
+          description: 'Please try a different date.',
+          variant: 'destructive',
         });
       }
 
@@ -117,6 +107,12 @@ export function CreateAppointmentEditorForm({
         variant: 'destructive',
       });
     }
+
+    router.refresh();
+
+    return toast({
+      title: 'Appointment booked!',
+    });
   }
 
   return (
