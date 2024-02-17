@@ -16,12 +16,12 @@ export default async function BookNowDetailsPage({
   const { page, button } = await getDictionary(lang);
   const appointment = await readAppointmentById(id);
 
-  const date = new Date(appointment.appointmentDate);
-  const formattedDate = formatDateForHumans(date, lang);
-
   if (!appointment) {
     notFound();
   }
+
+  const date = new Date(appointment.appointmentDate);
+  const formattedDate = formatDateForHumans(date, lang);
 
   return (
     <div className="flex flex-col w-full items-center gap-10 justify-between">

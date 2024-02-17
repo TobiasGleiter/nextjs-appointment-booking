@@ -6,6 +6,7 @@ export type Appointment = {
   clientEmail: string;
   clientName: string;
   sellerId: ObjectId;
+  sellerName?: string;
   bookedAt: Date;
   clientNotes?: string;
 };

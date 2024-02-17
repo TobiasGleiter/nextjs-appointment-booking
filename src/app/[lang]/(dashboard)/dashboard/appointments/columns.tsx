@@ -1,6 +1,5 @@
 'use client';
 
-import { Icons } from '@/src/components/base/icons';
 import { Button } from '@/src/components/ui/button';
 import {
   DropdownMenu,
@@ -13,6 +12,7 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 
+import { Icons } from '@/src/components/base/icons';
 import { formatDateForHumans } from '@/src/lib/helper/date-helper';
 import { constructPathWithLocale } from '@/src/lib/utils';
 import { Appointment } from '@/src/types/database/appointments-database';
@@ -20,7 +20,18 @@ import { Appointment } from '@/src/types/database/appointments-database';
 export const columns: ColumnDef<Appointment>[] = [
   {
     accessorKey: 'appointmentDate',
-    header: () => <div>Date</div>,
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="-translate-x-4"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
+          Appointment-Date
+          <Icons.sort className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       // just to show the coll formating
       const dateStringValue = row.getValue('appointmentDate').toString();
@@ -31,21 +42,15 @@ export const columns: ColumnDef<Appointment>[] = [
   },
   {
     accessorKey: 'clientName',
-    header: () => <div>Name</div>,
+    header: () => <div>Client-Name</div>,
   },
   {
     accessorKey: 'clientEmail',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Email
-          <Icons.sort className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: () => <div>Client-Email</div>,
+  },
+  {
+    accessorKey: 'sellerName',
+    header: () => <div>Seller</div>,
   },
   {
     id: 'actions',
