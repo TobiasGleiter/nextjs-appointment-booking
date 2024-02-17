@@ -51,7 +51,7 @@ export function SellerCreateButton({
 
     router.refresh();
 
-    //router.push(`/${lang}/editor/seller/${result.insertedId}`);
+    router.push(`/${lang}/editor/seller/${result.insertedId}`);
   }
 
   return (
