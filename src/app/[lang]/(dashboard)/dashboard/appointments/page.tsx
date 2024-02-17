@@ -1,4 +1,5 @@
 import { DashboardHeader } from '@/src/components/navigation/header/dashboard-header';
+import { readAllAppointments } from '@/src/lib/database/collection/appointments/read-appointments';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
 import { columns } from './columns';
@@ -12,7 +13,7 @@ export default async function AppointmentsManagementPage({
   params: { lang },
 }: AppointmentManagementPageProps) {
   const { page, button } = await getDictionary(lang);
-  const data = [];
+  const data = await readAllAppointments();
 
   return (
     <div>

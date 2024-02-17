@@ -10,19 +10,31 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/src/components/ui/dropdown-menu';
-import { Seller } from '@/src/types/database/sellers-database';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 
+import { formatDateForHumans } from '@/src/lib/helper/date-helper';
 import { constructPathWithLocale } from '@/src/lib/utils';
+import { Appointment } from '@/src/types/database/appointments-database';
 
-export const columns: ColumnDef<Seller>[] = [
+export const columns: ColumnDef<Appointment>[] = [
   {
-    accessorKey: 'name',
+    accessorKey: 'appointmentDate',
+    header: () => <div>Date</div>,
+    cell: ({ row }) => {
+      // just to show the coll formating
+      const dateStringValue = row.getValue('appointmentDate').toString();
+      const date = new Date(dateStringValue);
+      const formattedDate = formatDateForHumans(date, 'en');
+      return <div className="font-medium">{formattedDate}</div>;
+    },
+  },
+  {
+    accessorKey: 'clientName',
     header: () => <div>Name</div>,
   },
   {
-    accessorKey: 'email',
+    accessorKey: 'clientEmail',
     header: ({ column }) => {
       return (
         <Button
@@ -38,7 +50,7 @@ export const columns: ColumnDef<Seller>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const seller = row.original;
+      const appointment = row.original;
       return (
         <div className="flex justify-end">
           <DropdownMenu>
@@ -51,7 +63,9 @@ export const columns: ColumnDef<Seller>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(seller.email)}
+                onClick={() =>
+                  navigator.clipboard.writeText(appointment.clientEmail)
+                }
               >
                 Copy seller email
               </DropdownMenuItem>
@@ -60,7 +74,7 @@ export const columns: ColumnDef<Seller>[] = [
                 onClick={() => {
                   window.location.href = constructPathWithLocale(
                     'en',
-                    `/editor/employees/${seller._id}`
+                    `/editor/appointment/${appointment._id}`
                   );
                 }}
               >
@@ -72,7 +86,7 @@ export const columns: ColumnDef<Seller>[] = [
 
                   window.location.href = constructPathWithLocale(
                     'en',
-                    `/dashboard/employees`
+                    `/dashboard/appointment`
                   );
                 }}
               >

@@ -2,6 +2,7 @@ import NavigationLink from '@/src/components/navigation/link-navigation';
 import { buttonVariants } from '@/src/components/ui/button';
 import { Label } from '@/src/components/ui/label';
 import { readAppointmentById } from '@/src/lib/database/collection/appointments/read-appointments';
+import { formatDateForHumans } from '@/src/lib/helper/date-helper';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
 import { cn } from '@/src/lib/utils';
@@ -16,16 +17,7 @@ export default async function BookNowDetailsPage({
   const appointment = await readAppointmentById(id);
 
   const date = new Date(appointment.appointmentDate);
-  const options: Intl.DateTimeFormatOptions = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    timeZone: 'UTC',
-  };
-  const formattedDate = date.toLocaleDateString(lang, options);
+  const formattedDate = formatDateForHumans(date, lang);
 
   if (!appointment) {
     notFound();
