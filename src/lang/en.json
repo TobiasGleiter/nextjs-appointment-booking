@@ -6,7 +6,20 @@
     }
   },
   "navigation": {
-    "marketing": [{ "title": "Features", "href": "#features" }]
+    "marketing": [{ "title": "Features", "href": "#features" }],
+    "dashboard": [
+      {
+        "title": "Appointments",
+        "href": "/dashboard/appointments",
+        "icon": "appointments"
+      },
+      { "title": "Sellers", "href": "/dashboard/sellers", "icon": "sellers" },
+      {
+        "title": "Opening Time",
+        "href": "/dashboard/opening-time",
+        "icon": "openingTime"
+      }
+    ]
   },
   "page": {
     "home": {
