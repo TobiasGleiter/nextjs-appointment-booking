@@ -35,7 +35,7 @@ export default async function Home({
           <div className="flex gap-2">
             <NavigationLink
               lang={lang}
-              path={'/login'}
+              path={'/book-now'}
               className={cn(buttonVariants({ variant: 'default' }))}
             >
               {button.bookNow}
