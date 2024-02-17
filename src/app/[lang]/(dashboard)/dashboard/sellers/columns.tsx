@@ -43,7 +43,7 @@ export async function deleteSellerById(sellerId: ObjectId): Promise<void> {
 export const columns: ColumnDef<Seller>[] = [
   {
     accessorKey: 'name',
-    header: () => <div className="font-bold">Name</div>,
+    header: () => <div>Name</div>,
     cell: ({ row }) => {
       // just to show the coll formating
       const formatted = row.getValue('name').toString();
@@ -63,6 +63,10 @@ export const columns: ColumnDef<Seller>[] = [
         </Button>
       );
     },
+  },
+  {
+    accessorKey: 'role',
+    header: () => <div>Role</div>,
   },
   {
     id: 'actions',

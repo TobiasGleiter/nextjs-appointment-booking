@@ -16,9 +16,13 @@ export async function createSeller(
   const sellersCollection = await connectToDatabaseAndCollection('sellers');
   const sellersOptions = {};
 
+  const insertSeller = {
+    ...seller,
+    role: 'seller',
+  };
   const sellersRepository = new MongoDBRepository(sellersCollection);
   const databaseAdapter = new DatabaseAdapter(sellersRepository);
-  const result = await databaseAdapter.insertOne(seller, sellersOptions);
+  const result = await databaseAdapter.insertOne(insertSeller, sellersOptions);
 
   return result;
 }

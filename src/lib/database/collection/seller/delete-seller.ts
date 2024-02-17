@@ -15,8 +15,6 @@ export async function deleteSellerById(
   const sellerQuery = { _id: new ObjectId(sellerId) };
   const sellersOptions = {};
 
-  console.log(sellerQuery);
-
   const sellersRepository = new MongoDBRepository(sellersCollection);
   const databaseAdapter = new DatabaseAdapter(sellersRepository);
   const result: DeleteResult = await databaseAdapter.deleteOne(

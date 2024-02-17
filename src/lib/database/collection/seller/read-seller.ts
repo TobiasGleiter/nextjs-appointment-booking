@@ -12,7 +12,7 @@ export async function readAllSellers(): Promise<Seller[]> {
   const sellersCollection = await connectToDatabaseAndCollection('sellers');
   const sellersQuery = {};
   const sellersOptions = {
-    projection: { name: 1, email: 1 },
+    projection: { name: 1, email: 1, role: 1 },
   };
 
   const sellersRepository = new MongoDBRepository(sellersCollection);
@@ -35,7 +35,7 @@ export async function readSellerById(sellerId: string): Promise<Seller> {
     _id: new ObjectId(sellerId),
   };
   const sellerOptions = {
-    projection: { name: 1, email: 1 },
+    projection: { name: 1, email: 1, role: 1 },
   };
 
   const sellersRepository = new MongoDBRepository(sellerCollection);

@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/src/components/ui/form';
+import { roles } from '@/src/config/auth';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { cn, constructPathWithLocale } from '@/src/lib/utils';
 import { formSellerSchema } from '@/src/lib/validation/editor/seller/form-seller';
@@ -16,11 +17,18 @@ import { Seller } from '@/src/types/database/sellers-database';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { Key } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { Icons } from '../base/icons';
 import { Input } from '../ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 import { toast } from '../ui/use-toast';
 
 interface SellerEditorProps {
@@ -39,6 +47,7 @@ export default function SellerEditor({
     defaultValues: {
       name: seller.name,
       email: seller.email,
+      role: seller.role,
     },
   });
 
@@ -58,6 +67,7 @@ export default function SellerEditor({
       body: JSON.stringify({
         name: data.name,
         email: data.email,
+        role: data.role,
       }),
     });
 
@@ -123,6 +133,36 @@ export default function SellerEditor({
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={'Select role of employee'} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {roles &&
+                        roles.map((role, key: Key) => {
+                          return (
+                            <SelectItem key={key} value={role}>
+                              {role}
+                            </SelectItem>
+                          );
+                        })}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

@@ -23,4 +23,5 @@ export const routeRequestPostDashboardSellerSchema = z.object({
 export const routeRequestPatchDashboardSellerSchema = z.object({
   name: z.string(),
   email: z.string(),
+  role: z.string(),
 });
