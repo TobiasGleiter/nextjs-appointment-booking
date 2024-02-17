@@ -37,6 +37,7 @@ export function SidebarDashboardNavigation({ items, lang }: DashboardNavProps) {
       {items.map((item, index) => {
         const Icon = Icons[item.icon || 'arrowRight'];
         return (
+          item.role !== 'seller' &&
           item.href && (
             <Link key={index} href={item.disabled ? '/' : item.href}>
               <span

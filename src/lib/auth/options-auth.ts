@@ -27,6 +27,8 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
+      session.user.role = token.role as string;
+
       return session;
     },
   },

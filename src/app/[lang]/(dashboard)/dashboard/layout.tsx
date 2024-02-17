@@ -1,5 +1,6 @@
 import { MainNavigation } from '@/src/components/navigation/main-navigation';
 import { SidebarDashboardNavigation } from '@/src/components/navigation/sidebar-dashboard-navigation';
+import { UserAccountNav } from '@/src/components/navigation/user-account-navigation';
 import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { Locale, i18n } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
@@ -35,6 +36,7 @@ export default async function DashboardLayout({
             button={button}
             lang={lang}
           />
+          <UserAccountNav user={user} lang={lang} button={button} />
         </div>
       </header>
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">

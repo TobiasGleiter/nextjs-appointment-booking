@@ -50,7 +50,7 @@ export function withAuthMiddleware(middleware: CustomMiddleware) {
       !token &&
       protectedPathsWithLocale.some((path) => pathname.includes(path))
     ) {
-      const signInUrl = new URL('/login', request.url);
+      let signInUrl = new URL('/login', request.url);
       signInUrl.searchParams.set('callbackUrl', pathname);
       return NextResponse.redirect(signInUrl);
     }
@@ -64,13 +64,13 @@ export function withAuthMiddleware(middleware: CustomMiddleware) {
 
     // is employee but not admin
     if (isAdminRoute && !hasRole(token, 'admin')) {
-      const redirectUrl = new URL('/dashboard', request.url);
+      let redirectUrl = new URL('/dashboard', request.url);
       return NextResponse.redirect(redirectUrl);
     }
 
     // is not an employee
     if (isEmployeeRoute && !hasRole(token, 'seller')) {
-      const redirectUrl = new URL('/', request.url);
+      const redirectUrl = new URL('/', request.nextUrl.origin);
       return NextResponse.redirect(redirectUrl);
     }
 

@@ -16,12 +16,14 @@
       {
         "title": "Employees",
         "href": "/dashboard/employees",
-        "icon": "sellers"
+        "icon": "sellers",
+        "role": "admin"
       },
       {
         "title": "Opening Time",
         "href": "/dashboard/opening-time",
-        "icon": "openingTime"
+        "icon": "openingTime",
+        "role": "admin"
       }
     ]
   },

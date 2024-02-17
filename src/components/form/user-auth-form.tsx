@@ -5,6 +5,7 @@ import { signIn } from 'next-auth/react';
 import * as React from 'react';
 
 import { cn } from '@/src/lib/utils';
+import { useSearchParams } from 'next/navigation';
 import { Icons } from '../base/icons';
 import { buttonVariants } from '../ui/button';
 
@@ -22,6 +23,10 @@ export function UserAuthForm({ lang }) {
   };
 
   const [isAuthLoading, setIsAuthLoading] = React.useState<boolean>(false);
+
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  console.log(params.get('callbackUrl'));
 
   return (
     <div className={cn('grid gap-6')}>
