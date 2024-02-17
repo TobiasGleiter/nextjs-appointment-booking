@@ -3,6 +3,7 @@ import {
   Collection,
   InsertOneResult,
   OptionalUnlessRequiredId,
+  UpdateResult,
   WithId,
 } from 'mongodb';
 
@@ -11,6 +12,10 @@ export class MongoDBRepository<T> implements DatabaseRepository<T> {
 
   constructor(collection: Collection<T>) {
     this.collection = collection;
+  }
+
+  async updateOne(query: T, options?: Object): Promise<UpdateResult<T>> {
+    return this.collection.updateOne(query, options);
   }
 
   async find(query: T, options?: Object): Promise<any> {

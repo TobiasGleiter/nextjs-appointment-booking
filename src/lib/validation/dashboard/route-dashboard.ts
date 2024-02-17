@@ -5,7 +5,7 @@ import { z } from 'zod';
  */
 export const routeContextDashboardSellerSchema = z.object({
   params: z.object({
-    id: z.string(),
+    sellerId: z.string(),
   }),
 });
 
@@ -13,6 +13,14 @@ export const routeContextDashboardSellerSchema = z.object({
  * Defines the allowed appointment schema for a post request (server side)
  */
 export const routeRequestPostDashboardSellerSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+});
+
+/**
+ * Defines the allowed appointment schema for a post request (server side)
+ */
+export const routeRequestPatchDashboardSellerSchema = z.object({
   name: z.string(),
   email: z.string(),
 });

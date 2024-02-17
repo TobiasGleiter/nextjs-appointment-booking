@@ -8,6 +8,10 @@ export class DatabaseAdapter<T> {
     this.repository = repository;
   }
 
+  async updateOne(query: T, options?: Object): Promise<any> {
+    return this.repository.updateOne(query, options);
+  }
+
   async find(query: T, options?: Object): Promise<any> {
     return this.repository.find(query, options);
   }
