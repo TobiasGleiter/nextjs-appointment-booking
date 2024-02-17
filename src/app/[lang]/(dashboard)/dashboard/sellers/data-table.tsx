@@ -1,5 +1,6 @@
 'use client';
 
+import { Icons } from '@/src/components/base/icons';
 import { Button } from '@/src/components/ui/button';
 import {
   DropdownMenu,
@@ -74,8 +75,9 @@ export function DataTable<TData, TValue>({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
+            <Button variant="outline" className="flex gap-1 ml-auto">
+              <Icons.view className="w-3 h-3" />
+              <p>View</p>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
