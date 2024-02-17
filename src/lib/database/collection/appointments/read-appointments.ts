@@ -47,7 +47,7 @@ export async function readAppointmentById(id: string) {
     'appointments'
   );
   const appointmentOptions = {
-    projection: { appointmentDate: 1, clientName: 1 },
+    projection: { appointmentDate: 1, clientName: 1, sellerId: 1 },
   };
   const appointmentsQuery = {
     _id: new ObjectId(id),

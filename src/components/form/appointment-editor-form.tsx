@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/src/components/ui/form';
 import { Locale } from '@/src/lib/lang/i18.config';
+import { Appointment } from '@/src/types/database/appointments-database';
 import {
   OpeningTime,
   TimeSlots,
@@ -33,6 +34,7 @@ import {
 import { toast } from '../ui/use-toast';
 
 interface AppointmentEditorFormProps {
+  appointment: Appointment;
   sections: any;
   buttonBookNow: any;
   error: any;
@@ -42,6 +44,7 @@ interface AppointmentEditorFormProps {
 }
 
 export function AppointmentEditorForm({
+  appointment,
   sections,
   buttonBookNow,
   error,
@@ -64,6 +67,13 @@ export function AppointmentEditorForm({
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      bookingDate: new Date(appointment.appointmentDate),
+      bookingTimeSlotStart: appointment.appointmentDate
+        .toString()
+        .slice(11, 16),
+      sellerId: appointment.sellerId.toString(),
+    },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {

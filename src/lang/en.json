@@ -52,7 +52,20 @@
         "description": "Manage your sellers"
       }
     },
-
+    "editor": {
+      "bookNow": {
+        "headline": "Update Appointment",
+        "description": "Customer:",
+        "sections": {
+          "date": {
+            "headline": "Select Your date."
+          },
+          "timeSlot": {
+            "headline": "Select Your time slot"
+          }
+        }
+      }
+    },
     "bookNow": {
       "headline": "Book Now!",
       "description": "All day and night!",

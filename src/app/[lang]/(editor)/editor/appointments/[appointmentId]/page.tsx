@@ -2,6 +2,7 @@ import { AppointmentEditorForm } from '@/src/components/form/appointment-editor-
 import NavigationLink from '@/src/components/navigation/link-navigation';
 import AppointmentFormSkeleton from '@/src/components/skeleton/appointment-form-skeleton';
 import { buttonVariants } from '@/src/components/ui/button';
+import { readAppointmentById } from '@/src/lib/database/collection/appointments/read-appointments';
 import { readOpeningTime } from '@/src/lib/database/collection/opening-time/read-opening-time';
 import { readAllSellers } from '@/src/lib/database/collection/seller/read-seller';
 import { Locale } from '@/src/lib/lang/i18.config';
@@ -16,6 +17,7 @@ export default async function SellerEditorPage({
   params: { lang: Locale; appointmentId: string };
 }) {
   const { page, button, error } = await getDictionary(lang);
+  const appointment = await readAppointmentById(appointmentId);
   const sellers = await readAllSellers();
   const openingTime = await readOpeningTime(0);
 
@@ -37,10 +39,14 @@ export default async function SellerEditorPage({
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h1 className="text-xl font-bold">{page.bookNow.headline}</h1>
+        <h1 className="text-xl font-bold">{page.editor.bookNow.headline}</h1>
+        <p className="">
+          {page.editor.bookNow.description} {appointment.clientName}
+        </p>
         <Suspense fallback={<AppointmentFormSkeleton />}>
           <AppointmentEditorForm
-            sections={page.bookNow.sections}
+            appointment={appointment}
+            sections={page.editor.bookNow.sections}
             buttonBookNow={button.bookNow}
             error={error}
             lang={lang}
