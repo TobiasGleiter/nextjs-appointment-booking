@@ -47,6 +47,8 @@ export function withAuthMiddleware(middleware: CustomMiddleware) {
       return NextResponse.redirect(signInUrl);
     }
 
+    console.log(token);
+
     return middleware(request, event, response);
   };
 }

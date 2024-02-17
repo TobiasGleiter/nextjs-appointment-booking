@@ -1,14 +1,14 @@
 import { env } from '@/env.mjs';
+import { MongoDBAdapter } from '@auth/mongodb-adapter';
 import { NextAuthOptions } from 'next-auth';
+import clientPromise from '../database/mongodb-database';
 import { providers } from './providers-auth';
-
-let mongodb_name: string = env.MONGODB_NAME_DEV ?? '';
-if (env.NODE_ENV !== 'development') {
-  mongodb_name = env.MONGODB_NAME_PROD;
-}
 
 export const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
+  adapter: MongoDBAdapter(clientPromise, {
+    databaseName: env.NODE_ENV,
+  }),
   providers: providers,
   pages: {
     //signIn: '/login', // problem with locale! Where do I get the locale from?
@@ -21,6 +21,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, account }) {
       if (account && user) {
         token.id = user.id;
+        token.role = user.role;
       }
 
       return token;
