@@ -26,14 +26,14 @@ export function SellerCreateButton({
   async function onClick() {
     setIsLoading(true);
 
-    const response = await fetch('/api/v1/editor/seller', {
+    const response = await fetch('/api/v1/sellers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        title: 'Unnamed',
-        email: '',
+        name: 'Unnamed',
+        email: 'a',
       }),
     });
 
@@ -51,7 +51,7 @@ export function SellerCreateButton({
 
     router.refresh();
 
-    router.push(`/${lang}/editor/seller/${result.insertedId}`);
+    //router.push(`/${lang}/editor/seller/${result.insertedId}`);
   }
 
   return (
