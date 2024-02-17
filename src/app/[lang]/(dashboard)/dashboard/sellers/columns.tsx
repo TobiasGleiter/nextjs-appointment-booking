@@ -14,6 +14,31 @@ import { Seller } from '@/src/types/database/sellers-database';
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 
+import { toast } from '@/src/components/ui/use-toast';
+import { ObjectId } from 'mongodb';
+
+/**
+ * Delete the seller from the database by given id
+ * @param sellerId
+ * @returns
+ */
+export async function deleteSellerById(sellerId: ObjectId): Promise<void> {
+  //const router = useRouter();
+  const response = await fetch(`/api/v1/sellers/${sellerId}`, {
+    method: 'DELETE',
+  });
+
+  if (!response?.ok) {
+    toast({
+      title: 'Something went wrong.',
+      description: 'It was not deleted. Please try again.',
+      variant: 'destructive',
+    });
+  }
+
+  //router.refresh();
+}
+
 export const columns: ColumnDef<Seller>[] = [
   {
     accessorKey: 'name',
@@ -60,7 +85,15 @@ export const columns: ColumnDef<Seller>[] = [
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Edit</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async (event) => {
+                  event.preventDefault();
+
+                  await deleteSellerById(seller._id);
+                }}
+              >
+                <span>Delete</span>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

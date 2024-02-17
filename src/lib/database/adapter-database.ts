@@ -8,6 +8,10 @@ export class DatabaseAdapter<T> {
     this.repository = repository;
   }
 
+  async deleteOne(query: T, options?: Object): Promise<any> {
+    return this.repository.deleteOne(query, options);
+  }
+
   async updateOne(query: T, options?: Object): Promise<any> {
     return this.repository.updateOne(query, options);
   }
