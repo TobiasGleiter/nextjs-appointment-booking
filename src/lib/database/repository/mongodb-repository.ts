@@ -19,8 +19,12 @@ export class MongoDBRepository<T> implements DatabaseRepository<T> {
     return this.collection.deleteOne(query, options);
   }
 
-  async updateOne(query: T, options?: Object): Promise<UpdateResult<T>> {
-    return this.collection.updateOne(query, options);
+  async updateOne(
+    query: T,
+    update?: Object,
+    options?: Object
+  ): Promise<UpdateResult<T>> {
+    return this.collection.updateOne(query, update, options);
   }
 
   async find(query: T, options?: Object): Promise<any> {

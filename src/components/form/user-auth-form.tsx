@@ -26,7 +26,6 @@ export function UserAuthForm({ lang }) {
 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
-  console.log(params.get('callbackUrl'));
 
   return (
     <div className={cn('grid gap-6')}>

@@ -12,8 +12,8 @@ export class DatabaseAdapter<T> {
     return this.repository.deleteOne(query, options);
   }
 
-  async updateOne(query: T, options?: Object): Promise<any> {
-    return this.repository.updateOne(query, options);
+  async updateOne(query: T, update?: Object, options?: Object): Promise<any> {
+    return this.repository.updateOne(query, update, options);
   }
 
   async find(query: T, options?: Object): Promise<any> {

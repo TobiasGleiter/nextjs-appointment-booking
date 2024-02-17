@@ -19,7 +19,7 @@ export default async function MainButtonNavigation({
       </NavigationLink>
       <NavigationLink
         lang={lang}
-        path={'/login'}
+        path={'/book-now'}
         className={cn(buttonVariants({ variant: 'default' }), 'hidden md:flex')}
       >
         {button.bookNow}

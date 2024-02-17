@@ -40,7 +40,6 @@ export async function POST(request: Request) {
       return nextResponse;
     }
 
-    // 3. Book Appointment
     const user = await readCurrentUser();
     const newAppointment: Appointment = {
       appointmentDate: new Date(json.appointmentDate),
@@ -71,7 +70,7 @@ export async function DELETE() {
   return NextResponse.json('Forbidden', { status: 403 });
 }
 export async function PUT() {
-  return NextResponse.json('Forbidden', { status: 403 });
+  return NextResponse.json('Forbidden1', { status: 403 });
 }
 export async function OPTIONS() {
   return NextResponse.json('Forbidden', { status: 403 });

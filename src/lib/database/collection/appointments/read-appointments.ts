@@ -1,9 +1,10 @@
-import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { Appointment } from '@/src/types/database/appointments-database';
+import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { ObjectId } from 'mongodb';
 import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
 import { MongoDBRepository } from '../../repository/mongodb-repository';
+import { readSellerById } from '../seller/read-seller';
 
 /**
  * Reads if the appointment is available and not already booked
@@ -15,17 +16,12 @@ export async function readAppointmentIsAvailable(
   appointmentDate: Date,
   sellerId: ObjectId
 ): Promise<boolean> {
-  const user = await readCurrentUser();
   const appointmentsCollection = await connectToDatabaseAndCollection(
     'appointments'
   );
 
   const appointmentsQuery = {
-    $and: [
-      { clientEmail: user.email },
-      { sellerId: sellerId },
-      { appointmentDate: appointmentDate },
-    ],
+    $and: [{ sellerId: sellerId }, { appointmentDate: appointmentDate }],
   };
 
   const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
@@ -45,7 +41,12 @@ export async function readAppointmentById(id: string) {
     'appointments'
   );
   const appointmentOptions = {
-    projection: { appointmentDate: 1, clientName: 1 },
+    projection: {
+      appointmentDate: 1,
+      clientName: 1,
+      clientEmail: 1,
+      sellerId: 1,
+    },
   };
   const appointmentsQuery = {
     _id: new ObjectId(id),
@@ -61,4 +62,59 @@ export async function readAppointmentById(id: string) {
   // workaround because of passing data from server to client
   const appointment: Appointment = JSON.parse(JSON.stringify(response));
   return appointment;
+}
+
+/**
+ * Get all appointments
+ * @returns appointments
+ */
+export async function readAllAppointments() {
+  const appointmentsCollection = await connectToDatabaseAndCollection(
+    'appointments'
+  );
+  const appointmentOptions = {
+    projection: {
+      appointmentDate: 1,
+      clientName: 1,
+      clientEmail: 1,
+      sellerId: 1,
+    },
+    sort: {
+      appointmentDate: 1,
+    },
+  };
+
+  const today = startOfDay(new Date());
+  const nextWeek = addDays(today, 7);
+  const endOfNextWeek = endOfDay(nextWeek);
+
+  const appointmentsQuery = {
+    appointmentDate: {
+      $gte: today,
+      // $lte: endOfNextWeek,
+    },
+  };
+
+  const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
+  const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
+  const response = await databaseAdapter.find(
+    appointmentsQuery,
+    appointmentOptions
+  );
+
+  // workaround because of passing data from server to client
+  const appointments: Appointment[] = JSON.parse(JSON.stringify(response));
+  return appointments;
+}
+
+export async function readAllAppointmentsWithSellerNameForSevenDays(): Promise<
+  Appointment[]
+> {
+  const appointments = await readAllAppointments();
+  for (const appointment of appointments) {
+    const { sellerId } = appointment;
+    const seller = await readSellerById(sellerId.toString());
+    if (seller) appointment.sellerName = seller.name;
+  }
+  return appointments;
 }

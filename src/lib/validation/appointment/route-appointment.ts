@@ -17,3 +17,14 @@ export const routeRequestPostAppointmentSchema = z.object({
   clientNotes: z.string().optional(),
   sellerId: z.string(),
 });
+
+/**
+ * Defines the allowed appointment schema for a post request (server side)
+ */
+export const routeRequestPatchAppointmentSchema = z.object({
+  appointmentDate: z.string(),
+  clientNotes: z.string().optional(),
+  sellerId: z.string(),
+  clientName: z.string(),
+  clientEmail: z.string().optional(),
+});

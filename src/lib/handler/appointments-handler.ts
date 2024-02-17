@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
+import { readCurrentUser } from '../auth/read-auth';
 import {
   checkAppointmentIsBetweenOpeningHours,
   checkIfBusinessIsOpenOnWeekday,
@@ -66,8 +67,24 @@ export class VerifySellerIsAvailableHandler extends AbstractHandler {
       appointmentDate,
       new ObjectId(data.sellerId)
     );
+
     if (!isSellerAvailable) {
-      return NextResponse.json('Forbidden', { status: 404 });
+      return NextResponse.json('Forbidden', { status: 403 });
+    }
+
+    return super.handle(data);
+  }
+}
+
+/**
+ * Check if user is employee, if not return 'Forbidden'
+ * @returns NextResponse | null
+ */
+export class VerifyUserIsEmployeeHandler extends AbstractHandler {
+  public async handle(data: any): Promise<NextResponse | null> {
+    const user = await readCurrentUser();
+    if (user.role !== 'admin') {
+      return NextResponse.json('Forbidden', { status: 403 });
     }
 
     return super.handle(data);
