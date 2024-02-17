@@ -6,12 +6,10 @@ import { columns } from './columns';
 import { DataTable } from './data-table';
 
 interface SellersManagementPageProps {
-  children?: React.ReactNode;
   params: { lang: Locale };
 }
 
 export default async function SellersManagementPage({
-  children,
   params: { lang },
 }: SellersManagementPageProps) {
   const { page } = await getDictionary(lang);
