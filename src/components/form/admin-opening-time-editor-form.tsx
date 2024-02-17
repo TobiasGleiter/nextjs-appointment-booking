@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/src/components/ui/button';
+import { Button, buttonVariants } from '@/src/components/ui/button';
 import {
   Form,
   FormControl,
@@ -10,7 +10,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@/src/components/ui/form';
+import { openingTimeSlots } from '@/src/config/opening-time';
 import { getDayForHumans } from '@/src/lib/helper/date-helper';
+import { cn } from '@/src/lib/utils';
 import { openingTimeFormSchema } from '@/src/lib/validation/dashboard/form-dashboard';
 import { OpeningTime } from '@/src/types/database/opening-time-database';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,7 +21,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Icons } from '../base/icons';
-import { Input } from '../ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select';
 import { Switch } from '../ui/switch';
 import { toast } from '../ui/use-toast';
 
@@ -56,41 +64,42 @@ export function AdminUpdateOpeningTimeEditorForm({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          data,
+          open: data.open,
+          timeSlots: data.timeSlots,
         }),
       }
     );
 
     setIsLoading(false);
 
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-
-    // if (!response?.ok) {
-    //   if (response.status === 404) {
-    //     return toast({
-    //       title: 'This date is not available',
-    //       description: 'Please try a different date.',
-    //       variant: 'destructive',
-    //     });
-    //   }
-
-    //   return toast({
-    //     title: 'Error',
-    //     description: 'Error occured',
-    //     variant: 'destructive',
-    //   });
-    // }
-
-    // return toast({
-    //   title: 'Appointment updated!',
+    // toast({
+    //   title: 'You submitted the following values:',
+    //   description: (
+    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+    //     </pre>
+    //   ),
     // });
+
+    if (!response?.ok) {
+      if (response.status === 404) {
+        return toast({
+          title: 'This date is not available',
+          description: 'Please try a different date.',
+          variant: 'destructive',
+        });
+      }
+
+      return toast({
+        title: 'Error',
+        description: 'Error occured',
+        variant: 'destructive',
+      });
+    }
+
+    return toast({
+      title: 'Timeslots updated!',
+    });
   }
 
   return (
@@ -127,21 +136,109 @@ export function AdminUpdateOpeningTimeEditorForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>TimeSlots</FormLabel>
-
+              <div
+                className={cn(
+                  'flex flex-col md:flex-row w-full md:items-center gap-2'
+                )}
+              >
+                <FormField
+                  control={form.control}
+                  name="timeSlot"
+                  render={({ field }) => (
+                    <FormItem>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue placeholder={'Select a time'} />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {openingTimeSlots.map((timeSlot, key) => {
+                            return (
+                              <SelectItem key={key} value={timeSlot.time}>
+                                {timeSlot.time}
+                              </SelectItem>
+                            );
+                          })}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  className={cn(
+                    buttonVariants({ variant: 'secondary' }),
+                    'flex-row gap-1'
+                  )}
+                  onClick={() => {
+                    const inputValue = form.getValues('timeSlot');
+                    if (inputValue.trim() !== '') {
+                      field.onChange([
+                        ...field.value,
+                        { time: inputValue, label: inputValue },
+                      ]);
+                      form.setValue('timeSlot', '');
+                    }
+                  }}
+                >
+                  <Icons.add className="w-4 h-4" />
+                  Add time slot
+                </Button>
+              </div>
               {field.value.map((timeSlot, index) => (
                 <div
                   key={index}
                   className="flex flex-row items-start space-x-3 space-y-0"
                 >
                   <FormItem>
-                    <Input
+                    {/* <Input
                       defaultValue={timeSlot.time}
                       onChange={(e) => {
                         const newTimeSlots = [...field.value];
                         newTimeSlots[index].time = e.target.value;
+                        newTimeSlots[index].value = e.target.value;
                         console.log(newTimeSlots);
                         field.onChange(newTimeSlots);
                       }}
+                    /> */}
+                    <FormField
+                      control={form.control}
+                      name="timeSlots"
+                      render={({ field }) => (
+                        <FormItem>
+                          <Select
+                            onValueChange={(e) => {
+                              const newTimeSlots = [...field.value];
+                              newTimeSlots[index].time = e;
+                              newTimeSlots[index].label = e;
+                              console.log(newTimeSlots);
+                              field.onChange(newTimeSlots);
+                            }}
+                            defaultValue={timeSlot.time}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder={'Select a time'} />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {openingTimeSlots.map((timeSlot, key) => {
+                                return (
+                                  <SelectItem key={key} value={timeSlot.time}>
+                                    {timeSlot.time}
+                                  </SelectItem>
+                                );
+                              })}
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                     <FormMessage />
                   </FormItem>

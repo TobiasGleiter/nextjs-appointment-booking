@@ -8,4 +8,5 @@ const timeSlotSchema = z.object({
 export const openingTimeFormSchema = z.object({
   open: z.boolean(),
   timeSlots: z.any(), //array(timeSlotSchema),
+  timeSlot: z.string().optional(),
 });
