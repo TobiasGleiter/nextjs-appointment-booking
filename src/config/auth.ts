@@ -6,4 +6,4 @@ export const employeePaths = ['/dashboard'];
 
 export const adminPaths = ['/dashboard/employees', '/dashboard/opening-time'];
 
-export const roles = ['admin', 'seller'];
+export const roles = ['seller'];
