@@ -11,6 +11,7 @@ interface SellersManagementPageProps {
 }
 
 export default async function SellersManagementPage({
+  children,
   params: { lang },
 }: SellersManagementPageProps) {
   const { page } = await getDictionary(lang);
