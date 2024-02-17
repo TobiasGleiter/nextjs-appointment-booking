@@ -1,4 +1,4 @@
-import { CreateAppointmentEditorForm } from '@/src/components/form/admin-appointment-editor-form';
+import { CreateAppointmentEditorForm } from '@/src/components/form/admin-create-appointment-editor-form';
 import AppointmentFormSkeleton from '@/src/components/skeleton/appointment-form-skeleton';
 import { readOpeningTime } from '@/src/lib/database/collection/opening-time/read-opening-time';
 import { readAllSellers } from '@/src/lib/database/collection/seller/read-seller';

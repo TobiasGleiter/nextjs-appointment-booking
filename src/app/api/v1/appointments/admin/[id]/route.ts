@@ -59,6 +59,7 @@ export async function PATCH(
       sellerId: new ObjectId(json.sellerId),
       clientNotes: json.clientNotes,
     };
+
     const result = await updateAppointmentById(params.id, newAppointment);
     if (!result) {
       return NextResponse.json('Failed', { status: 400 });

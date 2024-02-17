@@ -26,7 +26,7 @@ import { ObjectId } from 'mongodb';
  */
 export async function deleteAppointmentById(sellerId: ObjectId): Promise<void> {
   //const router = useRouter();
-  const response = await fetch(`/api/v1/appointments/${sellerId}`, {
+  const response = await fetch(`/api/v1/appointments/admin/${sellerId}`, {
     method: 'DELETE',
   });
 

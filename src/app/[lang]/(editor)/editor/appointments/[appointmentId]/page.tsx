@@ -1,4 +1,4 @@
-import { AppointmentEditorForm } from '@/src/components/form/appointment-editor-form';
+import { AdminUpdateAppointmentEditorForm } from '@/src/components/form/admin-update-appointment-editor-form';
 import NavigationLink from '@/src/components/navigation/link-navigation';
 import AppointmentFormSkeleton from '@/src/components/skeleton/appointment-form-skeleton';
 import { buttonVariants } from '@/src/components/ui/button';
@@ -40,9 +40,8 @@ export default async function SellerEditorPage({
       </div>
       <div className="flex flex-col gap-2">
         <h1 className="text-xl font-bold">{page.editor.bookNow.headline}</h1>
-
         <Suspense fallback={<AppointmentFormSkeleton />}>
-          <AppointmentEditorForm
+          <AdminUpdateAppointmentEditorForm
             appointment={appointment}
             sections={page.editor.bookNow.sections}
             buttonBookNow={button.bookNow}

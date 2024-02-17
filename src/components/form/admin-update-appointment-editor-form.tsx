@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/src/components/ui/form';
 import { Locale } from '@/src/lib/lang/i18.config';
+import { appointmentFormSchema } from '@/src/lib/validation/appointment/form-appointment';
 import { Appointment } from '@/src/types/database/appointments-database';
 import {
   OpeningTime,
@@ -34,7 +35,7 @@ import {
 } from '../ui/select';
 import { toast } from '../ui/use-toast';
 
-interface AppointmentEditorFormProps {
+interface AdminUpdateAppointmentEditorFormProps {
   appointment: Appointment;
   sections: any;
   buttonBookNow: any;
@@ -44,32 +45,18 @@ interface AppointmentEditorFormProps {
   openingTime: OpeningTime;
 }
 
-export function AppointmentEditorForm({
+export function AdminUpdateAppointmentEditorForm({
   appointment,
   sections,
   buttonBookNow,
-  error,
-  lang,
   sellers,
   openingTime,
-}: AppointmentEditorFormProps) {
+}: AdminUpdateAppointmentEditorFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const FormSchema = z.object({
-    bookingDate: z.date({
-      required_error: error.form.date.description,
-    }),
-    bookingTimeSlotStart: z.string({
-      required_error: error.form.timeSlot.description,
-    }),
-    sellerId: z.string({ required_error: 'A seller is required' }),
-    clientName: z.string(),
-    clientEmail: z.string().optional(),
-  });
-
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof appointmentFormSchema>>({
+    resolver: zodResolver(appointmentFormSchema),
     defaultValues: {
       bookingDate: new Date(appointment.appointmentDate),
       bookingTimeSlotStart: appointment.appointmentDate
@@ -81,7 +68,7 @@ export function AppointmentEditorForm({
     },
   });
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof appointmentFormSchema>) {
     setIsLoading(true);
 
     const bookingDate = new Date(data.bookingDate);
@@ -90,26 +77,30 @@ export function AppointmentEditorForm({
     const appointmentDate = new Date(fullDateWithTime);
     const utcAppointmentDate = appointmentDate.toUTCString();
 
-    const response = await fetch(`/api/v1/appointments/${appointment._id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        appointmentDate: utcAppointmentDate,
-        sellerId: data.sellerId,
-        clientEmail: data.clientEmail,
-        clientName: data.clientName,
-      }),
-    });
+    const response = await fetch(
+      `/api/v1/appointments/admin/${appointment._id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          appointmentDate: utcAppointmentDate,
+          sellerId: data.sellerId,
+          clientEmail: data.clientEmail,
+          clientName: data.clientName,
+        }),
+      }
+    );
 
     setIsLoading(false);
 
     if (!response?.ok) {
       if (response.status === 404) {
         return toast({
-          title: 'We are closed on this date!',
-          description: 'Sorry, but try a different date.',
+          title: 'This date is not available',
+          description: 'Please try a different date.',
+          variant: 'destructive',
         });
       }
 
@@ -119,6 +110,12 @@ export function AppointmentEditorForm({
         variant: 'destructive',
       });
     }
+
+    router.refresh();
+
+    return toast({
+      title: 'Appointment updated!',
+    });
   }
 
   return (

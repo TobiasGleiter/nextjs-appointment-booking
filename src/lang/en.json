@@ -106,7 +106,13 @@
         "description": "An appointment date is required"
       },
       "timeSlot": {
-        "description": "An appointment time slot is required"
+        "description": "An appointment time is required"
+      },
+      "clientName": {
+        "description": "Client is required"
+      },
+      "seller": {
+        "description": "Seller is required"
       }
     }
   }

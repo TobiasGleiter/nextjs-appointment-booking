@@ -75,7 +75,7 @@ export function AppointmentForm({
     const appointmentDate = new Date(fullDateWithTime);
     const utcAppointmentDate = appointmentDate.toUTCString();
 
-    const response = await fetch('/api/v1/appointments', {
+    const response = await fetch('/api/v1/appointments/client', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
