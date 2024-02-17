@@ -42,10 +42,17 @@
         }
       }
     },
-    "sellers": {
-      "headline": "Employees",
-      "description": "Manage your sellers"
+    "dashboard": {
+      "appointments": {
+        "headline": "Appointments",
+        "description": "Manage your appointments"
+      },
+      "employees": {
+        "headline": "Employees",
+        "description": "Manage your sellers"
+      }
     },
+
     "bookNow": {
       "headline": "Book Now!",
       "description": "All day and night!",

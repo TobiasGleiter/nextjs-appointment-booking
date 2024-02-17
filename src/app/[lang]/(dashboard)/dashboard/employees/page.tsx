@@ -19,8 +19,8 @@ export default async function SellersManagementPage({
   return (
     <div>
       <DashboardHeader
-        heading={page.sellers.headline}
-        text={page.sellers.description}
+        heading={page.dashboard.employees.headline}
+        text={page.dashboard.employees.description}
       >
         <SellerCreateButton lang={lang} button={button} />
       </DashboardHeader>
