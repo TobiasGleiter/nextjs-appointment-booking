@@ -91,19 +91,12 @@ export const columns: ColumnDef<Appointment>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() =>
-                  navigator.clipboard.writeText(appointment.clientEmail)
-                }
-              >
-                Copy seller email
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
                   window.location.href = constructPathWithLocale(
                     'en',
-                    `/editor/appointment/${appointment._id}`
+                    `/editor/appointments/${appointment._id}`
                   );
                 }}
               >
