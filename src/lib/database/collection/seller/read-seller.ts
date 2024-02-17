@@ -10,7 +10,7 @@ import { MongoDBRepository } from '../../repository/mongodb-repository';
  */
 export async function readAllSellers(): Promise<Seller[]> {
   const sellersCollection = await connectToDatabaseAndCollection('sellers');
-  const sellersQuery = {};
+  const sellersQuery = { role: 'seller' };
   const sellersOptions = {
     projection: { name: 1, email: 1, role: 1 },
   };
@@ -26,7 +26,7 @@ export async function readAllSellers(): Promise<Seller[]> {
 }
 
 /**
- * Read all sellers from sellers collection
+ * Read seller from sellers collection
  * @returns sellers
  */
 export async function readSellerById(sellerId: string): Promise<Seller> {
@@ -44,6 +44,27 @@ export async function readSellerById(sellerId: string): Promise<Seller> {
 
   // workaround because of passing data from server to client
   const sellers: Seller = JSON.parse(JSON.stringify(response));
+
+  return sellers;
+}
+
+/**
+ * Read all sellers from sellers collection
+ * @returns sellers
+ */
+export async function readAllEmployees(): Promise<Seller[]> {
+  const sellersCollection = await connectToDatabaseAndCollection('sellers');
+  const sellersQuery = {};
+  const sellersOptions = {
+    projection: { name: 1, email: 1, role: 1 },
+  };
+
+  const sellersRepository = new MongoDBRepository(sellersCollection);
+  const databaseAdapter = new DatabaseAdapter(sellersRepository);
+  const response = await databaseAdapter.find(sellersQuery, sellersOptions);
+
+  // workaround because of passing data from server to client
+  const sellers: Seller[] = JSON.parse(JSON.stringify(response));
 
   return sellers;
 }
