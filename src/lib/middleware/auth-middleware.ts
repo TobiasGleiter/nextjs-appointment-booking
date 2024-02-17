@@ -1,7 +1,7 @@
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 
-import { protectedPaths } from '@/src/config/auth';
-import { getToken } from 'next-auth/jwt';
+import { adminPaths, employeePaths, protectedPaths } from '@/src/config/auth';
+import { JWT, getToken } from 'next-auth/jwt';
 import { Locale, i18n } from '../lang/i18.config';
 import { CustomMiddleware } from './chain-middleware';
 
@@ -19,6 +19,14 @@ function getProtectedRoutes(protectedPaths: string[], locales: Locale[]) {
   });
 
   return protectedPathsWithLocale;
+}
+
+// Middleware function to check if the user has the required role
+function hasRole(token: JWT, role) {
+  // Assuming the user's role is stored in the request object
+  const userRole = token.role; // Adjust this based on how user role is stored
+
+  return userRole === role;
 }
 
 export function withAuthMiddleware(middleware: CustomMiddleware) {
@@ -47,7 +55,24 @@ export function withAuthMiddleware(middleware: CustomMiddleware) {
       return NextResponse.redirect(signInUrl);
     }
 
-    console.log(token);
+    const adminPathsWithLocale = getProtectedRoutes(adminPaths, [
+      ...i18n.locales,
+    ]);
+
+    const isAdminRoute = adminPathsWithLocale.includes(pathname);
+    const isEmployeeRoute = employeePaths.includes(pathname);
+
+    // is employee but not admin
+    if (isAdminRoute && !hasRole(token, 'admin')) {
+      const redirectUrl = new URL('/dashboard', request.url);
+      return NextResponse.redirect(redirectUrl);
+    }
+
+    // is not an employee
+    if (isEmployeeRoute && !hasRole(token, 'seller')) {
+      const redirectUrl = new URL('/', request.url);
+      return NextResponse.redirect(redirectUrl);
+    }
 
     return middleware(request, event, response);
   };
