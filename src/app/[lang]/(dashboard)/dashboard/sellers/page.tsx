@@ -1,3 +1,4 @@
+import { SellerCreateButton } from '@/src/components/button/seller-create-button';
 import { DashboardHeader } from '@/src/components/navigation/header/dashboard-header';
 import { readAllSellers } from '@/src/lib/database/collection/seller/read-seller';
 import { Locale } from '@/src/lib/lang/i18.config';
@@ -12,7 +13,7 @@ interface SellersManagementPageProps {
 export default async function SellersManagementPage({
   params: { lang },
 }: SellersManagementPageProps) {
-  const { page } = await getDictionary(lang);
+  const { page, button } = await getDictionary(lang);
   const data = await readAllSellers();
 
   return (
@@ -20,7 +21,9 @@ export default async function SellersManagementPage({
       <DashboardHeader
         heading={page.sellers.headline}
         text={page.sellers.description}
-      />
+      >
+        <SellerCreateButton lang={lang} button={button} />
+      </DashboardHeader>
       <DataTable columns={columns} data={data} />
     </div>
   );

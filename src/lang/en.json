@@ -71,7 +71,8 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "edit": "Edit",
-    "reset": "Reset"
+    "reset": "Reset",
+    "add": "Add"
   },
   "error": {
     "form": {
