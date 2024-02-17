@@ -66,6 +66,7 @@ export class VerifySellerIsAvailableHandler extends AbstractHandler {
       appointmentDate,
       new ObjectId(data.sellerId)
     );
+
     if (!isSellerAvailable) {
       return NextResponse.json('Forbidden', { status: 404 });
     }

@@ -40,9 +40,7 @@ export default async function SellerEditorPage({
       </div>
       <div className="flex flex-col gap-2">
         <h1 className="text-xl font-bold">{page.editor.bookNow.headline}</h1>
-        <p className="">
-          {page.editor.bookNow.description} {appointment.clientName}
-        </p>
+
         <Suspense fallback={<AppointmentFormSkeleton />}>
           <AppointmentEditorForm
             appointment={appointment}

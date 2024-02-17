@@ -1,4 +1,3 @@
-import { readCurrentUser } from '@/src/lib/auth/read-auth';
 import { Appointment } from '@/src/types/database/appointments-database';
 import { addDays, endOfDay, startOfDay } from 'date-fns';
 import { ObjectId } from 'mongodb';
@@ -17,17 +16,12 @@ export async function readAppointmentIsAvailable(
   appointmentDate: Date,
   sellerId: ObjectId
 ): Promise<boolean> {
-  const user = await readCurrentUser();
   const appointmentsCollection = await connectToDatabaseAndCollection(
     'appointments'
   );
 
   const appointmentsQuery = {
-    $and: [
-      { clientEmail: user.email },
-      { sellerId: sellerId },
-      { appointmentDate: appointmentDate },
-    ],
+    $and: [{ sellerId: sellerId }, { appointmentDate: appointmentDate }],
   };
 
   const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
@@ -47,7 +41,12 @@ export async function readAppointmentById(id: string) {
     'appointments'
   );
   const appointmentOptions = {
-    projection: { appointmentDate: 1, clientName: 1, sellerId: 1 },
+    projection: {
+      appointmentDate: 1,
+      clientName: 1,
+      clientEmail: 1,
+      sellerId: 1,
+    },
   };
   const appointmentsQuery = {
     _id: new ObjectId(id),

@@ -34,3 +34,14 @@ export const routeContextDashboardAppointmentSchema = z.object({
     id: z.string(),
   }),
 });
+
+/**
+ * Appointment schema on pach is possible with the client Name and client Id (not directly with the session)
+ */
+export const routeRequestPatchDashboardAppointmentSchema = z.object({
+  appointmentDate: z.string(),
+  clientNotes: z.string().optional(),
+  sellerId: z.string(),
+  clientName: z.string(),
+  clientId: z.string(),
+});

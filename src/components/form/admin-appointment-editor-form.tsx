@@ -34,7 +34,7 @@ import {
 } from '../ui/select';
 import { toast } from '../ui/use-toast';
 
-interface AppointmentEditorFormProps {
+interface CreateAppointmentEditorProps {
   appointment: Appointment;
   sections: any;
   buttonBookNow: any;
@@ -44,7 +44,7 @@ interface AppointmentEditorFormProps {
   openingTime: OpeningTime;
 }
 
-export function AppointmentEditorForm({
+export function CreateAppointmentEditorForm({
   appointment,
   sections,
   buttonBookNow,
@@ -52,7 +52,7 @@ export function AppointmentEditorForm({
   lang,
   sellers,
   openingTime,
-}: AppointmentEditorFormProps) {
+}: CreateAppointmentEditorProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -64,7 +64,7 @@ export function AppointmentEditorForm({
       required_error: error.form.timeSlot.description,
     }),
     sellerId: z.string({ required_error: 'A seller is required' }),
-    clientName: z.string(),
+    clientName: z.string().min(2),
     clientEmail: z.string().optional(),
   });
 
@@ -72,9 +72,7 @@ export function AppointmentEditorForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       bookingDate: new Date(appointment.appointmentDate),
-      bookingTimeSlotStart: appointment.appointmentDate
-        .toString()
-        .slice(11, 16),
+      bookingTimeSlotStart: '10:00',
       sellerId: appointment.sellerId.toString(),
       clientName: appointment.clientName || '',
       clientEmail: appointment.clientEmail || '',
@@ -90,8 +88,8 @@ export function AppointmentEditorForm({
     const appointmentDate = new Date(fullDateWithTime);
     const utcAppointmentDate = appointmentDate.toUTCString();
 
-    const response = await fetch(`/api/v1/appointments/${appointment._id}`, {
-      method: 'PATCH',
+    const response = await fetch(`/api/v1/appointments/admin`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
