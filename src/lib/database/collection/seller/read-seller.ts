@@ -29,7 +29,7 @@ export async function readAllSellers(): Promise<Seller[]> {
  * Read all sellers from sellers collection
  * @returns sellers
  */
-export async function readSellerById(sellerId: string): Promise<Seller[]> {
+export async function readSellerById(sellerId: string): Promise<Seller> {
   const sellerCollection = await connectToDatabaseAndCollection('sellers');
   const sellerQuery = {
     _id: new ObjectId(sellerId),
@@ -43,7 +43,7 @@ export async function readSellerById(sellerId: string): Promise<Seller[]> {
   const response = await databaseAdapter.findOne(sellerQuery, sellerOptions);
 
   // workaround because of passing data from server to client
-  const sellers: Seller[] = JSON.parse(JSON.stringify(response));
+  const sellers: Seller = JSON.parse(JSON.stringify(response));
 
   return sellers;
 }
