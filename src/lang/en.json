@@ -13,7 +13,7 @@
         "href": "/dashboard/appointments",
         "icon": "appointments"
       },
-      { "title": "Sellers", "href": "/dashboard/sellers", "icon": "sellers" },
+      { "title": "Sellers", "href": "/dashboard/employees", "icon": "sellers" },
       {
         "title": "Opening Time",
         "href": "/dashboard/opening-time",

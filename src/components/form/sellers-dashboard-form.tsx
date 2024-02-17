@@ -58,7 +58,7 @@ export default function SellerEditor({
   async function onSubmit(data: z.infer<typeof formSellerSchema>) {
     setIsSaving(true);
 
-    const response = await fetch(`/api/v1/sellers/${seller._id}`, {
+    const response = await fetch(`/api/v1/employees/${seller._id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ export default function SellerEditor({
           <div className="flex w-full items-start justify-between">
             <div className="flex flex-row items-center gap-2">
               <Link
-                href={constructPathWithLocale(lang, '/dashboard/sellers')}
+                href={constructPathWithLocale(lang, '/dashboard/employees')}
                 className={cn(buttonVariants({ variant: 'ghost' }))}
               >
                 <>

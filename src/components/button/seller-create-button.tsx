@@ -26,7 +26,7 @@ export function SellerCreateButton({
   async function onClick() {
     setIsLoading(true);
 
-    const response = await fetch('/api/v1/sellers', {
+    const response = await fetch('/api/v1/employees', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export function SellerCreateButton({
 
     router.refresh();
 
-    router.push(`/${lang}/editor/seller/${result.insertedId}`);
+    router.push(`/${lang}/editor/employees/${result.insertedId}`);
   }
 
   return (

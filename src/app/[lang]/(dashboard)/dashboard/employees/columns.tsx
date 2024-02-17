@@ -25,7 +25,7 @@ import { ObjectId } from 'mongodb';
  */
 export async function deleteSellerById(sellerId: ObjectId): Promise<void> {
   //const router = useRouter();
-  const response = await fetch(`/api/v1/sellers/${sellerId}`, {
+  const response = await fetch(`/api/v1/employees/${sellerId}`, {
     method: 'DELETE',
   });
 
@@ -93,7 +93,7 @@ export const columns: ColumnDef<Seller>[] = [
                 onClick={() => {
                   window.location.href = constructPathWithLocale(
                     'en',
-                    `/editor/seller/${seller._id}`
+                    `/editor/employees/${seller._id}`
                   );
                 }}
               >
@@ -105,7 +105,7 @@ export const columns: ColumnDef<Seller>[] = [
                   await deleteSellerById(seller._id);
                   window.location.href = constructPathWithLocale(
                     'en',
-                    `/editor/seller`
+                    `/dashboard/employees`
                   );
                 }}
               >
