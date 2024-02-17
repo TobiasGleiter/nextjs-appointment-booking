@@ -1,8 +1,10 @@
 import { DatabaseRepository } from '@/src/types/database/repository-database';
 import {
   Collection,
+  DeleteResult,
   InsertOneResult,
   OptionalUnlessRequiredId,
+  UpdateResult,
   WithId,
 } from 'mongodb';
 
@@ -11,6 +13,14 @@ export class MongoDBRepository<T> implements DatabaseRepository<T> {
 
   constructor(collection: Collection<T>) {
     this.collection = collection;
+  }
+
+  async deleteOne(query: T, options?: Object): Promise<DeleteResult> {
+    return this.collection.deleteOne(query, options);
+  }
+
+  async updateOne(query: T, options?: Object): Promise<UpdateResult<T>> {
+    return this.collection.updateOne(query, options);
   }
 
   async find(query: T, options?: Object): Promise<any> {

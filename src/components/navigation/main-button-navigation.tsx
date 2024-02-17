@@ -13,11 +13,14 @@ export default async function MainButtonNavigation({
   button,
 }: IMainButtonNav) {
   return (
-    <nav className="flex flex-row gap-2 items-center">
+    <nav className="flex flex-row gap-4 items-center ">
+      <NavigationLink lang={lang} path={'/dashboard'}>
+        Admin?
+      </NavigationLink>
       <NavigationLink
         lang={lang}
         path={'/login'}
-        className={cn(buttonVariants({ variant: 'default' }))}
+        className={cn(buttonVariants({ variant: 'default' }), 'hidden md:flex')}
       >
         {button.bookNow}
       </NavigationLink>

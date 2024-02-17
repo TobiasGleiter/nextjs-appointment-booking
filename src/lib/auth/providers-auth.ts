@@ -13,6 +13,7 @@ export const providers = [
         location: profile.locale,
         emailVerified: profile.emailVerified,
 
+        role: 'customer',
         createdAt: Date.now(),
       };
     },

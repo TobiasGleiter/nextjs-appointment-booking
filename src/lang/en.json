@@ -6,7 +6,26 @@
     }
   },
   "navigation": {
-    "marketing": [{ "title": "Features", "href": "#features" }]
+    "marketing": [{ "title": "Features", "href": "#features" }],
+    "dashboard": [
+      {
+        "title": "Appointments",
+        "href": "/dashboard/appointments",
+        "icon": "appointments"
+      },
+      {
+        "title": "Employees",
+        "href": "/dashboard/employees",
+        "icon": "sellers",
+        "role": "admin"
+      },
+      {
+        "title": "Opening Time",
+        "href": "/dashboard/opening-time",
+        "icon": "openingTime",
+        "role": "admin"
+      }
+    ]
   },
   "page": {
     "home": {
@@ -22,6 +41,10 @@
           "description": "We are a crazy team for booking appointments with us. We love it."
         }
       }
+    },
+    "sellers": {
+      "headline": "Employees",
+      "description": "Manage your sellers"
     },
     "bookNow": {
       "headline": "Book Now!",
@@ -52,9 +75,10 @@
     "menu": "Menu",
     "back": "Back",
     "cancel": "Cancel",
-    "submit": "Submit",
+    "save": "Save",
     "edit": "Edit",
-    "reset": "Reset"
+    "reset": "Reset",
+    "add": "Add"
   },
   "error": {
     "form": {
