@@ -15,6 +15,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 
 import { toast } from '@/src/components/ui/use-toast';
+import { constructPathWithLocale } from '@/src/lib/utils';
 import { ObjectId } from 'mongodb';
 
 /**
@@ -84,12 +85,24 @@ export const columns: ColumnDef<Seller>[] = [
                 Copy seller email
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  window.location.href = constructPathWithLocale(
+                    'en',
+                    `/editor/seller/${seller._id}`
+                  );
+                }}
+              >
+                Edit
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={async (event) => {
                   event.preventDefault();
-
                   await deleteSellerById(seller._id);
+                  window.location.href = constructPathWithLocale(
+                    'en',
+                    `/editor/seller`
+                  );
                 }}
               >
                 <span>Delete</span>
