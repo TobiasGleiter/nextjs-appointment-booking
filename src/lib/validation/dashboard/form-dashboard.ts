@@ -7,6 +7,5 @@ const timeSlotSchema = z.object({
 
 export const openingTimeFormSchema = z.object({
   open: z.boolean(),
-  day: z.number().int().min(0).max(6),
-  timeSlots: z.array(timeSlotSchema),
+  timeSlots: z.any(), //array(timeSlotSchema),
 });

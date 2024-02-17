@@ -15,11 +15,7 @@ export default async function OpeningTimeEditorPage({
   return (
     <AdminUpdateOpeningTimeEditorForm
       button={button}
-      openingTime={{
-        open: false,
-        day: 0,
-        timeSlots: [],
-      }}
+      openingTime={openingTime}
     />
   );
 }
