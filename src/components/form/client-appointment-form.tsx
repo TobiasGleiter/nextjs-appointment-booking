@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from '@/src/components/ui/form';
 import { Locale } from '@/src/lib/lang/i18.config';
+import { clientAppointmentFormSchema } from '@/src/lib/validation/appointment/form-appointment';
 import {
   OpeningTime,
   TimeSlots,
@@ -19,7 +20,7 @@ import { Seller } from '@/src/types/database/sellers-database';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import React, { Key } from 'react';
+import React, { Key, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Icons } from '../base/icons';
@@ -30,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../ui/select';
+import { Skeleton } from '../ui/skeleton';
 import { toast } from '../ui/use-toast';
 
 interface AppointmentFormProps {
@@ -51,22 +53,46 @@ export function AppointmentForm({
 }: AppointmentFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [isLoadingOpeningTime, setIsLoadingOpeningTime] = useState(false);
+  const [openingTimeDynamic, setOpeningTimeDynamic] = useState(openingTime);
 
-  const FormSchema = z.object({
-    bookingDate: z.date({
-      required_error: error.form.date.description,
-    }),
-    bookingTimeSlotStart: z.string({
-      required_error: error.form.timeSlot.description,
-    }),
-    sellerId: z.string({ required_error: 'A seller is required' }),
+  const form = useForm<z.infer<typeof clientAppointmentFormSchema>>({
+    resolver: zodResolver(clientAppointmentFormSchema),
   });
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-  });
+  async function handleDayChange(event: any) {
+    setIsLoadingOpeningTime(true);
+    // fetch opening time
+    const date = new Date(event);
+    const weekdayMondayToSunday = date.getUTCDay();
 
-  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const response = await fetch(
+      `/api/v1/opening-time/client/${weekdayMondayToSunday}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+
+    setIsLoadingOpeningTime(false);
+
+    if (!response?.ok) {
+      return toast({
+        title: 'Error',
+        description: 'Error occured',
+        variant: 'destructive',
+      });
+    }
+
+    const { result } = await response.json();
+
+    setOpeningTimeDynamic(result);
+  }
+
+  async function onSubmit(data: z.infer<typeof clientAppointmentFormSchema>) {
     setIsLoading(true);
 
     const bookingDate = new Date(data.bookingDate);
@@ -124,6 +150,7 @@ export function AppointmentForm({
                 mode="single"
                 selected={field.value}
                 onSelect={field.onChange}
+                onDayClick={handleDayChange}
                 defaultMonth={field.value}
                 disabled={(date) => date <= new Date()}
                 initialFocus
@@ -134,19 +161,26 @@ export function AppointmentForm({
         />
         <FormField
           control={form.control}
+          disabled={isLoadingOpeningTime}
           name="bookingTimeSlotStart"
           render={({ field }) => (
             <FormItem>
               <FormLabel>{sections.timeSlot.headline}</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={sections.date.headline} />
-                  </SelectTrigger>
+                  {!isLoadingOpeningTime ? (
+                    <SelectTrigger>
+                      <SelectValue placeholder={sections.date.headline} />
+                    </SelectTrigger>
+                  ) : (
+                    <div className="flex w-full items-center justify-center">
+                      <Skeleton className="w-[252px] h-[40px]" />
+                    </div>
+                  )}
                 </FormControl>
                 <SelectContent>
-                  {openingTime?.timeSlots &&
-                    openingTime.timeSlots.map(
+                  {openingTimeDynamic?.timeSlots &&
+                    openingTimeDynamic.timeSlots.map(
                       (timeSlot: TimeSlots, key: Key) => {
                         return (
                           <SelectItem key={key} value={timeSlot.time}>

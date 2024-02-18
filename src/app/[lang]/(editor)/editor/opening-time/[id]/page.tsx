@@ -10,7 +10,6 @@ export default async function OpeningTimeEditorPage({
 }) {
   const { button } = await getDictionary(lang);
   const openingTime = await readOpeningTimeById(id);
-  console.log(openingTime);
 
   return (
     <AdminUpdateOpeningTimeEditorForm

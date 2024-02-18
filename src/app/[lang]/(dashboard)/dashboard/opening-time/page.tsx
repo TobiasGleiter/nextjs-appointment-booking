@@ -15,7 +15,7 @@ export default async function OpeningTimeManagementPage({
 }: OpeningTimeManagementPageProps) {
   const { page, button } = await getDictionary(lang);
   const openingTime = await readAllOpeningTime();
-  console.log(openingTime);
+
   return (
     <div className="flex flex-col gap-4 ">
       <DashboardHeader
