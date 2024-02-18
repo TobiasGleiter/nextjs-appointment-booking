@@ -2,7 +2,7 @@
 
 This project is a streamlined appointment booking website powered by Next.js 14, MongoDB, and NextAuth. It incorporates various automation and DevOps practices for efficiency and reliability.
 
-![Demo Video](./docs/demo-1.mov)
+![Demo Video](./docs/demo.mov)
 
 ## 💻 Technologies Used:
 
