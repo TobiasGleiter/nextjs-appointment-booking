@@ -14,7 +14,7 @@ export default async function MainButtonNavigation({
 }: IMainButtonNav) {
   return (
     <nav className="flex flex-row gap-4 items-center ">
-      <NavigationLink lang={lang} path={'/dashboard'}>
+      <NavigationLink lang={lang} path={'/dashboard/appointments'}>
         Admin?
       </NavigationLink>
       <NavigationLink

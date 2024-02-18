@@ -10,3 +10,9 @@ export const appointmentFormSchema = z.object({
   clientName: z.string().min(3),
   clientEmail: z.string().optional(),
 });
+
+export const clientAppointmentFormSchema = z.object({
+  bookingDate: z.date(),
+  bookingTimeSlotStart: z.string(),
+  sellerId: z.string(),
+});

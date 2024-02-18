@@ -2,6 +2,22 @@
 
 This project is a streamlined appointment booking website powered by Next.js 14, MongoDB, and NextAuth. It incorporates various automation and DevOps practices for efficiency and reliability.
 
+![Demo Video](./docs/demo.mov)
+
+## 📋 Implemented
+
+- ✅ Customer Appointment Booking with Google Login
+- ✅ Dashboard: Appointment Management
+- ✅ Dashboard: Seller Management
+- ✅ Dashboard: Opening Time Management
+
+I am currently working on this project:
+
+- ❌ Hide already booked appointments
+- ❌ Hide already booked sellers
+- ❌ Refactor Opening Time Managment Logic
+- ❌ Refactor Appointment Management Logic
+
 ## 💻 Technologies Used:
 
 - **Next.js 14**: For robust frontend development.

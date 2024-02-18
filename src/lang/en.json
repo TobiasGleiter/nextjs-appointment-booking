@@ -50,6 +50,10 @@
       "employees": {
         "headline": "Employees",
         "description": "Manage your sellers"
+      },
+      "openingHours": {
+        "headline": "Opening Hours",
+        "description": "Manage your opening hours"
       }
     },
     "editor": {

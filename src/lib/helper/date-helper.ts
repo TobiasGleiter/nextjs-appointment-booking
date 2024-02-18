@@ -22,3 +22,16 @@ export function formatDateForHumans(date: Date, lang: Locale): string {
   };
   return date.toLocaleDateString(lang, options);
 }
+
+export function getDayForHumans(day: number): string {
+  const daysOfWeek = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday',
+  ];
+  return daysOfWeek[day];
+}

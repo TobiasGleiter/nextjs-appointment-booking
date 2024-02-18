@@ -3,7 +3,7 @@ import NavigationLink from '@/src/components/navigation/link-navigation';
 import AppointmentFormSkeleton from '@/src/components/skeleton/appointment-form-skeleton';
 import { buttonVariants } from '@/src/components/ui/button';
 import { readAppointmentById } from '@/src/lib/database/collection/appointments/read-appointments';
-import { readOpeningTime } from '@/src/lib/database/collection/opening-time/read-opening-time';
+import { readOpeningTimeByDay } from '@/src/lib/database/collection/opening-time/read-opening-time';
 import { readAllSellers } from '@/src/lib/database/collection/seller/read-seller';
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
@@ -19,7 +19,7 @@ export default async function SellerEditorPage({
   const { page, button, error } = await getDictionary(lang);
   const appointment = await readAppointmentById(appointmentId);
   const sellers = await readAllSellers();
-  const openingTime = await readOpeningTime(0);
+  const openingTime = await readOpeningTimeByDay(0);
 
   if (!sellers || !openingTime) {
     notFound();
