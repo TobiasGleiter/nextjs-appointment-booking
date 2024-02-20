@@ -6,7 +6,10 @@ import {
   checkIfBusinessIsOpenOnWeekday,
   checkIfSellerIsAvailable,
 } from '../helper/appointments-helper';
-import { routeRequestPostAppointmentSchema } from '../validation/appointment/route-appointment';
+import {
+  routeRequestPatchAppointmentSchema,
+  routeRequestPostAppointmentSchema,
+} from '../validation/appointment/route-appointment';
 import { AbstractHandler } from './handler';
 
 /**
@@ -16,6 +19,20 @@ import { AbstractHandler } from './handler';
 export class VerifyAppointmentSchemaHandler extends AbstractHandler {
   public async handle(data: any): Promise<NextResponse | null> {
     const parsedAppointment = routeRequestPostAppointmentSchema.parse(data);
+    if (!parsedAppointment) {
+      return NextResponse.json('Forbidden', { status: 403 });
+    }
+    return super.handle(parsedAppointment);
+  }
+}
+
+/**
+ * Check if the data fits the expected schema, if not return 'Forbidden'
+ * @returns NextResponse | null
+ */
+export class VerifyAppointmentAdminSchemaHandler extends AbstractHandler {
+  public async handle(data: any): Promise<NextResponse | null> {
+    const parsedAppointment = routeRequestPatchAppointmentSchema.parse(data);
     if (!parsedAppointment) {
       return NextResponse.json('Forbidden', { status: 403 });
     }

@@ -1,6 +1,5 @@
-import { routeRequestPostDashboardSellerSchema } from '@/src/lib/validation/dashboard/route-dashboard';
+import { Seller } from '@/src/types/database/sellers-database';
 import { InsertOneResult } from 'mongodb';
-import { z } from 'zod';
 import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
 import { MongoDBRepository } from '../../repository/mongodb-repository';
@@ -10,9 +9,7 @@ import { MongoDBRepository } from '../../repository/mongodb-repository';
  * @param goal
  * @returns result
  */
-export async function createSeller(
-  seller: z.infer<typeof routeRequestPostDashboardSellerSchema>
-): Promise<InsertOneResult> {
+export async function createSeller(seller: Seller): Promise<InsertOneResult> {
   const sellersCollection = await connectToDatabaseAndCollection('sellers');
   const sellersOptions = {};
 

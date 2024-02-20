@@ -13,11 +13,12 @@ import { ObjectId } from 'mongodb';
 import { NextResponse } from 'next/server';
 
 /**
- * This routes handles creating a new appointment
+ * This routes handles creating a new appointment as a client
  * @param request
  * @returns
  */
 export async function POST(request: Request) {
+  // Init necessary handlers
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
   const verifyBusinessIsOpenOnWeekdayHandler =
@@ -26,6 +27,7 @@ export async function POST(request: Request) {
     new VerifyAppointmentIsBetweenOpeningHoursHandler();
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
+  // Setup chain of responsibility
   verifyUserHasRouteAccessHandler
     .setNext(verifyAppointmentSchemaHandler)
     .setNext(verifyBusinessIsOpenOnWeekdayHandler)
