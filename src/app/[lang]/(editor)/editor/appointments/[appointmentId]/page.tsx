@@ -16,7 +16,8 @@ export default async function SellerEditorPage({
 }: {
   params: { lang: Locale; appointmentId: string };
 }) {
-  const { page, button, error } = await getDictionary(lang);
+  const { page, button } = await getDictionary(lang);
+
   const appointment = await readAppointmentById(appointmentId);
   const sellers = await readAllSellers();
   const openingTime = await readOpeningTimeByDay(0);

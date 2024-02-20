@@ -9,6 +9,7 @@ export default async function SellerEditorPage({
   params: { lang: Locale; sellerId: string };
 }) {
   const { button } = await getDictionary(lang);
+
   const seller = await readSellerById(sellerId);
 
   return <SellerEditor seller={seller} button={button} lang={lang} />;

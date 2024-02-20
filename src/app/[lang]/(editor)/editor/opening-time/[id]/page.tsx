@@ -3,12 +3,15 @@ import { readOpeningTimeById } from '@/src/lib/database/collection/opening-time/
 import { Locale } from '@/src/lib/lang/i18.config';
 import { getDictionary } from '@/src/lib/lang/lang';
 
+interface OpeningTimeEditorPageProps {
+  params: { lang: Locale; id: string };
+}
+
 export default async function OpeningTimeEditorPage({
   params: { lang, id },
-}: {
-  params: { lang: Locale; id: string };
-}) {
+}: OpeningTimeEditorPageProps) {
   const { button } = await getDictionary(lang);
+
   const openingTime = await readOpeningTimeById(id);
 
   return (
