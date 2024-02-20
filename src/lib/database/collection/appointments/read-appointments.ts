@@ -4,7 +4,7 @@ import { ObjectId } from 'mongodb';
 import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
 import { MongoDBRepository } from '../../repository/mongodb-repository';
-import { readSellerById } from '../seller/read-seller';
+import { readAllEmployees, readSellerById } from '../seller/read-seller';
 
 /**
  * Reads if the appointment is available and not already booked
@@ -153,7 +153,32 @@ export async function readAllAppointmentsForGivenDay(date: Date) {
     appointmentOptions
   );
 
+  // read all employees:
+  const employees = await readAllEmployees();
+
   // workaround because of passing data from server to client
   const appointments: Appointment[] = JSON.parse(JSON.stringify(response));
-  return appointments;
+
+  const timeSlotCounts = {};
+
+  appointments.forEach((appointment) => {
+    const appointmentDate = new Date(appointment.appointmentDate);
+    const hour = appointmentDate.getHours();
+    const minute = appointmentDate.getMinutes();
+    const timeSlot = `${hour}:${minute}`;
+    timeSlotCounts[timeSlot] = (timeSlotCounts[timeSlot] || 0) + 1;
+  });
+
+  // Filter time slots that are fully booked
+  const fullyBookedTimeSlots = Object.keys(timeSlotCounts)
+    .filter((timeSlot) => timeSlotCounts[timeSlot] === employees.length) // Assuming there are 2 employees
+    .map((timeSlot) => {
+      const [hour, minute] = timeSlot.split(':').map(Number);
+      const date = new Date();
+      date.setHours(hour);
+      date.setMinutes(minute);
+      return date;
+    });
+
+  return fullyBookedTimeSlots;
 }

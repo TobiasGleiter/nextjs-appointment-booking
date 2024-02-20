@@ -41,8 +41,8 @@ export async function GET(
       selectedDateByClient
     );
 
-    const bookedTimes = alreadyBookedAppointments.map((appointment) => {
-      const appointmentDate = new Date(appointment.appointmentDate);
+    const bookedTimes = alreadyBookedAppointments.map((date) => {
+      const appointmentDate = new Date(date);
       // Adjusting for timezone offset
       const timezoneOffset = appointmentDate.getTimezoneOffset();
       appointmentDate.setMinutes(appointmentDate.getMinutes() + timezoneOffset);
@@ -70,9 +70,6 @@ export async function GET(
       timeSlots: filteredTimeSlots,
     };
 
-    // console.log(filteredTimeSlots);
-
-    // filter available appointments (time)
     if (!result) {
       return NextResponse.json('Failed', { status: 400 });
     }
