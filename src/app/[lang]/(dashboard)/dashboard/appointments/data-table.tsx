@@ -34,18 +34,20 @@ import * as React from 'react';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  button: any;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  button,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+    React.useState<VisibilityState>({ clientEmail: false });
 
   const table = useReactTable({
     data,
@@ -162,7 +164,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
-          Previous
+          {button.previous}
         </Button>
         <Button
           variant="outline"
@@ -170,7 +172,7 @@ export function DataTable<TData, TValue>({
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
-          Next
+          {button.next}
         </Button>
       </div>
     </div>

@@ -40,7 +40,6 @@ interface CreateAppointmentEditorProps {
   appointment: Appointment;
   sections: any;
   buttonBookNow: any;
-  error: any;
   lang: Locale;
   sellers: Seller[];
   openingTime: OpeningTime;
@@ -50,7 +49,6 @@ export function CreateAppointmentEditorForm({
   appointment,
   sections,
   buttonBookNow,
-  error,
   lang,
   sellers,
   openingTime,
@@ -127,7 +125,7 @@ export function CreateAppointmentEditorForm({
           name="clientName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Client Name</FormLabel>
+              <FormLabel>{sections.clientName.headline}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -140,7 +138,7 @@ export function CreateAppointmentEditorForm({
           name="clientEmail"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Client-Email</FormLabel>
+              <FormLabel>{sections.clientEmail.headline}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>

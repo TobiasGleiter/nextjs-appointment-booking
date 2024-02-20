@@ -18,7 +18,8 @@ export default async function AppointmentsManagementPage({
   params: { lang },
 }: AppointmentManagementPageProps) {
   const { page, button } = await getDictionary(lang);
-  const data = await readAllAppointmentsWithSellerNameForSevenDays();
+
+  const appointments = await readAllAppointmentsWithSellerNameForSevenDays();
 
   return (
     <div>
@@ -36,7 +37,7 @@ export default async function AppointmentsManagementPage({
         </NavigationLink>
       </DashboardHeader>
       <Suspense fallback={'Loading...'}>
-        <DataTable columns={columns} data={data} />
+        <DataTable columns={columns} data={appointments} button={button} />
       </Suspense>
     </div>
   );

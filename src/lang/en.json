@@ -78,11 +78,17 @@
           "headline": "Appointment booked!",
           "description": "Booking details:"
         },
+        "clientName": {
+          "headline": "Client Name"
+        },
+        "clientEmail": {
+          "headline": "Client Email"
+        },
         "date": {
-          "headline": "Select Your date."
+          "headline": "Appointment date."
         },
         "timeSlot": {
-          "headline": "Select Your time slot"
+          "headline": "Time"
         }
       }
     },
@@ -102,7 +108,9 @@
     "save": "Save",
     "edit": "Edit",
     "reset": "Reset",
-    "add": "Add"
+    "add": "Add",
+    "next": "Next",
+    "previous": "Previous"
   },
   "error": {
     "form": {
