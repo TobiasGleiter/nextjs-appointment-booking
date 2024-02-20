@@ -25,7 +25,13 @@ export default async function OpeningTimeManagementPage({
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-2 px-1">
         {openingTime.map((openingTime: OpeningTime, key: Key) => {
-          return <OpeningTimeCard key={key} openingTime={openingTime} />;
+          return (
+            <OpeningTimeCard
+              key={key}
+              openingTime={openingTime}
+              sections={page.dashboard.openingHours.sections}
+            />
+          );
         })}
       </div>
     </div>

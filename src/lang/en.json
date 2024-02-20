@@ -53,7 +53,15 @@
       },
       "openingHours": {
         "headline": "Opening Hours",
-        "description": "Manage your opening hours"
+        "description": "Manage your opening hours",
+        "sections": {
+          "open": {
+            "headline": "Open"
+          },
+          "closed": {
+            "headline": "Closed"
+          }
+        }
       }
     },
     "editor": {
