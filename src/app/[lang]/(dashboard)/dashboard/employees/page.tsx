@@ -14,6 +14,7 @@ export default async function SellersManagementPage({
   params: { lang },
 }: SellersManagementPageProps) {
   const { page, button } = await getDictionary(lang);
+
   const data = await readAllEmployees();
 
   return (

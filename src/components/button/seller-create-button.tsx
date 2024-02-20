@@ -32,8 +32,8 @@ export function SellerCreateButton({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: 'Unnamed',
-        email: 'a',
+        name: 'Seller Name',
+        email: '',
       }),
     });
 
