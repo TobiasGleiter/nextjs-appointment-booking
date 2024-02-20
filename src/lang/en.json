@@ -28,6 +28,17 @@
     ]
   },
   "page": {
+    "marketing": {
+      "headline": "Simple Booking System",
+      "description": "Using Next.js 14, Shadcn, MongoDb, Design Patterns and Best Practices.",
+      "sections": {
+        "bullet": {
+          "one": "+ Landing Page",
+          "two": "+ Booking Process",
+          "three": "+ Admin Dashboard"
+        }
+      }
+    },
     "home": {
       "headline": "Simple Booking System",
       "description": "Using Next.js 14, Shadcn, MongoDb, Design Patterns, Best Practices and more..",
