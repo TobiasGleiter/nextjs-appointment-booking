@@ -37,6 +37,8 @@ Project specific questions:
 - ✅ NextAuth with Google provider for login (working without mongodb)
 - ✅ Booking process
 - ✅ MongoDb setup
-- ❌ Admin Seller Management (Dashboard)
-- ❌ Admin Opening Time Management (Dashboard)
-- ❌ Admin Appointment Management (Dashboard)
+- ✅ Admin Seller Management (Dashboard)
+- ⭕️ Admin Opening Time Management (Dashboard)
+- ✅ Admin Appointment Management (Dashboard)
+- ✅ Adapter Pattern (usage with different databases possible)
+- ❌ Hide already booked sellers after selecting a time slots
