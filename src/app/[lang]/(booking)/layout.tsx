@@ -1,5 +1,4 @@
 import { Locale } from '@/src/lib/lang/i18.config';
-import { getDictionary } from '@/src/lib/lang/lang';
 
 interface BookNowLayoutProps {
   children: React.ReactNode;
@@ -10,7 +9,6 @@ export default async function BookNowLayout({
   children,
   params: { lang },
 }: BookNowLayoutProps) {
-  const { button } = await getDictionary(lang);
   return (
     <div className="flex min-h-screen flex-col py-8">
       <main className="flex w-full items-center container min-h-screen flex-1 flex-col overflow-hidden">
