@@ -55,7 +55,7 @@ export function SidebarDashboardNavigation({ items, lang }: DashboardNavProps) {
         );
       })}
       <div className="mt-2" />
-      <Link href={'/dashboard/settings'}>
+      {/* <Link href={'/dashboard/settings'}>
         <span
           className={cn(
             'group flex items-center rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground',
@@ -65,7 +65,7 @@ export function SidebarDashboardNavigation({ items, lang }: DashboardNavProps) {
           <Icons.settings className="mr-2 h-4 w-4" />
           <span className="hidden md:flex">Settings</span>
         </span>
-      </Link>
+      </Link> */}
     </nav>
   );
 }

@@ -14,14 +14,15 @@ export default async function BookNowDetailsPage({
   params: { lang: Locale; id: string };
 }) {
   const { page, button } = await getDictionary(lang);
+
   const appointment = await readAppointmentById(id);
 
   if (!appointment) {
     notFound();
   }
 
-  const date = new Date(appointment.appointmentDate);
-  const formattedDate = formatDateForHumans(date, lang);
+  const appointmentDate = new Date(appointment.appointmentDate);
+  const humanReadableData = formatDateForHumans(appointmentDate, lang);
 
   return (
     <div className="flex flex-col w-full items-center gap-10 justify-between">
@@ -50,7 +51,7 @@ export default async function BookNowDetailsPage({
           </div>
           <div>
             <Label>Date</Label>
-            <p>{formattedDate}</p>
+            <p>{humanReadableData}</p>
           </div>
         </div>
       </div>

@@ -28,6 +28,17 @@
     ]
   },
   "page": {
+    "marketing": {
+      "headline": "Simple Booking System",
+      "description": "Using Next.js 14, Shadcn, MongoDb, Design Patterns and Best Practices.",
+      "sections": {
+        "bullet": {
+          "one": "+ Landing Page",
+          "two": "+ Booking Process",
+          "three": "+ Admin Dashboard"
+        }
+      }
+    },
     "home": {
       "headline": "Simple Booking System",
       "description": "Using Next.js 14, Shadcn, MongoDb, Design Patterns, Best Practices and more..",
@@ -53,7 +64,15 @@
       },
       "openingHours": {
         "headline": "Opening Hours",
-        "description": "Manage your opening hours"
+        "description": "Manage your opening hours",
+        "sections": {
+          "open": {
+            "headline": "Open"
+          },
+          "closed": {
+            "headline": "Closed"
+          }
+        }
       }
     },
     "editor": {
@@ -78,11 +97,17 @@
           "headline": "Appointment booked!",
           "description": "Booking details:"
         },
+        "clientName": {
+          "headline": "Client Name"
+        },
+        "clientEmail": {
+          "headline": "Client Email"
+        },
         "date": {
-          "headline": "Select Your date."
+          "headline": "Appointment date."
         },
         "timeSlot": {
-          "headline": "Select Your time slot"
+          "headline": "Time"
         }
       }
     },
@@ -102,7 +127,9 @@
     "save": "Save",
     "edit": "Edit",
     "reset": "Reset",
-    "add": "Add"
+    "add": "Add",
+    "next": "Next",
+    "previous": "Previous"
   },
   "error": {
     "form": {

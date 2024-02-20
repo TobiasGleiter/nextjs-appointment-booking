@@ -30,7 +30,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       template: `%s | ${meta.home.title}`,
     },
     description: meta.home.description,
-    applicationName: 'Appointment',
+    applicationName: 'Appointment Booking System',
     openGraph: {
       title: meta.home.title,
       description: meta.home.description,

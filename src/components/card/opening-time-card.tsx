@@ -5,9 +5,18 @@ import {
   CardTitle,
 } from '@/src/components/ui/card';
 import { getDayForHumans } from '@/src/lib/helper/date-helper';
+import { OpeningTime } from '@/src/types/database/opening-time-database';
 import NavigationLink from '../navigation/link-navigation';
 
-export default function OpeningTimeCard({ openingTime }) {
+interface OpeningTimeCardProps {
+  openingTime: OpeningTime;
+  sections: any;
+}
+
+export default function OpeningTimeCard({
+  openingTime,
+  sections,
+}: OpeningTimeCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -21,7 +30,7 @@ export default function OpeningTimeCard({ openingTime }) {
           </NavigationLink>
         </CardTitle>
         <CardDescription>
-          {openingTime.open ? 'Open' : 'Closed'}
+          {openingTime.open ? sections.open.headline : sections.closed.headline}
         </CardDescription>
       </CardHeader>
     </Card>

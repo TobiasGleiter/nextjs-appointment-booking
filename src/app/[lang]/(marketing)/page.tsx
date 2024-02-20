@@ -6,11 +6,11 @@ import { getDictionary } from '@/src/lib/lang/lang';
 import { cn } from '@/src/lib/utils';
 import Link from 'next/link';
 
-export default async function Home({
-  params: { lang },
-}: {
+interface HomeProps {
   params: { lang: Locale };
-}) {
+}
+
+export default async function Home({ params: { lang } }: HomeProps) {
   const { page, button } = await getDictionary(lang);
 
   return (
@@ -26,19 +26,19 @@ export default async function Home({
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             {page.home.description}
           </p>
-          <ol className="text-lg font-bold underline">
-            <li>Landing Page</li>
-            <li>Simple Booking Process</li>
-            <li>Admin Dashboard</li>
-            <li>Documentation</li>
+          <ol className="text-lg font-bold">
+            <li>{page.marketing.sections.bullet.one}</li>
+            <li>{page.marketing.sections.bullet.two}</li>
+            <li>{page.marketing.sections.bullet.three}</li>
           </ol>
           <div className="flex gap-2">
             <NavigationLink
               lang={lang}
               path={'/book-now'}
-              className={cn(buttonVariants({ variant: 'default' }))}
+              className={cn(buttonVariants({ variant: 'default' }), 'gap-1')}
             >
-              {button.bookNow}
+              <Icons.arrowRight className="-rotate-45" />
+              <p>{button.bookNow}</p>
             </NavigationLink>
             <Link
               href={
@@ -58,6 +58,7 @@ export default async function Home({
           </div>
         </div>
       </section>
+      {/** This section is not translated because it is not part of the booking system and should just tell which features are implemented */}
       <section
         id="features"
         className="container space-y-6 bg-slate-50 py-8 dark:bg-transparent md:py-12 lg:py-24"

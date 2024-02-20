@@ -14,8 +14,10 @@ export default async function BookNowPage({
   params: { lang: Locale };
 }) {
   const { page, button, error } = await getDictionary(lang);
+
   const sellers = await readAllSellers();
-  const openingTime = await readOpeningTimeByDay(0);
+  const weekDay = new Date().getDay();
+  const openingTime = await readOpeningTimeByDay(weekDay);
 
   if (!sellers || !openingTime) {
     notFound();
@@ -38,7 +40,6 @@ export default async function BookNowPage({
             appointment={emptyAppointment}
             sections={page.bookNow.sections}
             buttonBookNow={button.bookNow}
-            error={error}
             lang={lang}
             sellers={sellers}
             openingTime={openingTime}

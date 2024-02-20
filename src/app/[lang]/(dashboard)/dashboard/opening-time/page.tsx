@@ -13,7 +13,8 @@ interface OpeningTimeManagementPageProps {
 export default async function OpeningTimeManagementPage({
   params: { lang },
 }: OpeningTimeManagementPageProps) {
-  const { page, button } = await getDictionary(lang);
+  const { page } = await getDictionary(lang);
+
   const openingTime = await readAllOpeningTime();
 
   return (
@@ -21,10 +22,16 @@ export default async function OpeningTimeManagementPage({
       <DashboardHeader
         heading={page.dashboard.openingHours.headline}
         text={page.dashboard.openingHours.description}
-      ></DashboardHeader>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 flex-col gap-2 px-1">
+      />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 flex-col gap-2 px-1">
         {openingTime.map((openingTime: OpeningTime, key: Key) => {
-          return <OpeningTimeCard key={key} openingTime={openingTime} />;
+          return (
+            <OpeningTimeCard
+              key={key}
+              openingTime={openingTime}
+              sections={page.dashboard.openingHours.sections}
+            />
+          );
         })}
       </div>
     </div>
