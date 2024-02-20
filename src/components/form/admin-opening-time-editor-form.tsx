@@ -54,8 +54,6 @@ export function AdminUpdateOpeningTimeEditorForm({
   async function onSubmit(data: z.infer<typeof openingTimeFormSchema>) {
     setIsLoading(true);
 
-    console.log(data);
-
     const response = await fetch(
       `/api/v1/opening-time/admin/${openingTime._id}`,
       {

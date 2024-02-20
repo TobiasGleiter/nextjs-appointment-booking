@@ -65,17 +65,13 @@ export function AppointmentForm({
     setIsLoadingOpeningTime(true);
     // fetch opening time
     const date = new Date(event);
-    const weekdayMondayToSunday = date.getUTCDay();
 
-    const response = await fetch(
-      `/api/v1/opening-time/client/${weekdayMondayToSunday}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      }
-    );
+    const response = await fetch(`/api/v1/opening-time/client/${date}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
     setIsLoadingOpeningTime(false);
 
@@ -159,76 +155,93 @@ export function AppointmentForm({
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          disabled={isLoadingOpeningTime}
-          name="bookingTimeSlotStart"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{sections.timeSlot.headline}</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  {!isLoadingOpeningTime ? (
-                    <SelectTrigger>
-                      <SelectValue placeholder={sections.date.headline} />
-                    </SelectTrigger>
-                  ) : (
-                    <div className="flex w-full items-center justify-center">
-                      <Skeleton className="w-[252px] h-[40px]" />
-                    </div>
-                  )}
-                </FormControl>
-                <SelectContent>
-                  {openingTimeDynamic?.timeSlots &&
-                    openingTimeDynamic.timeSlots.map(
-                      (timeSlot: TimeSlots, key: Key) => {
+        {openingTimeDynamic.open ? (
+          <>
+            {' '}
+            <FormField
+              control={form.control}
+              disabled={isLoadingOpeningTime}
+              name="bookingTimeSlotStart"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{sections.timeSlot.headline}</FormLabel>
+
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      {!isLoadingOpeningTime ? (
+                        <SelectTrigger>
+                          <SelectValue placeholder={sections.date.headline} />
+                        </SelectTrigger>
+                      ) : (
+                        <div className="flex w-full items-center justify-center">
+                          <Skeleton className="w-[252px] h-[40px]" />
+                        </div>
+                      )}
+                    </FormControl>
+                    <SelectContent>
+                      {openingTimeDynamic?.timeSlots &&
+                        openingTimeDynamic.timeSlots.map(
+                          (timeSlot: TimeSlots, key: Key) => {
+                            return (
+                              <SelectItem key={key} value={timeSlot.time}>
+                                {timeSlot.label}
+                              </SelectItem>
+                            );
+                          }
+                        )}
+                    </SelectContent>
+                  </Select>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="sellerId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{'Select Your prefered seller'}</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={'Select a seller'} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {sellers.map((seller: Seller, key: Key) => {
                         return (
-                          <SelectItem key={key} value={timeSlot.time}>
-                            {timeSlot.label}
+                          <SelectItem key={key} value={seller._id.toString()}>
+                            {seller.name}
                           </SelectItem>
                         );
-                      }
-                    )}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="sellerId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{'Select Your prefered seller'}</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={'Select a seller'} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {sellers.map((seller: Seller, key: Key) => {
-                    return (
-                      <SelectItem key={key} value={seller._id.toString()}>
-                        {seller.name}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Icons.add className="mr-2 h-4 w-4" />
-          )}
-          {buttonBookNow}
-        </Button>
+                      })}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? (
+                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+              ) : (
+                <Icons.add className="mr-2 h-4 w-4" />
+              )}
+              {buttonBookNow}
+            </Button>
+          </>
+        ) : (
+          <div className="w-full text-center border rounded-md">
+            We are closed on that date!
+          </div>
+        )}
       </form>
     </Form>
   );

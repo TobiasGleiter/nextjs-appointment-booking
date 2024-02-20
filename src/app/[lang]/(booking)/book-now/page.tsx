@@ -17,7 +17,7 @@ export default async function BookNowPage({
 }) {
   const { page, button, error } = await getDictionary(lang);
   const sellers = await readAllSellers();
-  const openingTime = await readOpeningTimeByDay(0);
+  const openingTime = await readOpeningTimeByDay(1);
 
   if (!sellers || !openingTime) {
     notFound();
