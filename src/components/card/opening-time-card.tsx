@@ -11,7 +11,7 @@ export default function OpeningTimeCard({ openingTime }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
+        <CardTitle className="font-heading font-bold text-xl md:text-2xl">
           <NavigationLink
             lang={'en'}
             path={`/editor/opening-time/${openingTime._id}`}
