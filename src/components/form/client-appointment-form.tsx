@@ -55,7 +55,9 @@ export function AppointmentForm({
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [isLoadingOpeningTime, setIsLoadingOpeningTime] = useState(false);
-  const [openingTimeDynamic, setOpeningTimeDynamic] = useState(openingTime);
+  const [openingTimeDynamic, setOpeningTimeDynamic] =
+    useState<OpeningTime>(openingTime);
+  const [sellersDynamic, setSellersDynamic] = useState<Seller[]>(sellers);
 
   const form = useForm<z.infer<typeof clientAppointmentFormSchema>>({
     resolver: zodResolver(clientAppointmentFormSchema),
@@ -215,7 +217,7 @@ export function AppointmentForm({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {sellers.map((seller: Seller, key: Key) => {
+                      {sellersDynamic.map((seller: Seller, key: Key) => {
                         return (
                           <SelectItem key={key} value={seller._id.toString()}>
                             {seller.name}
