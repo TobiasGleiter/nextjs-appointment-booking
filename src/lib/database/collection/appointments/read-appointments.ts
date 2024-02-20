@@ -118,3 +118,42 @@ export async function readAllAppointmentsWithSellerNameForSevenDays(): Promise<
   }
   return appointments;
 }
+
+/**
+ * Get all appointments for the given day
+ * @returns appointments
+ */
+export async function readAllAppointmentsForGivenDay(date: Date) {
+  const appointmentsCollection = await connectToDatabaseAndCollection(
+    'appointments'
+  );
+  const appointmentOptions = {
+    projection: {
+      appointmentDate: 1,
+    },
+    sort: {
+      appointmentDate: 1,
+    },
+  };
+
+  const startOfToday = startOfDay(date);
+  const endOfToday = endOfDay(date);
+
+  const appointmentsQuery = {
+    appointmentDate: {
+      $gte: startOfToday,
+      $lte: endOfToday,
+    },
+  };
+
+  const appointmentsRepository = new MongoDBRepository(appointmentsCollection);
+  const databaseAdapter = new DatabaseAdapter(appointmentsRepository);
+  const response = await databaseAdapter.find(
+    appointmentsQuery,
+    appointmentOptions
+  );
+
+  // workaround because of passing data from server to client
+  const appointments: Appointment[] = JSON.parse(JSON.stringify(response));
+  return appointments;
+}

@@ -5,6 +5,6 @@ import { z } from 'zod';
  */
 export const routeContextClientOpeningTimeSchema = z.object({
   params: z.object({
-    day: z.string(),
+    date: z.date(),
   }),
 });
