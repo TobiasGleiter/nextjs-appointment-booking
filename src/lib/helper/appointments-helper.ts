@@ -1,6 +1,8 @@
+import { Appointment } from '@/src/types/database/appointments-database';
 import { ObjectId } from 'mongodb';
 import { readAppointmentIsAvailable } from '../database/collection/appointments/read-appointments';
 import { readOpeningTimeByDay } from '../database/collection/opening-time/read-opening-time';
+import { readAllEmployees } from '../database/collection/seller/read-seller';
 
 /**
  *  Check if the given appointment date is in the open times of the business
@@ -75,4 +77,33 @@ export async function checkIfSellerIsAvailable(
   }
 
   return true;
+}
+
+export async function getAllBookedAppointments(
+  appointments: Appointment[]
+): Promise<Date[]> {
+  // read all employees:
+  const employees = await readAllEmployees();
+  const timeSlotCounts = {};
+
+  appointments.forEach((appointment) => {
+    const appointmentDate = new Date(appointment.appointmentDate);
+    const hour = appointmentDate.getHours();
+    const minute = appointmentDate.getMinutes();
+    const timeSlot = `${hour}:${minute}`;
+    timeSlotCounts[timeSlot] = (timeSlotCounts[timeSlot] || 0) + 1;
+  });
+
+  // Filter time slots that are fully booked
+  const fullyBookedTimeSlots = Object.keys(timeSlotCounts)
+    .filter((timeSlot) => timeSlotCounts[timeSlot] === employees.length) // Assuming there are 2 employees
+    .map((timeSlot) => {
+      const [hour, minute] = timeSlot.split(':').map(Number);
+      const date = new Date();
+      date.setHours(hour);
+      date.setMinutes(minute);
+      return date;
+    });
+
+  return fullyBookedTimeSlots;
 }

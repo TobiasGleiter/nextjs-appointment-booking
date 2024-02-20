@@ -20,12 +20,15 @@ export default async function MainButtonNavigation({
         path={'/dashboard/appointments'}
         className={cn(buttonVariants({ variant: 'outline' }), 'gap-1')}
       >
-        Admin Dashboard
+        Admin?
       </NavigationLink>
       <NavigationLink
         lang={lang}
         path={'/book-now'}
-        className={cn(buttonVariants({ variant: 'default' }), 'gap-1')}
+        className={cn(
+          buttonVariants({ variant: 'default' }),
+          'gap-1 hidden sm:flex'
+        )}
       >
         <Icons.arrowRight className="-rotate-45" />
         <p>{button.bookNow}</p>
