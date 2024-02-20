@@ -8,3 +8,11 @@ export const routeContextClientOpeningTimeSchema = z.object({
     date: z.date(),
   }),
 });
+
+/**
+ * Defines the allowed openingTime schema for a patch request (server side)
+ */
+export const routeRequestPatchOpeningTimeSchema = z.object({
+  open: z.boolean(),
+  timeSlots: z.any(),
+});

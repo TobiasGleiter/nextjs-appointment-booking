@@ -1,25 +1,33 @@
 import { createSeller } from '@/src/lib/database/collection/seller/create-seller';
-import { VerifyUserHasRouteAccessHandler } from '@/src/lib/handler/auth-handler';
+import {
+  VerifyUserHasRouteAccessHandler,
+  VerifyUserIsAdminAccessHandler,
+} from '@/src/lib/handler/auth-handler';
 import { VerifyDashboardSellerSchemaHandler } from '@/src/lib/handler/dashboard-handler';
+import { Seller } from '@/src/types/database/sellers-database';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
+  // Init necessary handlers
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
+  const verifyUserIsAdminAccessHandler = new VerifyUserIsAdminAccessHandler();
   const verifyDashboardSellerSchemaHandler =
     new VerifyDashboardSellerSchemaHandler();
 
-  verifyUserHasRouteAccessHandler.setNext(verifyDashboardSellerSchemaHandler);
+  // Setup chain of responsibility
+  verifyUserHasRouteAccessHandler
+    .setNext(verifyUserIsAdminAccessHandler)
+    .setNext(verifyDashboardSellerSchemaHandler);
 
   try {
     const json = await request.json();
-
     const nextResponse = await verifyUserHasRouteAccessHandler.handle(json);
 
     if (nextResponse !== null) {
       return nextResponse;
     }
 
-    const seller = json;
+    const seller: Seller = json;
     const result = await createSeller(seller);
     if (!result) {
       return NextResponse.json('Failed', { status: 400 });

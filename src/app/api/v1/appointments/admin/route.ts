@@ -18,6 +18,7 @@ import { NextResponse } from 'next/server';
  * @returns
  */
 export async function POST(request: Request) {
+  // Init necessary handlers
   const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
   const verifyUserIsEmployeeHandler = new VerifyUserIsEmployeeHandler();
   const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
@@ -27,6 +28,7 @@ export async function POST(request: Request) {
     new VerifyAppointmentIsBetweenOpeningHoursHandler();
   const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
 
+  // Setup chain of responsibility
   verifyUserHasRouteAccessHandler
     .setNext(verifyAppointmentSchemaHandler)
     .setNext(verifyUserIsEmployeeHandler)
@@ -60,6 +62,9 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json('Forbidden1', { status: 403 });
   }
+}
+export async function PUT() {
+  return NextResponse.json('Forbidden', { status: 403 });
 }
 export async function GET() {
   return NextResponse.json('Forbidden', { status: 403 });
@@ -69,50 +74,6 @@ export async function PATCH() {
 }
 export async function DELETE() {
   return NextResponse.json('Forbidden', { status: 403 });
-}
-export async function PUT(request: Request) {
-  const verifyUserHasRouteAccessHandler = new VerifyUserHasRouteAccessHandler();
-  const verifyUserIsEmployeeHandler = new VerifyUserIsEmployeeHandler();
-  const verifyAppointmentSchemaHandler = new VerifyAppointmentSchemaHandler();
-  const verifyBusinessIsOpenOnWeekdayHandler =
-    new VerifyBusinessIsOpenOnWeekdayHandler();
-  const verifyAppointmentIsBetweenOpeningHoursHandler =
-    new VerifyAppointmentIsBetweenOpeningHoursHandler();
-  const verifySellerIsAvailableHandler = new VerifySellerIsAvailableHandler();
-
-  verifyUserHasRouteAccessHandler
-    .setNext(verifyUserIsEmployeeHandler)
-    .setNext(verifyAppointmentSchemaHandler)
-    .setNext(verifyBusinessIsOpenOnWeekdayHandler)
-    .setNext(verifyAppointmentIsBetweenOpeningHoursHandler)
-    .setNext(verifySellerIsAvailableHandler);
-
-  try {
-    const json = await request.json();
-    const nextResponse = await verifyUserHasRouteAccessHandler.handle(json);
-
-    if (nextResponse !== null) {
-      return nextResponse;
-    }
-
-    const newAppointment: Appointment = {
-      appointmentDate: new Date(json.appointmentDate),
-      clientEmail: json.clientEmail,
-      clientName: json.clientName,
-      bookedAt: getUTCDate(new Date()),
-      sellerId: new ObjectId(json.sellerId),
-      clientNotes: json.clientNotes,
-    };
-
-    const result = await createAppointment(newAppointment);
-    if (!result) {
-      return NextResponse.json('Failed', { status: 400 });
-    }
-
-    return NextResponse.json({ result }, { status: 200 });
-  } catch (error) {
-    return NextResponse.json('Forbidden1', { status: 403 });
-  }
 }
 export async function OPTIONS() {
   return NextResponse.json('Forbidden', { status: 403 });

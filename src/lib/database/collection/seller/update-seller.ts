@@ -1,6 +1,5 @@
-import { routeRequestPatchDashboardSellerSchema } from '@/src/lib/validation/dashboard/route-dashboard';
+import { Seller } from '@/src/types/database/sellers-database';
 import { ObjectId, UpdateResult } from 'mongodb';
-import { z } from 'zod';
 import { DatabaseAdapter } from '../../adapter-database';
 import { connectToDatabaseAndCollection } from '../../connect-database';
 import { MongoDBRepository } from '../../repository/mongodb-repository';
@@ -13,7 +12,7 @@ import { MongoDBRepository } from '../../repository/mongodb-repository';
  */
 export async function updateSeller(
   sellerId: string,
-  seller: z.infer<typeof routeRequestPatchDashboardSellerSchema>
+  seller: Seller
 ): Promise<UpdateResult> {
   const sellersCollection = await connectToDatabaseAndCollection('sellers');
   const sellersQuery = { _id: new ObjectId(sellerId) };
